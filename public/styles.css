@@ -1,0 +1,763 @@
+/* Main stylesheet for Xlerion CMR - small additions for accessibility and helpers */
+:root{
+  --accent:#00EEFF; /* bright cyan */
+  --accent-2:#43FFFF; /* cyan accent */
+  --deep:#004080; /* deep blue */
+  --bg:#FFFFFF; /* white */
+  --fg:#121212; /* charcoal */
+  --muted:#2C2C2C;
+}
+/* smooth theme switch helper */
+.theme-transition *{transition: background-color 240ms ease, color 240ms ease, border-color 240ms ease}
+/* IE-friendly font stack with generic fallback */
+body{font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; margin:0;background:var(--bg);color:var(--fg)}
+.container{max-width:980px;margin:1.25rem auto;padding:0 1rem}
+.btn{background:var(--accent);color:#002; padding:.5rem 1rem;border-radius:6px;text-decoration:none;display:inline-block;border:none}
+.btn:hover{background:var(--accent-2)}
+.flash{padding:.5rem;background:linear-gradient(90deg,rgba(0,238,255,0.06),rgba(67,255,255,0.03));margin:.5rem 0;border-left:4px solid var(--accent)}
+/* Honeypot helper: visually hidden and inaccessible to assistive tech while remaining in DOM */
+:root{
+  /* Xlerion brand palette (from contenido.txt) */
+  --accent: #00eeff;       /* azul brillante tecnológico */
+  --accent-2: #43ffff;     /* cian brillante */
+  --deep: #004080;         /* azul profundo */
+  --bg: #ffffff;           /* blanco puro */
+  --fg: #121212;           /* negro carbón */
+  --muted: #2C2C2C;        /* gris oscuro */
+  --card-bg: #ffffff;
+  --card-border: #e9eef6;
+  --header-bg: rgba(0,32,64,0.78);
+  --btn-contrast: #000000;
+}
+.honeypot-hidden{display:none !important;position:absolute !important;left:-9999px !important;}
+.site-header{position:sticky;top:0;z-index:1050;background:var(--header-bg);color:var(--bg);}
+
+.btn{background:var(--accent);color:var(--btn-contrast); padding:.5rem 1rem;border-radius:6px;text-decoration:none;display:inline-block;border:none}
+.site-header{position:sticky;top:0;z-index:1050;background:linear-gradient(90deg,var(--deep),#002a66);color:var(--bg);}
+/* TEMP: force header gradient to solid black for visual debugging */
+.site-header { background: #000000 !important; }
+.btn:hover{background:var(--accent-2)}
+.brand{font-weight:700;color:var(--bg);text-decoration:none;font-size:1.2rem}
+.navbar.sticky-top{ background: rgba(0,0,0,0.4); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+/* Navbar tuned for better touch targets and contrast */
+.navbar{box-shadow:0 2px 10px rgba(0,0,0,0.10);min-height:64px}
+.navbar .container{display:-ms-flexbox;display:flex;-ms-flex-align:center;align-items:center}
+.navbar-brand{font-weight:800;font-size:1.25rem;color:var(--bg)}
+.navbar .nav-link{color:rgba(255,255,255,0.98);padding:.6rem .5rem}
+.navbar .nav-link[title]{ cursor: pointer; }
+.navbar .nav-link:hover, .navbar .nav-link:focus{color:var(--accent);text-decoration:none; text-shadow:0 0 8px rgba(0,238,255,0.45);}
+.site-header, header.site-header {
+  background: rgba(0,0,0,0.65) !important;
+  background-image: none !important;
+  color: var(--bg) !important;
+  border: none !important;
+  position:relative;
+  border-radius:12px;
+}
+
+/* decorative inset margin for header */
+.site-header::after{ content:''; position:absolute; left:6px; right:6px; top:6px; bottom:6px; border-radius:10px; pointer-events:none; box-shadow: 0 0 0 3px rgba(40,40,40,0.06) inset }
+.theme-dark .site-header::after{ box-shadow: 0 0 0 3px rgba(0,238,255,0.08) inset }
+/* TEMP: force header tag background to black so user can identify the element */
+header { background: #000 !important; }
+.navbar .nav-link{ white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display:inline-block; }
+.navbar-toggler{border-color:rgba(255,255,255,0.18);margin-right:0.25rem}
+/* make the hamburger icon clearly visible on dark bg */
+.navbar-toggler-icon{filter:invert(1) brightness(1.2) contrast(1.1)}
+/* filter is not supported in older IE; no-op fallback retained */
+
+/* Centralized navbar background to avoid inline styles */
+.navbar.sticky-top{ background: rgba(0,0,0,0.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+
+/* Nav icons placed before label */
+.nav-icon{display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;margin-right:0.6rem;opacity:0.95;color:inherit}
+.nav-icon img{width:20px;height:20px;display:inline-block}
+.material-symbols-outlined.nav-icon{font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0; font-size:20px; line-height:1}
+
+/* navbar control buttons (search, theme) */
+.nav-control{border:1px solid rgba(255,255,255,0.06);padding:0.4rem 0.6rem;border-radius:8px}
+.nav-control:hover, .nav-control:focus{background:rgba(255,255,255,0.03);color:var(--accent);transform:translateY(-2px)}
+.nav-control[aria-pressed="true"]{background:linear-gradient(90deg, rgba(67,255,255,0.06), rgba(0,238,255,0.03));color:var(--accent-2);box-shadow:0 6px 14px rgba(2,12,32,0.06)}
+.nav-control:focus-visible{box-shadow:0 0 0 4px rgba(0,238,255,0.06);outline:none}
+
+/* Right-side vertical controls (desktop-only): tab-like buttons stacked vertically */
+.nav-vertical-controls{list-style:none;margin:0;padding:0;gap:0.5rem;align-items:center}
+.nav-vertical-controls .nav-item{display:flex}
+.nav-control-tab{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:8px;background:rgba(255,255,255,0.02);color:var(--bg);border:1px solid rgba(255,255,255,0.04);margin:0.25rem;cursor:pointer;text-decoration:none}
+.nav-control-tab span{font-size:20px}
+.nav-control-tab:hover, .nav-control-tab:focus{background:rgba(255,255,255,0.06);color:var(--accent);transform:none}
+.nav-vertical-controls{margin-left:0.8rem}
+
+@media (max-width:991px){
+  .nav-vertical-controls{display:none !important}
+}
+
+/* Tab bar below navbar for controls (desktop only) */
+.nav-tabs-bar{background:transparent;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+.tabs-list{display:flex;gap:0.5rem;align-items:flex-end;margin:0;padding:0 0.8rem 0 1rem;list-style:none}
+.tab-item{display:inline-flex;align-items:center;gap:0.6rem;padding:0.5rem 0.9rem;border-radius:8px 8px 0 0;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));color:var(--bg);border:1px solid rgba(255,255,255,0.04);border-bottom:2px solid transparent;text-decoration:none}
+.tab-item .tab-label{font-weight:600}
+.tab-item:hover, .tab-item:focus{background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));color:var(--accent)}
+.tab-item.active{background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));border-bottom-color:var(--accent)}
+
+@media (max-width:991px){
+  .nav-tabs-bar{display:none}
+}
+
+/* Floating controls container (desktop only) */
+.menu-controls-floating{position:relative;z-index:2200;pointer-events:auto}
+.menu-controls-floating .mc-stack{position:absolute;right:1rem;top:calc(100% - 6px);display:flex;flex-direction:column;gap:0.5rem;align-items:flex-end}
+.mc-btn{width:48px;height:48px;border-radius:8px;background:rgba(0,0,0,0.08);border:1px solid rgba(255,255,255,0.06);display:inline-flex;align-items:center;justify-content:center;color:var(--bg);text-decoration:none;box-shadow:0 6px 18px rgba(2,12,32,0.18)}
+.mc-btn span{font-size:20px}
+.mc-btn:hover,.mc-btn:focus{background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));color:var(--accent);transform:none}
+
+/* stronger visible backgrounds for controls */
+.mc-btn{background:var(--bg); color:var(--fg); border:1px solid rgba(0,0,0,0.06);}
+.mc-btn span{color:var(--deep)}
+.mc-btn:focus{outline:3px solid rgba(0,238,255,0.18); outline-offset:2px}
+.mc-btn:hover{transform:translateY(-2px); box-shadow:0 10px 22px rgba(2,12,32,0.22)}
+
+/* Ensure header buttons are vertically centered by adding symmetric padding in header context */
+.site-header .mc-btn, .site-header .nav-control, .site-header .nav-control-tab, .site-header .navbar .nav-link{padding-top:0.55rem;padding-bottom:0.55rem}
+.site-header .mc-btn{height:auto} /* let padding define height for better centering */
+
+/* Admin header: center any controls inside the admin header area vertically */
+.admin-header{align-items:center !important}
+.admin-header .mc-btn, .admin-header .nav-control, .admin-header .nav-control-tab, .admin-header .navbar .nav-link{padding-top:0.45rem;padding-bottom:0.45rem}
+
+@media (prefers-color-scheme: dark){
+  .mc-btn{background:rgba(255,255,255,0.04); color:var(--bg); border:1px solid rgba(255,255,255,0.06)}
+  .mc-btn span{color:var(--accent-2)}
+}
+
+/* Force visible and fixed on large screens to avoid being hidden by overflow/stacking contexts */
+@media (min-width: 992px){
+  .menu-controls-floating.d-none.d-lg-flex{display:flex !important}
+  .menu-controls-floating{position:fixed !important; right:16px; top:50%; transform:translateY(-50%); z-index:99999}
+  .menu-controls-floating .mc-stack{position:static; display:flex; flex-direction:column; gap:0.5rem; align-items:center}
+}
+
+@media (max-width:1199px){
+  /* shift floating controls inside header on medium screens to avoid overlapping content */
+  .menu-controls-floating .mc-stack{right:0.6rem;bottom:0.15rem}
+}
+
+@media (max-width:991px){
+  .menu-controls-floating{display:none !important}
+}
+
+/* Better touch targets and visual feedback for nav links (pill style) */
+.navbar .nav-link{padding:.45rem .7rem;border-radius:18px;transition:background .12s ease,color .12s ease, transform .08s ease;display:inline-flex;align-items:center;gap:0.35rem}
+.navbar .nav-link:hover, .navbar .nav-link:focus{background:linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0.03));color:var(--accent);text-decoration:none;transform:translateY(-2px);text-shadow:0 0 10px rgba(0,238,255,0.45)}
+.navbar .nav-link.active, .navbar .nav-link[aria-current="page"]{background:linear-gradient(90deg, rgba(67,255,255,0.04), rgba(0,238,255,0.03));color:var(--accent-2);font-weight:700;box-shadow:0 6px 18px rgba(2,12,32,0.06)}
+
+/* Ensure logo image in brand scales well */
+.navbar-brand img{height:36px;max-height:40px}
+
+/* Accessible focus states */
+.nav-link:focus-visible, .btn:focus-visible, .navbar-toggler:focus-visible{
+  /* subtle light focus ring instead of bright blue */
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.08);
+  outline: none;
+  border-radius:6px;
+}
+
+/* Center the main nav items and avoid right-side overflow */
+.navbar{padding-left:0.2rem;padding-right:0.6rem}
+
+/* Remove any unwanted colored frame around the header/panel */
+/* ensure header remains sticky and visible; remove unwanted frame but keep subtle shadow */
+header, .site-header, .navbar, .container-fluid, .container {
+  border: none !important;
+  outline: none !important;
+}
+
+.site-header{box-shadow: 0 2px 10px rgba(0,0,0,0.12);padding-top:0.45rem;padding-bottom:0.45rem}
+
+/* Override any gradient or blue background that creates a visible blue band.
+   Force a semi-transparent black header consistent with the navbar. */
+.site-header, header.site-header {
+  background: rgba(0,0,0,0.65) !important;
+  background-image: none !important;
+  color: var(--bg) !important;
+  border: none !important;
+}
+
+/* ensure inner navbar also uses transparent black and no border */
+.site-header .navbar, .site-header .navbar-expand-lg {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Prevent focused elements inside header from showing platform blue outlines */
+.site-header :focus, .navbar :focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Keep nav items on a single line and distribute across available width */
+.navbar .navbar-nav.me-auto{ display:flex; flex:1 1 auto; justify-content:flex-start; align-items:center; gap:0.6rem; flex-wrap:wrap }
+.navbar .navbar-nav.me-auto .nav-item{flex:0 0 auto; max-width:220px}
+.navbar .navbar-collapse{display:flex;align-items:center}
+.navbar .navbar-brand{margin-right:0.6rem; margin-left:0.3rem}
+.navbar .container-fluid{padding-left:0.6rem;padding-right:0.6rem}
+.navbar .container{padding-left:0.4rem;padding-right:0.4rem}
+
+@media (max-width:992px){
+  /* revert to collapse behavior on smaller screens */
+  /* allow nav items to wrap gently to avoid horizontal overflow on narrow devices like 414x896 */
+  .navbar .navbar-nav.me-auto{flex-direction:row;flex-wrap:wrap;justify-content:flex-start;gap:0.35rem;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .navbar .navbar-nav.me-auto .nav-item{width:auto;flex:0 0 auto}
+  /* ensure collapsed panel has readable background and padding */
+  .navbar-collapse{background:rgba(0,0,0,0.86);padding:0.6rem;border-radius:8px;margin-top:0.4rem}
+  /* Offcanvas / collapsed menu: make links full-width and more tappable */
+  .offcanvas .nav-link{display:block;padding:.75rem 1rem;border-radius:8px;margin-bottom:0.35rem}
+  .offcanvas .nav-link:hover{background:rgba(255,255,255,0.04)}
+  .navbar .nav-link{display:inline-flex;align-items:center;padding:.5rem .6rem;border-radius:6px}
+  .material-symbols-outlined.nav-icon{font-size:20px}
+  .navbar-brand{flex:0 0 auto}
+  .navbar{padding-left:0.4rem;padding-right:0.4rem}
+  /* reduce brand image size slightly on narrow screens */
+  .navbar-brand img{height:32px}
+}
+
+/* Desktop / wide screens: allow wider containers and distribute nav items */
+@media (min-width:1200px){
+  .container{max-width:1280px}
+  .container-fluid{padding-left:2rem;padding-right:2rem}
+  /* Center primary nav items and keep utilities (ms-auto) aligned right */
+  .navbar{align-items:center}
+  .navbar .navbar-nav.me-auto{justify-content:center; gap:0.9rem; flex: 1 1 auto}
+  /* keep brand at far left */
+  .navbar-brand{order:0}
+  .navbar .navbar-nav.me-auto{order:1}
+  .navbar .navbar-nav.ms-auto{order:2;margin-left:auto}
+  .parallax-banner{height:70vh}
+  .parallax-overlay .hero{max-width:1100px;text-align:left;padding-left:2rem;padding-right:2rem}
+}
+
+  /* Hero content on home */
+  .hero-content{padding:2.2rem 1rem; color: #fff}
+  .hero-content .lead{font-size:1.125rem;opacity:0.95;margin-bottom:1rem}
+  .hero-body{max-width:900px;margin:0 auto}
+
+  /* Banner title improvements for home only: larger, uppercase, tighter line-height for emphasis */
+  .home-banner .parallax-overlay .hero h1{
+    font-size:clamp(2rem, 4vw, 3.4rem); /* responsive scaling */
+    line-height:1.02;
+    letter-spacing:0.02em;
+    font-weight:800;
+    text-transform:uppercase;
+    margin:0 0 0.5rem 0;
+    color: inherit;
+    text-shadow: 0 6px 24px rgba(2,12,32,0.45);
+  }
+
+  /* Reusable large section title used across the site and for the login banner */
+  .section-title-lg{
+    font-size:clamp(2rem, 3.6vw, 3rem) !important;
+    line-height:1.04 !important;
+    letter-spacing:0.03em !important;
+    font-weight:800 !important;
+    text-transform:uppercase !important;
+    margin:0 0 0.6rem 0 !important;
+    color:inherit !important;
+    text-shadow: 0 6px 20px rgba(2,12,32,0.32);
+  }
+  /* subtitle slightly larger for readability */
+  .home-banner .parallax-overlay .hero p#hero-sub{font-size:1.05rem;opacity:0.95;margin-bottom:0.75rem}
+
+  /* make the parallax banner taller on large screens for dramatic effect (home only) */
+  @media(min-width:1200px){
+    .home-banner{height:78vh}
+    .home-banner .parallax-overlay .hero h1{font-size:clamp(2.4rem, 3.2vw, 4rem)}
+  }
+  /* slightly reduce for small screens but keep uppercase and emphasis */
+  @media(max-width:600px){
+    .home-banner{height:48vh}
+    .home-banner .parallax-overlay .hero h1{font-size:1.6rem;line-height:1.08}
+    .home-banner .parallax-overlay .hero{padding-left:1rem;padding-right:1rem}
+  }
+
+  /* Darken the overlay on home to improve contrast against bright video frames */
+  /* Increased opacity to ensure legibility on bright frames while still showing motion */
+  .home-banner::after{ content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,0.48), rgba(0,0,0,0.68)); z-index:1 }
+  .btn-primary{background:var(--accent);border-color:var(--accent);color:var(--btn-contrast)}
+  .btn-secondary{background:var(--card-bg);border-color:var(--card-border);color:var(--deep)}
+  .btn-outline-light{color:var(--bg);border:1px solid rgba(255,255,255,0.18)}
+
+  /* Cards preview styles */
+  .card-preview{transition:transform .18s ease, box-shadow .18s ease;background:var(--card-bg);border:1px solid var(--card-border)}
+  .card-preview:hover{transform:translateY(-6px);box-shadow:0 12px 30px rgba(2,12,32,0.08)}
+  .card-preview .card-title{font-weight:700;color:var(--deep)}
+  .card-preview .card-text{color:var(--muted)}
+  .card-preview .btn-link{font-weight:600;color:var(--deep)}
+
+  /* Modal theming */
+  .modal-content{background:linear-gradient(180deg,rgba(255,255,255,0.98),#fff)}
+  .modal-title{color:var(--deep)}
+
+  /* Dark card variant */
+  .card-preview.dark{background:#000;color:#fff;border:1px solid rgba(255,255,255,0.06)}
+  .card-preview.dark .card-title, .card-preview.dark .card-text{color:rgba(255,255,255,0.95)}
+  .card-preview.dark .card-img-top{height:160px;object-fit:cover}
+  .card-preview.dark .btn-link{text-decoration:none;color:var(--accent-2)}
+  .card-preview.dark .btn-outline-light{border-color:rgba(255,255,255,0.16)}
+
+@media (min-width:1600px){
+  .container{max-width:1400px}
+  .parallax-overlay .hero{max-width:1200px}
+}
+
+/* --- Compatibility fallbacks --- */
+/* Text-size adjust for mobile browsers */
+/* Text-size adjust for mobile browsers (webkit/ms prefixed and unprefixed) */
+html, body{ -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; text-size-adjust:100%; }
+
+/* User-select fallback for Safari and IE10/11 */
+.nav-link, .btn{ -webkit-user-select: none; -ms-user-select: none; user-select: none }
+
+/* Flexbox fallbacks for older IE */
+.navbar .nav-list{display:-ms-flexbox;display:flex; -ms-flex-wrap:wrap; flex-wrap:wrap}
+
+/* match-parent fallback for text-align (Safari/older engines) */
+.nav-link{ text-align: -webkit-match-parent; text-align: match-parent }
+
+/* Improve base type rhythm and smoothing */
+html{font-size:16px}
+body{line-height:1.45;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+
+@media (max-width:800px){
+  .main-nav{display:none}
+  .nav-toggle{display:inline-block}
+  .main-nav.open{display:block;background:linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.02));padding:0.5rem}
+  .main-nav .nav-list{flex-direction:column}
+}
+
+/* Prevent any accidental horizontal scrolling on small viewports (e.g., iPhone 11/12/13 Pro 414x896) */
+html, body { overflow-x: hidden; }
+
+/* Layout: keep footer at bottom */
+html, body { height:100%; }
+body{display:flex;flex-direction:column}
+main{flex:1 0 auto}
+
+/* Footer styling */
+.site-footer{background:#000;color:rgba(255,255,255,0.92);border-top:0;padding-top:1rem;padding-bottom:0.6rem;position:relative}
+.site-footer::before{content:'';position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent-2));box-shadow:0 0 12px rgba(67,255,255,0.18);}
+.site-footer a{color:var(--accent-2)}
+.site-footer .form-control{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.04);color:#fff}
+.site-footer .btn-primary{background:var(--accent);border-color:var(--accent);color:var(--btn-contrast)}
+.site-footer h5{color:#fff;margin-bottom:0.5rem}
+/* stronger rule: any element in footer with margin-bottom .mb-3 that is heading-like should use dark gray in light theme and remain readable in dark theme */
+.site-footer .mb-3 h1,
+.site-footer .mb-3 h2,
+.site-footer .mb-3 h3,
+.site-footer .mb-3 h4,
+.site-footer .mb-3 h5,
+.site-footer .mb-3 p,
+.site-footer .mb-3 .nav-link{
+  color: #2f3438 !important; /* dark gray for good contrast on light backgrounds */
+}
+
+.mb-3{ color: #2f3438 !important }
+/* Theme-specific overrides to keep contrast */
+.parallax-banner .parallax-overlay .mb-3,
+.parallax-banner .parallax-overlay .mb-3 *{ color: inherit !important }
+.theme-light .site-footer h5,
+.theme-light .site-footer .mb-3 h5{ color: #2f3438 !important; font-weight:700 }
+.theme-light .site-footer, .theme-light .site-footer p, .theme-light .site-footer .nav-link{ color: #071127 !important }
+.theme-dark .site-footer h5,
+.theme-dark .site-footer .mb-3 h5{ color: #fff !important; font-weight:700 }
+.theme-dark .site-footer p,
+.theme-dark .site-footer .nav-link{ color: rgba(255,255,255,0.9) !important }
+
+/* copyright styling */
+.site-footer .copyright{color:#ffffff;font-weight:600;padding-top:0.4rem;padding-bottom:0.2rem}
+.site-footer .copyright.brand-blue{color:var(--deep)}
+
+/* compact column spacing */
+.site-footer .row > [class*='col-']{padding-top:0.45rem;padding-bottom:0.45rem}
+
+/* Social icons in footer */
+.social-icons{display:flex;gap:0.6rem;align-items:center;margin-top:0.4rem}
+.social-link{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:8px;background:rgba(255,255,255,0.03);color:rgba(255,255,255,0.92);text-decoration:none;transition:background .12s ease, transform .08s ease}
+.social-link:hover, .social-link:focus{background:rgba(255,255,255,0.06);transform:translateY(-2px)}
+.social-link svg{width:20px;height:20px;display:block}
+
+/* Floating site control toolbar */
+/* Site controls: desktop expandable toolbar */
+#site-controls{position:fixed;right:1.25rem;bottom:1.25rem;z-index:2000}
+#site-controls .sc-list{list-style:none;margin:0;padding:0;display:flex;gap:0.5rem}
+#site-controls .sc-item{position:relative}
+#site-controls .sc-btn{display:flex;align-items:center;gap:0.6rem;background:rgba(255,255,255,0.06);color:var(--bg);border:1px solid rgba(255,255,255,0.04);padding:0.5rem 0.6rem;border-radius:10px;-webkit-backdrop-filter: blur(6px);backdrop-filter: blur(6px);cursor:pointer}
+#site-controls .sc-btn .sc-icon{font-family: 'Material Icons Outlined', sans-serif; font-variation-settings: 'FILL' 0, 'wght' 400; font-size:18px}
+#site-controls .sc-btn .sc-label{display:inline-block;font-size:0.9rem;color:rgba(255,255,255,0.92)}
+
+/* Desktop: labels visible and expand on hover for clarity */
+@media(min-width:992px){
+  #site-controls .sc-btn{padding:0.6rem 0.9rem}
+  #site-controls .sc-item{transition:transform .12s ease}
+  #site-controls .sc-item:hover{transform:translateY(-4px)}
+}
+
+/* Mobile: compact buttons, only icons */
+@media(max-width:991px){
+  #site-controls{right:0.75rem;bottom:0.75rem}
+  #site-controls .sc-list{flex-direction:column}
+  #site-controls .sc-btn{padding:0.45rem;gap:0.35rem;border-radius:8px}
+  #site-controls .sc-label{display:none}
+}
+
+/* theme helper: dark mode class toggled on :root for quick theme switch */
+.theme-dark{--bg:#121212;--fg:#ffffff; --card-bg:#0f1720; --card-border:rgba(255,255,255,0.04); --header-bg:rgba(0,12,22,0.88); --btn-contrast:#000}
+/* Make sure main content text is readable in dark mode */
+.theme-dark body, .theme-dark main, .theme-dark .container, .theme-dark .admin-main, .theme-dark .card-preview, .theme-dark .list-group-item {
+  color: #ffffff !important;
+}
+.theme-dark a, .theme-dark a:link, .theme-dark a:visited { color: var(--accent-2) !important; }
+.theme-dark .small, .theme-dark .text-muted { color: rgba(255,255,255,0.75) !important; }
+.theme-dark input, .theme-dark textarea, .theme-dark select { background: #0b1220; color: #fff; border:1px solid rgba(255,255,255,0.06); }
+.theme-dark .card-preview { background: var(--card-bg); border-color: var(--card-border); }
+.theme-dark .btn-outline-light { color: #fff; border-color: rgba(255,255,255,0.12); }
+.theme-dark .site-footer { background:#0b0b0b; }
+
+/* Editor contrast improvements in dark mode */
+.theme-dark .editor{
+  background: #071018 !important;
+  color: #fff !important;
+  caret-color: var(--accent) !important;
+  border-color: rgba(255,255,255,0.06) !important;
+}
+.theme-dark .editor p, .theme-dark .editor div, .theme-dark .editor span{ color: #fff !important }
+/* Ensure buttons and button-like links are readable in dark mode */
+/* Buttons: black background + bright cyan text in dark mode */
+.theme-dark .btn, .theme-dark .btn-sm, .theme-dark .btn-outline-light, .theme-dark .nav-link, .theme-dark .mc-btn, .theme-dark .btn-primary, .theme-dark .btn-danger {
+  background: #000 !important;
+  color: var(--accent) !important;
+  border-color: rgba(255,255,255,0.06) !important;
+}
+.theme-dark .btn-outline-light { background: #000 !important; border-color: rgba(255,255,255,0.08) !important; }
+.theme-dark .mc-btn { background: #000 !important; border-color: rgba(255,255,255,0.06) !important; }
+.theme-dark .btn-link{ color: var(--accent) !important }
+.theme-dark .btn:hover, .theme-dark .btn:focus{ background:#070707 !important; color: var(--accent-2) !important }
+.theme-dark .btn .material-symbols-outlined, .theme-dark .mc-btn span { color: var(--accent) !important }
+
+/* Admin-area specific fixes: make all admin buttons and small buttons readable in dark mode */
+.theme-dark .admin-main .btn, .theme-dark .admin-main .btn-sm, .theme-dark .admin-main .btn-outline-light, .theme-dark .admin-main .btn-danger, .theme-dark .admin-main .btn-primary {
+  background:#000 !important; color: var(--accent) !important; border-color: rgba(255,255,255,0.06) !important;
+}
+.theme-dark .admin-main .btn-outline-light { border-color: rgba(255,255,255,0.12) !important; background:#000 !important }
+.theme-dark .admin-main .btn-danger { background:#000 !important; color: var(--accent) !important; border-color: rgba(255,255,255,0.06) !important }
+.theme-dark .admin-main .btn .material-symbols-outlined, .theme-dark .admin-main .mc-btn span { color: var(--accent) !important }
+
+/* Make admin form labels and helper text readable in dark mode */
+.theme-dark .admin-main label,
+.theme-dark .admin-main .form-text,
+.theme-dark .admin-main .form-check-label,
+.theme-dark .admin-main .section-title-lg,
+.theme-dark .admin-main .card-preview,
+.theme-dark .admin-main .mb-3 { color: rgba(255,255,255,0.92) !important; }
+
+.theme-dark .admin-main input.form-control,
+.theme-dark .admin-main textarea.form-control,
+.theme-dark .admin-main select.form-control { background:#071018 !important; color: #fff !important; border-color: rgba(255,255,255,0.06) !important }
+
+/* ensure body background/text respect variables */
+body{background:var(--bg);color:var(--fg);transition:background-color 240ms ease,color 240ms ease}
+
+/* Light theme explicit overrides: brighter backgrounds and stronger contrast */
+.theme-light{
+  --bg:#fbfdff; /* very light, slightly cool */
+  --fg:#071127; /* deep charcoal for high contrast */
+  --card-bg:#ffffff;
+  --card-border:#e6eef8;
+  --header-bg:rgba(255,255,255,0.96);
+  --btn-contrast:#000000;
+  --muted:#2b2b2b;
+}
+
+/* Explicit light-theme overrides for components that are otherwise forced to dark via !important */
+.theme-light .site-header, .theme-light header.site-header {
+  background: var(--header-bg) !important;
+  color: var(--fg) !important;
+  box-shadow: 0 2px 8px rgba(2,12,32,0.06);
+}
+.theme-light .navbar .nav-link{ color: var(--fg); }
+.theme-light .navbar .nav-link:hover{ color: var(--deep); text-shadow: none; background: rgba(0,0,0,0.02); }
+.theme-light .navbar-toggler-icon{ filter: none }
+
+/* Floating controls tuned for light theme */
+.theme-light .mc-btn{ background: var(--bg); color: var(--fg); border:1px solid rgba(10,20,30,0.06); box-shadow:0 8px 20px rgba(2,12,32,0.06); }
+.theme-light .mc-btn span{ color: var(--deep); }
+
+.theme-light .card-preview{ background:var(--card-bg); border:1px solid var(--card-border); color:var(--fg) }
+.theme-light .card-preview .card-text{ color:var(--muted) }
+.theme-light .modal-content{ background: linear-gradient(180deg,#ffffff,#fbfdff) }
+
+.theme-light .site-footer{ background: #f8fafc; color: #071127 }
+.theme-light .site-footer::before{ box-shadow:none; background: linear-gradient(90deg,var(--accent),var(--accent-2)); }
+
+/* Make footer headings bold in light theme and preserve dark color */
+.theme-light .site-footer h5{ color: #071127 !important; font-weight:700 }
+.theme-dark .site-footer h5{ color: #fff }
+
+/* Footer headings darker on light theme */
+.theme-light .site-footer h5{ color: #071127 !important; }
+.theme-light .site-footer .copyright{ color: #071127 !important }
+
+/* Footer links subtler but readable */
+.theme-light .site-footer a{ color: #2f3438 }
+
+/* Ensure Material Symbols and other icons switch to dark gray in light theme */
+.theme-light .material-symbols-outlined, .theme-light .nav-icon, .theme-light .mc-btn span { color: #2f3438 !important; }
+.theme-light .nav-link, .theme-light .nav-link .nav-icon { color: #2f3438 !important; }
+.theme-light .navbar .nav-link.active, .theme-light .nav-link[aria-current="page"]{ background: rgba(0,0,0,0.03); color: #2f3438; box-shadow:none }
+.theme-light .social-link{ background: rgba(10,12,16,0.02); color:#2f3438 }
+.theme-light .social-link svg{ fill: #2f3438 }
+
+/* Buttons that used the cyan accent can be toned down on light theme to dark text with subtle accent borders */
+.theme-light .btn-primary{ background: #e8fbfc; color: #04314a; border-color: rgba(0,238,255,0.12) }
+.theme-light .btn-outline-light{ color: #2f3438; border-color: rgba(10,20,30,0.06) }
+
+/* Make sure hero text remains visible on light background */
+.theme-light .hero-content, .theme-light .hero-content .lead{ color: var(--fg) }
+
+/* Links and brand logo adjustments for light theme */
+.theme-light a{ color: #6b6f75; /* neutral light gray for links */ }
+.theme-light a:hover, .theme-light a:focus{ color: #475058; text-decoration:underline }
+
+/* Tint the brand/logo to a muted gray on light theme to avoid clashing with background */
+.theme-light .navbar-brand img{ filter: grayscale(100%) brightness(0.9) contrast(0.9); opacity:0.95 }
+
+/* Ensure nav link icons and labels use the muted gray rather than brand cyan */
+.theme-light .nav-icon{ color: #6b6f75 !important }
+
+
+/* Tighter parallax sizing to avoid overflow when object-fit rounding triggers >100% width */
+.parallax-media{min-width:100%;min-height:100%;max-width:none;max-height:none}
+.parallax-banner{height:50vh;min-height:220px}
+
+/* Small utility: improve contrast for form controls in dark mode */
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#121212; --fg:#FFFFFF }
+  .navbar, .site-header{background:linear-gradient(90deg,#02162b,#00213f)}
+  .flash{background:linear-gradient(90deg, rgba(0,238,255,0.04), rgba(67,255,255,0.02));border-left-color:var(--accent)}
+}
+
+/* Additional small tweaks */
+.nav-link{transition:color .15s ease, background .15s ease}
+.hero{padding:2rem 1rem;max-width:100%;box-shadow:0 4px 18px rgba(2,12,32,0.06)}
+footer.container{padding:1.25rem 1rem;background:transparent;color:rgba(0,0,0,0.6)}
+@media (max-width:800px){
+  .navbar{min-height:56px}
+  .navbar .nav-link{padding:.5rem .4rem}
+  .brand{font-size:1.05rem}
+}
+
+/* Parallax banner styles */
+.parallax-banner{position:relative;overflow:hidden;height:56vh;min-height:280px;display:block}
+.parallax-media{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;will-change:transform}
+.parallax-media[poster], .parallax-media video{object-fit:cover}
+.parallax-media[role="img"]{background-position:center center;background-size:cover;width:100%;height:100%;}
+.parallax-media{transition:transform 260ms cubic-bezier(.2,.9,.2,1), filter 220ms ease}
+.parallax-banner:hover .parallax-media{ filter:brightness(0.92) saturate(1.06) }
+
+/* Interactive inverse-mouse parallax: handled in JS; fallback subtle transform on hover */
+.parallax-banner:hover .parallax-media{ transform:translate(-50%,-50%) scale(1.05) }
+.parallax-overlay{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;height:100%;pointer-events:none}
+.parallax-overlay .hero{background:transparent;padding:2rem 1rem;text-align:center}
+.parallax-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.35));z-index:1}
+
+@media (max-width:800px){
+  .parallax-banner{height:42vh;min-height:200px}
+  .parallax-overlay .hero{padding:1rem}
+}
+
+/* Section layout helper: left-aligned prose and image/cards column */
+.section-grid .prose-left{ text-align:left; color:var(--fg); }
+.section-grid .prose-left p, .section-grid .prose-left ul, .section-grid .prose-left ol, .section-grid .prose-left h3{ margin-bottom:0.9rem; }
+.section-grid .section-cards{ display:flex; flex-direction:column; gap:0.75rem; }
+.section-grid .section-cards .card-preview{ background:var(--card-bg); border:1px solid var(--card-border); }
+.section-grid .section-cards img{ width:100%; height:auto; object-fit:cover; }
+.section-grid .card-preview .card-title{ color:var(--deep); }
+.prose-left img{ max-width:100%; height:auto; display:block; margin:0.5rem 0 }
+
+/* Section stripe: a horizontal blue band with section title and short snippet */
+.section-stripe{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0.9rem 1rem;border-radius:8px;background:linear-gradient(90deg,var(--deep),#003366);color:#fff;margin:1rem 0}
+/* TEMP: force section-stripe to black for debugging */
+.section-stripe { background: #000 !important; }
+.section-stripe .ss-title{font-weight:800;font-size:1.05rem;letter-spacing:0.02em;text-transform:uppercase}
+.section-stripe .ss-excerpt{opacity:0.95;color:rgba(255,255,255,0.95);font-size:0.98rem;max-width:72%;text-align:right}
+@media(max-width:768px){.section-stripe{flex-direction:column;align-items:flex-start}.section-stripe .ss-excerpt{text-align:left;max-width:100%}}
+
+/* Visual header: rounded container with a bright blue 'laser' line on top */
+.page-header-visual{
+  position:relative;
+  padding:1rem 1.25rem;
+  border-radius:14px;
+  background:rgba(255,255,255,0.02);
+  box-shadow:0 6px 20px rgba(2,12,32,0.12);
+  overflow:hidden;
+  /* visual improvements */
+  padding-bottom:1.8rem; /* space under laser */
+  margin-bottom:2rem;   /* separation from next block */
+  z-index:2;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+.page-header-visual .visual-phrase{
+  font-size:1.15rem;
+  font-weight:700;
+  color:var(--bg);
+  line-height:1.3;
+  /* ensure clear readability on most backgrounds */
+  text-shadow: 0 4px 16px rgba(2,12,32,0.18);
+  /* push text down slightly to avoid overlapping decorative line */
+  padding-top: 2%;
+}
+/* laser line: thin bright-blue gradient with glow (inside the header) */
+.page-header-visual::before{
+  content:'';
+  position:absolute;
+  left:12px;
+  right:12px;
+  top:14px; /* slightly lower to avoid overlapping inline content */
+  height:2px;
+  border-radius:4px;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));
+  box-shadow:0 0 10px rgba(67,255,255,0.18),0 0 18px rgba(0,238,255,0.08);
+  pointer-events:none; /* decorative only */
+}
+.page-header-visual::after{
+  content:'';
+  position:absolute;
+  left:8px;
+  right:8px;
+  top:16px; /* subtle secondary glow line */
+  height:1px;
+  background:linear-gradient(90deg, rgba(67,255,255,0.45), rgba(0,238,255,0.45));
+  opacity:0.95;
+  pointer-events:none;
+}
+
+/* Dark theme: keep the laser line bright blue, and make header text white */
+.theme-dark .page-header-visual::before{
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  box-shadow:0 0 12px rgba(67,255,255,0.28);
+}
+.theme-dark .page-header-visual::after{
+  background: linear-gradient(90deg, rgba(67,255,255,0.6), rgba(0,238,255,0.6));
+}
+.theme-dark .page-header-visual .visual-phrase{ color: #ffffff !important; }
+
+/* Adapt visuals for light theme to keep laser visible */
+.theme-light .page-header-visual{ background:var(--card-bg); box-shadow:0 6px 18px rgba(3,24,48,0.06); }
+.theme-light .page-header-visual .visual-phrase{ color:var(--fg); }
+
+/* Responsive adjustments for small screens */
+@media (max-width:600px){
+  .page-header-visual{ padding:0.75rem 1rem; padding-bottom:1.2rem; margin-bottom:1.2rem }
+  .page-header-visual .visual-phrase{ font-size:1rem; padding-top:1.2% }
+  .page-header-visual::before{ left:8px; right:8px; top:12px }
+  .page-header-visual::after{ left:6px; right:6px; top:14px }
+}
+
+/* Polaroid-style variant for header when it contains images */
+.page-header-polaroid{
+  background:#fff;
+  color:#071127;
+  border-radius:12px;
+  padding:0.75rem;
+  box-shadow: 0 14px 36px rgba(2,12,32,0.18), 0 6px 16px rgba(2,12,32,0.08);
+  transform: rotate(-1deg);
+  display:inline-block;
+  border: 12px solid #fff; /* outer polaroid border */
+}
+.page-header-polaroid .visual-phrase{ color:#071127; font-weight:700; padding-top:0.6rem; }
+.page-header-polaroid .polaroid-caption{ display:block; text-align:center; font-size:0.92rem; padding:0.6rem 0 0.9rem 0; color:rgba(7,17,39,0.8); }
+/* hide decorative laser when polaroid is used */
+.page-header-polaroid::before, .page-header-polaroid::after{ display:none }
+
+
+/* Admin dashboard layout -------------------------------------------------- */
+.admin-dashboard{display:flex;gap:1rem;padding:1rem}
+.admin-sidebar{width:220px;flex:0 0 220px;padding:0.8rem}
+.admin-sidebar .nav-link{display:block;padding:0.6rem 0;color:var(--fg);text-decoration:none;border-bottom:1px dashed rgba(0,0,0,0.04)}
+.admin-sidebar .nav-link:hover{color:var(--deep);}
+.admin-sidebar.card-preview{border-radius:12px;padding:0.9rem;background:var(--card-bg);box-shadow:0 8px 26px rgba(2,12,32,0.06);}
+.admin-main{flex:1;min-width:0}
+.admin-header{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem}
+.admin-header .section-title-lg{margin:0;padding:0}
+.admin-stats .card-preview{padding:1rem;margin-bottom:0.75rem}
+.admin-header{position:relative;border-radius:10px;padding:1.2rem 0.8rem 1rem 1.2rem}
+.admin-header::after{ content:''; position:absolute; left:6px; right:6px; top:6px; bottom:6px; border-radius:8px; pointer-events:none; box-shadow: 0 0 0 3px rgba(40,40,40,0.06) inset }
+.theme-dark .admin-header::after{ box-shadow: 0 0 0 3px rgba(0,238,255,0.08) inset }
+
+/* add top padding for text inside admin header to visually center below the inset */
+.admin-header h1, .admin-header h2, .admin-header p, .admin-header .section-title-lg{ padding-top:1.1rem; padding-left:0.9rem; padding-bottom:0.8rem }
+.admin-pipeline, .admin-pages{background:transparent}
+.list-group-item{background:var(--card-bg);border:1px solid var(--card-border);margin-bottom:0.45rem;border-radius:8px}
+.list-group-item .btn{padding:0.35rem 0.5rem;font-size:0.9rem}
+
+@media (max-width:900px){
+  .admin-dashboard{flex-direction:column}
+  .admin-sidebar{width:100%;flex:0 0 auto}
+}
+
+/* Hide the duplicate H1 inside admin pages since banner already shows section title */
+.admin-header .section-title-lg{display:none !important}
+.admin-main{padding-top:0.5rem}
+
+/* Dark theme: make admin sidebar fully black with bright-cyan accents for links/icons */
+.theme-dark .admin-sidebar{
+  background: #000 !important;
+  border-right: 1px solid rgba(255,255,255,0.06);
+}
+.theme-dark .admin-sidebar.card-preview{ box-shadow: 0 10px 36px rgba(0,0,0,0.6); border-radius: 12px; position:relative; }
+.theme-dark .admin-sidebar.card-preview::after{ content:''; position:absolute; left:6px; right:6px; top:6px; bottom:6px; border-radius:10px; pointer-events:none; box-shadow: 0 0 0 3px rgba(0,238,255,0.08) inset; }
+.theme-dark .admin-sidebar .nav-link{
+  color: var(--accent) !important;
+  border-bottom-color: rgba(255,255,255,0.04) !important;
+}
+.theme-dark .admin-sidebar .nav-link:hover{
+  color: var(--accent-2) !important;
+}
+.theme-dark .admin-sidebar .nav-link.active,
+.theme-dark .admin-sidebar .nav-link[aria-current="page"]{
+  background: rgba(255,255,255,0.03);
+  color: var(--accent-2) !important;
+  font-weight:700;
+}
+.theme-dark .admin-sidebar .nav-icon{ color: var(--accent) !important; }
+
+/* Light theme variant for admin sidebar card-preview border/margin */
+.theme-light .admin-sidebar.card-preview{ border-radius:12px; position:relative; }
+.theme-light .admin-sidebar.card-preview::after{ content:''; position:absolute; left:6px; right:6px; top:6px; bottom:6px; border-radius:10px; pointer-events:none; box-shadow: 0 0 0 3px rgba(40,40,40,0.06) inset; }
+
+
+
+/* Improve keyboard visibility within dropdown menus (Bootstrap adds focus outlines but we make menuitems clearer) */
+.dropdown-menu [role="menuitem"]:focus, .dropdown-menu .dropdown-item:focus{
+  outline:none;
+  background:rgba(0,0,0,0.08);
+  color:inherit;
+}
+
+@media (max-width:992px){
+  .section-grid .section-cards{ order:2 }
+  .section-grid .section-text{ order:1 }
+}
+
+/* ==========================
+  Navbar top-spacing tweak (appended at EOF)
+  - Force header/navbar to sit flush with the top of the viewport.
+  - Keep a small bottom padding for comfortable touch targets.
+  - Marked important to override previous sticky/header rules.
+  ========================== */
+.site-header{ padding-top:0 !important; padding-bottom:0.35rem !important; }
+header.site-header, header{ padding-top:0 !important; }
+.navbar{ min-height:56px; padding-top:0 !important; padding-bottom:0 !important }
+.site-header{ top:0; }
+

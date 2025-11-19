@@ -1,0 +1,26 @@
+# Environment
+.env
+.env.*.local
+
+# Runtime and build artifacts
+/storage/
+/artifacts/
+/node_modules/
+/.venv/
+/vendor/
+
+# Uploaded media (ignore if large; adjust if you want to version media)
+public/media/
+public/uploads/
+
+# OS / editors / archives
+*.zip
+*.log
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Temporary/backup files
+*.bak
+*~ 

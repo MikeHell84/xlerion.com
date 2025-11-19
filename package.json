@@ -1,0 +1,11 @@
+{
+  "name": "xlerion-cmr",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "generate-thumbs": "node scripts/generate_thumbs.js"
+  },
+  "dependencies": {
+    "sharp": "^0.34.5"
+  }
+}

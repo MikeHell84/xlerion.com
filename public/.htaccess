@@ -1,0 +1,17 @@
+RewriteEngine On
+RewriteBase /
+
+# Si la petición corresponde a un archivo dentro de xlerion_cmr/public, servirlo directamente
+RewriteCond %{DOCUMENT_ROOT}/xlerion_cmr/public%{REQUEST_URI} -f
+RewriteRule ^(.*)$ /xlerion_cmr/public/$1 [L]
+
+RewriteCond %{DOCUMENT_ROOT}/xlerion_cmr/public%{REQUEST_URI} -d
+RewriteRule ^(.*)$ /xlerion_cmr/public/$1 [L]
+
+# Si no existe como fichero/dir, reenviar internamente al front controller del proyecto
+RewriteRule ^ /xlerion_cmr/public/index.php [L,QSA]
+
+# Seguridad: bloquear runners/zip si se subieron por error
+<FilesMatch "run_setup\.php|run_migrations_include\.php|deploy_.*\.zip">
+  Require all denied
+</FilesMatch>

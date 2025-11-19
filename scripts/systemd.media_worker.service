@@ -1,0 +1,14 @@
+[Unit]
+Description=Xlerion media worker
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+WorkingDirectory=/var/www/xlerion_cmr
+ExecStart=/usr/bin/env php /var/www/xlerion_cmr/scripts/media_worker.php
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

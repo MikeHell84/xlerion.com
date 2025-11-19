@@ -1,0 +1,16 @@
+{
+  "name": "xlerion/xlerion_cmr",
+  "description": "Xlerion CMR lightweight PHP app",
+  "type": "project",
+  "require": {
+    "php": ">=8.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Xlerion\\": "src/"
+    }
+  },
+  "config": {
+    "optimize-autoloader": true
+  }
+}

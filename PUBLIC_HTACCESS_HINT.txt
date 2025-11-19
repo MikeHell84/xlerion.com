@@ -1,0 +1,13 @@
+If the host control panel does not allow changing the DocumentRoot, add the following into
+the site's root `.htaccess` (typically `/home/<user>/public_html/.htaccess`) to map asset
+requests to the project `public/` folder.
+
+1) Copy contents of `public/_htaccess-for-subfolder.txt` into `/home/xlerionc/public_html/.htaccess`.
+2) Test in browser:
+   - https://xlerion.com/styles.css should return CSS (200)
+   - https://xlerion.com/app.js should return JS (200)
+
+Alternative (better): ask host to set DocumentRoot to `/home/xlerionc/public_html/xlerion_cmr/public`.
+
+After applying either fix, delete any one-time runner files in `xlerion_cmr/public/` and remove
+deploy zip files from webroot for security.
