@@ -1,0 +1,12 @@
+// Xlerion main SCSS
+@import 'variables';
+@import 'base';
+// components and layout will be added progressively here
+@import 'components/nav';
+@import 'components/header';
+@import 'components/controls';
+@import 'components/doc';
+@import 'theme-light';
+@import 'theme-dark';
+
+/* NOTE: compile this SCSS using your SASS pipeline to produce the final CSS in public/ */

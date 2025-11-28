@@ -1,0 +1,308 @@
+/* Xlerion variables - migrated from public/styles.css
+   This file holds the canonical CSS custom properties. Compile with your SCSS -> CSS
+   pipeline to produce the final stylesheet used by the site.
+*/
+:root {
+  --accent: #00eeff; /* bright cyan */
+  --accent-2: #43ffff; /* cyan accent */
+  --deep: #004080; /* deep blue */
+  --bg: #ffffff; /* white */
+  --fg: #121212; /* charcoal */
+  --muted: #2C2C2C; /* gris oscuro */
+  --card-bg: #ffffff;
+  --card-border: #e9eef6;
+  --header-bg: rgba(0,32,64,0.78);
+  --btn-contrast: #000000;
+}
+
+/* Base styles placeholder
+   Move generic base rules (typography, container, resets) here from public/styles.css
+   during incremental refactor. Keep this file minimal for now.
+*/
+html, body {
+  font-family: "Work Sans", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* Navbar styles moved from public/styles.css (partial)
+   Contains key navbar and nav-link rules for incremental migration.
+*/
+.navbar.sticky-top {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.navbar {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  min-height: 64px;
+}
+
+.navbar .container {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-brand {
+  font-weight: 800;
+  font-size: 1.25rem;
+  color: var(--bg);
+}
+
+.navbar .nav-link {
+  color: var(--accent);
+  padding: 0.6rem 0.5rem;
+}
+
+.navbar .nav-link[title] {
+  cursor: pointer;
+}
+
+.navbar .nav-link:hover, .navbar .nav-link:focus {
+  color: var(--accent);
+  text-decoration: none;
+  text-shadow: 0 0 8px rgba(0, 238, 255, 0.45);
+}
+
+.navbar .nav-link.active, .navbar .nav-link[aria-current=page] {
+  background: linear-gradient(180deg, rgba(0, 238, 255, 0.04), rgba(0, 238, 255, 0.02));
+  border-radius: 14px;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  box-shadow: 0 0 0 2px rgba(0, 238, 255, 0.08) inset, 0 6px 18px rgba(0, 0, 0, 0.06);
+  color: var(--bg) !important;
+  text-shadow: none;
+}
+
+.navbar .nav-list {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.navbar .nav-item.nav-group-main {
+  display: flex;
+  align-items: center;
+}
+
+.navbar .nav-item.nav-group-main > .nav-link {
+  font-weight: 400;
+}
+
+.navbar-collapse.d-none.d-lg-flex {
+  display: flex !important;
+  width: 100%;
+}
+
+.navbar-collapse.d-none.d-lg-flex > ul.navbar-nav.me-auto {
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.navbar-collapse.d-none.d-lg-flex > ul.navbar-nav.ms-auto {
+  flex: 0 0 auto;
+}
+
+.navbar .nav-link {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+}
+
+.navbar-toggler {
+  border-color: rgba(255, 255, 255, 0.18);
+  margin-right: 0.25rem;
+}
+
+.navbar-toggler-icon {
+  filter: invert(1) brightness(1.2) contrast(1.1);
+}
+
+/* Dropdowns and menu shapes */
+.navbar .dropdown-menu {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Header / site-header styles partial */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1050;
+  background: var(--header-bg);
+  color: var(--bg);
+  border-radius: 0 0 12px 12px;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1050;
+  background: linear-gradient(90deg, var(--deep), #002a66);
+  color: var(--bg);
+}
+
+.site-header {
+  background: #000000 !important;
+}
+
+.site-header .mc-btn, .site-header .nav-control, .site-header .nav-control-tab, .site-header .navbar .nav-link {
+  padding-top: 0.55rem;
+  padding-bottom: 0.55rem;
+}
+
+.site-header .mc-btn {
+  height: auto;
+}
+
+.site-header::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  top: 6px;
+  bottom: 6px;
+  border-radius: 0 0 8px 8px;
+  pointer-events: none;
+  box-shadow: 0 0 0 3px rgba(40, 40, 40, 0.06) inset;
+}
+
+.theme-dark .site-header::after {
+  box-shadow: 0 0 0 3px rgba(0, 238, 255, 0.08) inset;
+}
+
+/* header nav area fixes for light theme */
+html.theme-light header.site-header .navbar .dropdown-menu {
+  background: #fff;
+}
+
+/* Reduce prominence of floating site-controls in light theme and provide an easy opt-out */
+#site-controls {
+  z-index: 1200; /* keep above base content but under critical UI like header and modals */
+}
+
+/* allow hiding site-controls when page author adds .hide-site-controls on body */
+body.hide-site-controls #site-controls {
+  display: none !important;
+}
+
+.menu-controls-floating {
+  position: fixed !important;
+  right: 1rem !important;
+  top: 0 !important;
+  height: 100vh !important; /* full viewport height so we can center the stack vertically */
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important; /* vertical centering */
+  align-items: flex-end !important;
+  gap: 0.6rem !important;
+  z-index: 2500 !important;
+  pointer-events: auto !important;
+}
+
+.menu-controls-floating .mc-stack {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+  column-gap: 0.5rem;
+  align-items: flex-end;
+}
+
+.mc-btn {
+  --size: 44px;
+  width: var(--size);
+  height: var(--size);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--fg);
+  box-shadow: 0 6px 18px rgba(2, 12, 32, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  transition: all 180ms ease;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mc-btn:hover {
+  transform: translateX(-4px);
+}
+
+.mc-btn[aria-pressed=true],
+.mc-btn.is-active {
+  /* Appear like a right-side tab attached to the page content */
+  width: auto !important;
+  min-width: 64px !important;
+  padding: 0 0.8rem 0 0.8rem !important;
+  border-radius: 12px 0 0 12px !important;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2)) !important;
+  color: var(--btn-contrast) !important;
+  transform: translateX(-8px) !important;
+  box-shadow: 0 10px 30px rgba(2, 12, 32, 0.28) !important;
+  border: none !important;
+}
+
+.mc-btn[aria-pressed=true] .material-symbols-outlined,
+.mc-btn.is-active .material-symbols-outlined {
+  font-weight: 600;
+}
+
+@media (max-width: 720px) {
+  .menu-controls-floating {
+    position: fixed;
+    right: 1rem;
+    top: 1rem;
+    transform: none;
+    flex-direction: row;
+    align-items: center;
+  }
+  .menu-controls-floating .mc-stack {
+    flex-direction: row;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  .mc-btn {
+    width: 40px;
+    height: 40px;
+  }
+}
+/* Light theme overrides */
+html.theme-light {
+  --bg: #dedede; /* requested light background */
+  --fg: #071127; /* deep charcoal */
+  --card-bg: #ffffff;
+  --card-border: #e6eef8;
+  --header-bg: #dedede;
+  --btn-contrast: #000000;
+  --muted: #2b2b2b;
+}
+
+.theme-light body {
+  background: var(--bg);
+}
+
+/* Make the logo darker in light theme (reduce brightness) */
+html.theme-light .navbar-brand img {
+  filter: grayscale(100%) brightness(0.55) contrast(0.95);
+  opacity: 0.98;
+}
+
+/* Dark theme overrides */
+.theme-dark {
+  --bg:#121212;
+  --fg:#ffffff;
+  --card-bg:#0f1720;
+  --card-border:rgba(255,255,255,0.04);
+  --header-bg:rgba(0,12,22,0.88);
+  --btn-contrast:#000;
+}
+
+.theme-dark body {
+  background: var(--bg);
+  color: var(--fg);
+}
+
+/* NOTE: compile this SCSS using your SASS pipeline to produce the final CSS in public/ */

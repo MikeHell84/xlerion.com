@@ -1,0 +1,16 @@
+/* Xlerion variables - migrated from public/styles.css
+   This file holds the canonical CSS custom properties. Compile with your SCSS -> CSS
+   pipeline to produce the final stylesheet used by the site.
+*/
+:root {
+  --accent: #00eeff;       /* bright cyan */
+  --accent-2: #43ffff;     /* cyan accent */
+  --deep: #004080;         /* deep blue */
+  --bg: #ffffff;           /* white */
+  --fg: #121212;           /* charcoal */
+  --muted: #2C2C2C;        /* gris oscuro */
+  --card-bg: #ffffff;
+  --card-border: #e9eef6;
+  --header-bg: rgba(0,32,64,0.78);
+  --btn-contrast: #000000;
+}

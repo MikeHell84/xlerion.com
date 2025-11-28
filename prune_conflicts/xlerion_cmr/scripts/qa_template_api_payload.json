@@ -1,0 +1,5 @@
+{
+  "name": "QA Template API",
+  "description": "Prueba via API",
+  "data": { "html": "<div class=\"hero\" onclick=\"alert(\'xss\')\">\n  <h1 class=\"title special-class\">Prueba <em>Plantilla</em></h1>\n  <img src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA\" alt=\"inline\" />\n  <a href=\"javascript:alert(\'bad\')\">Click me</a>\n  <div data-custom=\"keep-me\">Custom data attribute</div>\n  <iframe src=\"https://www.youtube.com/embed/dQw4w9WgXcQ\" allowfullscreen></iframe>\n</div>" }
+}

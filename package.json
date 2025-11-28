@@ -1,0 +1,22 @@
+{
+  "name": "xlerion-cmr",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "generate-thumbs": "node scripts/generate_thumbs.js",
+    "build:css": "sass src/scss/main.scss public/css/main.css --no-source-map --style=expanded && postcss public/css/main.css --use autoprefixer cssnano -o public/css/main.min.css",
+    "lint:css": "stylelint \"src/scss/**/*.scss\" --fix"
+  },
+  "dependencies": {
+    "sharp": "^0.34.5"
+  },
+  "devDependencies": {
+    "sass": "^1.70.0",
+    "postcss": "^8.4.24",
+    "postcss-cli": "^10.1.0",
+    "autoprefixer": "^10.4.14",
+    "cssnano": "^6.0.1",
+    "stylelint": "^15.0.0",
+    "stylelint-config-standard": "^29.0.0"
+  }
+}

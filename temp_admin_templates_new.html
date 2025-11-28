@@ -1,0 +1,1040 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="index,follow">
+  <title>Admin - Nueva plantilla</title>
+  <!-- Bootstrap CSS (CDN) with SRI -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <!-- Material Symbols (Google) -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <base href="/">
+    <link rel="stylesheet" href="/styles.css?v=1764189060">
+  <script src="/app.js" defer></script>
+  <!-- Inline critical overrides: force light-mode dropdown and Contact CTA visuals while debugging (higher priority than external CSS) -->
+  <style>
+    html.theme-light header.site-header .navbar .dropdown-menu,
+    html.theme-light header.site-header .navbar .dropdown,
+    html.theme-light .navbar .dropdown-menu {
+      background: #ffffff !important;
+      color: #0f1724 !important;
+      border: 1px solid rgba(16,24,32,0.06) !important;
+      box-shadow: 0 12px 30px rgba(2,12,32,0.08) !important;
+    }
+    html.theme-light header.site-header .navbar .dropdown-menu::after,
+    html.theme-light .navbar .dropdown-menu::after {
+      content: '' !important;
+      position: absolute !important;
+      left: 6px !important; right: 6px !important; top: 6px !important; height: 1px !important;
+      background: rgba(16,24,32,0.12) !important; pointer-events: none !important;
+    }
+    /* Contact CTA exact appearance in light mode */
+    html.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta,
+    html.theme-light a.contact-cta {
+      background: #ffffff !important; color: #6b6f75 !important;
+      border: 1px solid rgba(16,24,32,0.06) !important; box-shadow: none !important;
+      height: 40px !important; padding: 0 .9rem !important; display:inline-flex !important; align-items:center !important; gap:.5rem !important; border-radius:999px !important;
+    }
+    html.theme-light a.contact-cta:hover, html.theme-light header.site-header .navbar a.contact-cta:hover {
+      background: #374151 !important; color: #ffffff !important;
+    }
+  </style>
+  <!-- Pre-render theme script: apply saved or system theme before paint to avoid FOUC -->
+  <script>!function(){try{var s=localStorage.getItem('xlerion_theme');var t=s?s:(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');if(t==='dark'){document.documentElement.classList.add('theme-dark');document.documentElement.classList.remove('theme-light')}else{document.documentElement.classList.remove('theme-dark');document.documentElement.classList.add('theme-light')}}catch(e){/*ignore*/}}();</script>
+  <!-- debug CSS removed (was temporarily injected for live_debug verification) -->
+  <!-- Tailwind CDN for rapid prototyping (no build required) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Configure Tailwind theme colors to match Xlerion palette
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            xlerion: {
+              accent: '#00EEFF',
+              cyan: '#43FFFF',
+              deep: '#004080',
+              coal: '#121212',
+              muted: '#2C2C2C',
+              white: '#FFFFFF'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Image lightbox modal (global) -->
+  <div class="modal fade" id="xlerionImageModal" tabindex="-1" aria-labelledby="xlerionImageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="xlerionImageModalLabel">Imagen</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body d-flex flex-column flex-lg-row gap-3">
+          <div style="flex:1 1 60%;">
+            <img id="xlerionModalImg" src="" alt="" class="pm-main-image" />
+          </div>
+          <div style="flex:1 1 40%;">
+            <h4 id="xlerionModalTitle" class="mb-1">Título</h4>
+            <p id="xlerionModalSubtitle" class="text-muted small mb-3">Subtítulo</p>
+            <div id="xlerionModalDesc">Descripción de la imagen.</div>
+            <div class="mt-3">
+              <a id="xlerionModalOpenPost" href="#" class="btn btn-primary d-none" target="_self">Abrir entrada</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      function openImageModal(data){
+        var img = document.getElementById('xlerionModalImg');
+        var title = document.getElementById('xlerionModalTitle');
+        var subtitle = document.getElementById('xlerionModalSubtitle');
+        var desc = document.getElementById('xlerionModalDesc');
+        var openPost = document.getElementById('xlerionModalOpenPost');
+        if(!data) return;
+        if(img && data.src) img.setAttribute('src', data.src);
+        if(img && data.alt) img.setAttribute('alt', data.alt);
+        if(title) title.textContent = data.title || '';
+        if(subtitle) subtitle.textContent = data.subtitle || '';
+        if(desc) desc.textContent = data.desc || '';
+        if(openPost){
+          if(data.postHref){ openPost.classList.remove('d-none'); openPost.setAttribute('href', data.postHref); }
+          else { openPost.classList.add('d-none'); }
+        }
+        // show modal programmatically if bootstrap is loaded
+        if(window.bootstrap){
+          var modalEl = document.getElementById('xlerionImageModal');
+          if(modalEl){
+            try { new bootstrap.Modal(modalEl).show(); } catch(e) { /* ignore */ }
+          }
+        }
+      }
+      document.addEventListener('keydown', function(e){
+        var key = e.key || e.code || '';
+        if (key === 'Enter' || key === ' ' || key === 'Spacebar'){
+          var af = document.activeElement;
+          if(!af) return;
+          // check focused element is inside the gallery/sidebar or is a gallery item
+          var isGalleryItem = (af.matches && af.matches('.section-cards figure, .section-cards img, .section-cards .card-img-top')) || (af.closest && af.closest('.section-cards'));
+          if (!isGalleryItem) return;
+          e.preventDefault();
+          // Prefer the <img> element if available
+          var img = (af.matches && (af.matches('img') || af.matches('.card-img-top'))) ? af : (af.querySelector ? af.querySelector('img') : null);
+          if (img){
+            var data = {
+              src: img.getAttribute('src') || img.getAttribute('data-src') || '',
+              alt: img.getAttribute('alt') || '',
+              title: img.getAttribute('data-title') || img.getAttribute('title') || img.getAttribute('alt') || '',
+              subtitle: img.getAttribute('data-subtitle') || '',
+              desc: img.getAttribute('data-desc') || ''
+            };
+            var cardWrap = img.closest && img.closest('.blog-card-wrap');
+            var link = cardWrap ? cardWrap.querySelector('.stretched-link-wrapper') : null;
+            if (link && link.getAttribute('href')) data.postHref = link.getAttribute('href');
+            openImageModal(data);
+            return;
+          }
+          // Fallback: element itself may carry data-* attributes
+          if (af.getAttribute && (af.getAttribute('data-src') || af.getAttribute('data-title'))){
+            var data2 = {
+              src: af.getAttribute('data-src') || '',
+              alt: af.getAttribute('data-alt') || '',
+              title: af.getAttribute('data-title') || af.getAttribute('data-alt') || '',
+              subtitle: af.getAttribute('data-subtitle') || '',
+              desc: af.getAttribute('data-desc') || ''
+            };
+            var wrap = af.closest && af.closest('.blog-card-wrap');
+            var link2 = wrap ? wrap.querySelector('.stretched-link-wrapper') : null;
+            if (link2 && link2.getAttribute('href')) data2.postHref = link2.getAttribute('href');
+            openImageModal(data2);
+          }
+        }
+      }, false);
+    })();
+  </script>
+  <style>
+    :root{
+      --accent:#00EEFF; /* bright cyan */
+      --accent-2:#43FFFF; /* cyan accent */
+      --deep:#004080; /* deep blue */
+      --bg:#FFFFFF; /* white background */
+      --fg:#121212; /* primary text */
+      --muted:#2C2C2C; /* muted dark */
+    }
+    html,body{height:100%;}
+  /* IE-friendly font stack */
+  body{font-family:"Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; margin:0;background:var(--bg);color:var(--fg);-webkit-font-smoothing:antialiased}
+  /* Header: remove blue gradient and make fully transparent */
+  header{background:transparent !important;color:var(--fg);padding:1rem}
+  /* Desktop navbar padding refinement (avoid large top gap) */
+    @media (min-width:992px){
+    header.site-header{padding:.35rem .85rem !important;}
+    header.site-header .navbar{min-height:0 !important; padding:0 !important; margin:0 !important;}
+    header.site-header .navbar > .container-fluid{padding-top:0 !important; padding-bottom:0 !important; min-height:0 !important;}
+    header.site-header .navbar-brand img{height:40px !important;}
+    header.site-header .navbar .container-fluid{padding-top:0 !important; padding-bottom:0 !important;}
+    header.site-header .navbar-nav > li > a.nav-link{padding-top:.4rem; padding-bottom:.4rem;}
+    header.site-header .navbar-brand{padding-top:.25rem; padding-bottom:.25rem;}
+    body > header.site-header + nav.sticky-top {margin-top:0 !important;}
+  }
+  /* Make header inner container match site header width on large screens
+     Keep full-width on small screens so bootstrap's responsive behavior remains intact */
+  @media (min-width:1200px) {
+    header.site-header .container-fluid,
+    header.site-header .navbar > .container-fluid,
+    header.site-header .navbar .container-fluid {
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 0.85rem; /* align with header padding */
+      padding-right: 0.85rem;
+    }
+  }
+  /* Place the visible header background behind the inner container so the container-fluid
+     no longer displays as a separate full-width bar. This uses a pseudo-element on the
+     header to render the background while keeping the inner container content on top. */
+  header.site-header {
+    position: relative; /* ensure pseudo-element is positioned relative to header */
+    z-index: 1000; /* keep header on top of page content */
+  }
+  /* Remove pseudo-element background (no colored layer) */
+  header.site-header::before { content: none !important; }
+  /* Ensure the inner container does not draw its own background, shadow or color */
+  header.site-header .container-fluid,
+  header.site-header .navbar > .container-fluid,
+  header.site-header .navbar .container-fluid {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+  /* Explicit theme overrides: keep header transparent in both themes */
+  html.theme-dark header.site-header, html.theme-light header.site-header { background: transparent !important; }
+  @media (min-width:1200px){
+    header.site-header{padding:.4rem 1.4rem !important;}
+  }
+  /* Make the main header/nav sticky at the top */
+  header.site-header, nav.navbar, .navbar { position: sticky; top: 0; z-index: 9999; }
+  nav a{color:var(--deep);margin-right:1rem;text-decoration:none;font-weight:600}
+  /* container sizing is controlled via public/styles.css to allow responsive adjustments */
+    footer{border-top:1px solid #eee;padding:1rem;color:#666;background:transparent}
+    .btn{background:var(--accent);color:#000;padding:.5rem 1rem;border-radius:6px;text-decoration:none;display:inline-block}
+    .hero{padding:2rem;border-radius:8px;background:linear-gradient(180deg, rgba(0,238,255,0.06), rgba(67,255,255,0.03));margin-bottom:1rem}
+    h1,h2,h3{color:var(--fg)}
+    a { color: var(--deep);} 
+    @media (prefers-color-scheme: dark) {
+      :root{ --bg:#121212; --fg:#FFFFFF; }
+      header{color:var(--fg)}
+    }
+
+    /* --- Contact improvements --- */
+    .contact-card{background:rgba(0,0,0,0.03);padding:1rem;border-radius:8px;display:flex;flex-direction:column;gap:.6rem}
+    .contact-card h5{margin:0 0 .25rem 0;font-size:1.05rem}
+    .contact-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.45rem}
+    .contact-item{display:flex;align-items:center;gap:.5rem;color:var(--muted);font-size:0.95rem}
+    .contact-item a{color:var(--deep);text-decoration:none}
+    .contact-item .material-symbols-outlined{font-size:18px;opacity:.9}
+    .contact-cta{background:var(--deep);color:var(--bg);padding:.5rem .75rem;border-radius:6px;display:inline-block;text-decoration:none}
+    .contact-meta{font-size:.9rem;color:#666;margin-top:.5rem}
+  /* Social icons: fixed order and compact spacing */
+  .social-icons{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}
+  .social-icons .social-link{display:inline-flex;align-items:center;gap:.4rem;padding:.15rem .35rem;color:inherit;text-decoration:none;font-size:0.95rem;line-height:1}
+  .social-icons .social-link svg{width:20px;height:20px;display:block;fill:currentColor}
+  /* make text links visually consistent with icons */
+  .social-icons .social-link:not(:has(svg)) { font-weight:600; padding:.15rem .45rem; }
+  /* hover/active states */
+  .social-icons .social-link:hover, .social-icons .social-link:focus { color: var(--accent) !important; text-decoration:none }
+  /* Ensure visibility on dark theme */
+  html.theme-dark .site-footer .social-icons .social-link { color: rgba(255,255,255,0.95); }
+  /* Ensure visibility on light theme */
+  html.theme-light .site-footer .social-icons .social-link { color: var(--deep); }
+  /* Subscribe compact adjustments */
+  .footer-subscribe{padding-top:.1rem;padding-bottom:.1rem}
+  /* Title: force white for strong contrast in footer */
+  .footer-subscribe h5{margin-bottom:.35rem;color:#ffffff}
+  /* Body text for subscribe block */
+  .footer-subscribe .footer-subscribe-text{margin-bottom:.4rem;margin-top:0;color:#ffffff}
+  /* Make subscribe input and button compact and responsive */
+  .footer-subscribe .form-control { height: 36px; padding: .45rem .6rem; background: rgba(255,255,255,0.03); color: inherit; border:1px solid rgba(255,255,255,0.04); }
+  .footer-subscribe .form-control::placeholder { color: rgba(255,255,255,0.45); opacity:1 }
+  .footer-subscribe .btn { height: 36px; padding: .35rem .7rem; white-space: nowrap; font-size: .92rem; max-width: 180px; overflow: hidden; text-overflow: ellipsis; }
+  .footer-subscribe form.d-flex { gap: .5rem; align-items: center; }
+  /* Stack inputs earlier for better small-screen layout */
+  @media (max-width: 767px) {
+    .footer-subscribe form.d-flex { flex-direction: column !important; align-items: stretch !important; }
+    .footer-subscribe .form-control, .footer-subscribe .btn { width: 100%; }
+    .footer-subscribe .btn { margin-top: .25rem; }
+  }
+  /* Ensure subscribe colors look good in both themes */
+  html.theme-dark .site-footer .footer-subscribe h5 { color: #ffffff !important }
+  html.theme-light .site-footer .footer-subscribe h5 { color: #ffffff !important }
+  /* Force subscribe subtitle/text to pure white in all themes */
+  .site-footer .footer-subscribe .footer-subscribe-text,
+  .site-footer .footer-subscribe p,
+  .site-footer .footer-subscribe p.mt-2 {
+    color: #ffffff !important;
+  }
+
+  /* Stronger overrides: theme-specific selectors with higher specificity to beat other !important rules */
+  html.theme-dark .site-footer .footer-subscribe .footer-subscribe-text,
+  html.theme-dark .site-footer .footer-subscribe p,
+  html.theme-dark .site-footer .footer-subscribe p.mt-2 {
+    color: #ffffff !important;
+  }
+  html.theme-light .site-footer .footer-subscribe .footer-subscribe-text,
+  html.theme-light .site-footer .footer-subscribe p,
+  html.theme-light .site-footer .footer-subscribe p.mt-2 {
+    color: #ffffff !important;
+  }
+
+  /* Footer links title placed under social icons */
+  .footer-links-title { padding-top: .75rem; margin-top:.4rem; color: #ffffff; font-weight:700; font-size:0.95rem }
+  .site-footer .col-6.col-md-3 .list-unstyled { margin-top: .35rem }
+    @media (max-width:767px){
+      .contact-card{padding:.75rem}
+    }
+    /* Modal theme support: make modal content follow root theme classes */
+    html.theme-dark .modal-content {
+      background: #121212;
+      color: #FFFFFF;
+      border-color: #2C2C2C;
+    }
+    html.theme-dark .modal-header,
+    html.theme-dark .modal-footer {
+      border-color: rgba(255,255,255,0.06);
+    }
+    html.theme-dark .modal-body { color: #e6e6e6; }
+    html.theme-dark .btn-outline-primary { color: var(--accent); border-color: rgba(0,238,255,0.12); }
+    html.theme-dark .btn-outline-primary:hover { background: rgba(0,238,255,0.04); }
+    html.theme-dark .modal-backdrop.show { background-color: rgba(0,0,0,0.6); }
+    /* Inputs inside modals should remain readable */
+    html.theme-dark .modal .form-control { background: #1a1a1a; color: #fff; border-color: #2c2c2c; }
+  /* Modal image sizing and gallery overlay */
+  .pm-main-image { width:100%; height:380px; object-fit:cover; display:block; border-radius:6px; }
+  @media (min-width:992px) { .pm-main-image { height:420px; } }
+  /* Project thumbnails: ensure list thumbnails and card images are uniform and responsive */
+    /* Ensure subscribe block remains readable in dark theme: force white for title and subtitle
+       (previous rule used var(--accent) which conflicted with our intent to keep subtitle white) */
+    html.theme-dark .site-footer .footer-subscribe h5,
+    html.theme-dark .site-footer .footer-subscribe p,
+    html.theme-dark .site-footer .footer-subscribe .footer-subscribe-text,
+    html.theme-dark .site-footer .footer-subscribe .form-control,
+    html.theme-dark .site-footer .footer-subscribe .mt-2 {
+      color: #ffffff !important;
+    }
+  /* Force Suscríbete title to white in all themes (override other rules) */
+  .site-footer .footer-subscribe h5 { color: #ffffff !important; }
+  .project-thumb { width:100%; height:180px; object-fit:cover; display:block; border-radius:6px; }
+  .project-card-img { width:100%; height:200px; object-fit:cover; display:block; }
+  @media (min-width:768px) { .project-thumb { height:200px; } .project-card-img { height:220px; } }
+  @media (min-width:992px) { .project-thumb { height:220px; } .project-card-img { height:260px; } }
+  /* Fullscreen gallery overlay */
+  #pm-gallery-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.95); display:none; align-items:center; justify-content:center; z-index:2000; }
+  #pm-gallery-overlay.show { display:flex; }
+  #pm-gallery-overlay img { max-width:95%; max-height:95%; object-fit:contain; }
+  #pm-gallery-overlay .g-btn { position:absolute; top:16px; right:16px; z-index:2010 }
+  #pm-gallery-overlay .g-prev, #pm-gallery-overlay .g-next { position:absolute; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.4); border:none;color:#fff;padding:.6rem .8rem;border-radius:6px }
+  #pm-gallery-overlay .g-prev { left:12px } #pm-gallery-overlay .g-next { right:12px }
+  </style>
+</head>
+<body>
+    <header class="site-header" data-theme-bg="site-dedede">
+      
+      
+      <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">
+                        <img id="siteLogoImg" src="/media/LogoX.svg" alt="Xlerion" class="site-logo" data-logo-src="/media/LogoX.svg" />
+          </a>
+          <!-- Toggler (manual JS controls offcanvas) -->
+          <button id="ctrl-menu-toggle" class="navbar-toggler" type="button" aria-controls="mobileMenu" aria-label="Abrir menú" aria-expanded="false">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <!-- Desktop menu (visible on large screens) -->
+          <div class="navbar-collapse d-none d-lg-flex" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item nav-group" data-group="Inicio"><a class="nav-link" href="/inicio" title="Inicio" aria-label="Inicio"><span class="material-symbols-outlined nav-icon" aria-hidden="true">home</span> Inicio</a></li><li class="nav-item dropdown nav-group nav-group-main" data-group="Información"><a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="material-symbols-outlined nav-icon" aria-hidden="true">info</span> Información</a><ul class="dropdown-menu" role="menu"><li role="none"><a class="dropdown-item" role="menuitem" tabindex="-1" href="/documentacion" title="Documentación" aria-label="Documentación"><span class="material-symbols-outlined nav-icon" aria-hidden="true">description</span> Documentación</a></li><li role="none"><a class="dropdown-item" role="menuitem" tabindex="-1" href="/filosofia" title="Filosofía" aria-label="Filosofía"><span class="material-symbols-outlined nav-icon" aria-hidden="true">emoji_objects</span> Filosofía</a></li></ul></li><li class="nav-item dropdown nav-group nav-group-main" data-group="Servicios"><a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="material-symbols-outlined nav-icon" aria-hidden="true">build</span> Servicios</a><ul class="dropdown-menu" role="menu"><li role="none"><a class="dropdown-item" role="menuitem" tabindex="-1" href="/proyectos" title="Proyectos" aria-label="Proyectos"><span class="material-symbols-outlined nav-icon" aria-hidden="true">work</span> Proyectos</a></li><li role="none"><a class="dropdown-item" role="menuitem" tabindex="-1" href="/soluciones" title="Soluciones" aria-label="Soluciones"><span class="material-symbols-outlined nav-icon" aria-hidden="true">build</span> Soluciones</a></li></ul></li><li class="nav-item nav-group nav-group-main" data-group="Recursos"><a class="nav-link" href="/blog" title="Blog" aria-label="Blog"><span class="material-symbols-outlined nav-icon" aria-hidden="true">rss_feed</span> Blog</a></li><li class="nav-item nav-group" data-group="Principal"><a class="nav-link" href="/equipo" title="Equipo" aria-label="Equipo"><span class="material-symbols-outlined nav-icon" aria-hidden="true">chevron_right</span> Equipo</a></li><li class="nav-item nav-group" data-group="Legal"><a class="nav-link" href="/legal" title="Legal y Privacidad" aria-label="Legal y Privacidad"><span class="material-symbols-outlined nav-icon" aria-hidden="true">gavel</span> Legal y Privacidad</a></li>            </ul>
+            <ul class="navbar-nav ms-auto align-items-center">
+              <!-- Right-aligned contact CTA (desktop) -->
+              <li class="nav-item d-none d-lg-flex align-items-center">
+                <a class="nav-link d-flex align-items-center gap-2 contact-cta" href="/contacto" title="Contacto" aria-label="Contacto">
+                  <span class="material-symbols-outlined" aria-hidden="true">mail</span>
+                  <span class="d-none d-sm-inline">Contacto</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      
+      <!-- Floating controls: outside the main menu, bottom-right of header (desktop only) -->
+      <div class="menu-controls-floating d-none d-lg-flex" aria-label="Controles flotantes del menú">
+        <div class="mc-stack">
+          <button id="ctrl-search" class="mc-btn" data-action="search" title="Buscar" aria-label="Buscar">
+            <span class="material-symbols-outlined">search</span>
+          </button>
+          <button id="ctrl-theme" class="mc-btn" data-action="theme" title="Alternar tema" aria-label="Alternar tema">
+            <span class="material-symbols-outlined">brightness_2</span>
+          </button>
+          <a id="ctrl-admin" class="mc-btn" href="/admin/login.php" title="Admin" aria-label="Admin">
+            <span class="material-symbols-outlined">settings</span>
+          </a>
+        </div>
+      </div>
+
+      <script>
+        (function(){
+          // Initialize all mc-stack instances (desktop + mobile) so controls behave the same
+          const stacks = Array.from(document.querySelectorAll('.mc-stack'));
+          if (!stacks.length) return;
+
+          // Helper: toggle theme and sync visual pressed state across all theme buttons
+          function setTheme(isDark){
+            if (isDark) {
+              document.documentElement.classList.remove('theme-light');
+              document.documentElement.classList.add('theme-dark');
+              localStorage.setItem('x-theme','dark');
+            } else {
+              document.documentElement.classList.remove('theme-dark');
+              document.documentElement.classList.add('theme-light');
+              localStorage.setItem('x-theme','light');
+            }
+            // sync theme button visual state
+            Array.from(document.querySelectorAll('[data-action="theme"]')).forEach(btn => {
+              btn.classList.toggle('is-active', isDark);
+              btn.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+            });
+          }
+
+          // Wire each stack independently to limit cross-effect between stacks when non-theme buttons are toggled
+          stacks.forEach(stack => {
+            const btns = Array.from(stack.querySelectorAll('.mc-btn'));
+            if (!btns.length) return;
+
+            btns.forEach(b => {
+              b.setAttribute('aria-pressed', b.classList.contains('is-active') ? 'true' : 'false');
+              b.addEventListener('click', (e) => {
+                const action = b.getAttribute('data-action');
+                if (action === 'theme') {
+                  const pressed = b.getAttribute('aria-pressed') === 'true';
+                  setTheme(!pressed);
+                  return;
+                }
+
+                if (action === 'search') {
+                  // attempt to reuse desktop search control behavior: trigger existing click if present
+                  const desktopSearch = document.getElementById('ctrl-search');
+                  if (desktopSearch && desktopSearch !== b) desktopSearch.click();
+                }
+
+                // Non-theme: in each stack make selected button visually active (tab-like)
+                btns.forEach(x => { x.classList.remove('is-active'); x.setAttribute('aria-pressed','false'); });
+                b.classList.add('is-active');
+                b.setAttribute('aria-pressed','true');
+              });
+            });
+          });
+
+          // Restore theme on load and sync buttons
+          try {
+            const saved = localStorage.getItem('x-theme');
+            if (saved === 'dark') setTheme(true);
+            else if (saved === 'light') setTheme(false);
+          } catch (e) { /* ignore storage errors */ }
+        })();
+      </script>
+
+      <!-- Offcanvas mobile menu -->
+      <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="mobileMenuLabel">Menú</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="/inicio" title="Inicio" aria-label="Inicio"><span class="material-symbols-outlined nav-icon" aria-hidden="true">home</span> Inicio</a></li><li class="nav-item mt-2"><div class="nav-link text-muted small fw-semibold">Información</div></li><li class="nav-item"><a class="nav-link" href="/documentacion" title="Documentación" aria-label="Documentación"><span class="material-symbols-outlined nav-icon" aria-hidden="true">description</span> Documentación</a></li><li class="nav-item"><a class="nav-link" href="/filosofia" title="Filosofía" aria-label="Filosofía"><span class="material-symbols-outlined nav-icon" aria-hidden="true">emoji_objects</span> Filosofía</a></li><li class="nav-item mt-2"><div class="nav-link text-muted small fw-semibold">Servicios</div></li><li class="nav-item"><a class="nav-link" href="/proyectos" title="Proyectos" aria-label="Proyectos"><span class="material-symbols-outlined nav-icon" aria-hidden="true">work</span> Proyectos</a></li><li class="nav-item"><a class="nav-link" href="/soluciones" title="Soluciones" aria-label="Soluciones"><span class="material-symbols-outlined nav-icon" aria-hidden="true">build</span> Soluciones</a></li><li class="nav-item mt-2"><div class="nav-link text-muted small fw-semibold">Recursos</div></li><li class="nav-item"><a class="nav-link" href="/blog" title="Blog" aria-label="Blog"><span class="material-symbols-outlined nav-icon" aria-hidden="true">rss_feed</span> Blog</a></li><li class="nav-item mt-2"><div class="nav-link text-muted small fw-semibold">Inicio</div></li><li class="nav-item mt-2"><div class="nav-link text-muted small fw-semibold">Principal</div></li><li class="nav-item"><a class="nav-link" href="/equipo" title="Equipo" aria-label="Equipo"><span class="material-symbols-outlined nav-icon" aria-hidden="true">chevron_right</span> Equipo</a></li><li class="nav-item mt-2"><div class="nav-link text-muted small fw-semibold">Legal</div></li><li class="nav-item"><a class="nav-link" href="/legal" title="Legal y Privacidad" aria-label="Legal y Privacidad"><span class="material-symbols-outlined nav-icon" aria-hidden="true">gavel</span> Legal y Privacidad</a></li>            <li class="nav-item mt-2"><a class="nav-link" href="/admin/login.php">Admin</a></li>
+            <!-- Mobile-only menu controls integrated into offcanvas -->
+            <li class="nav-item mt-3 d-lg-none">
+              <div class="nav-link text-muted small fw-semibold">Controles</div>
+            </li>
+            <li class="nav-item d-lg-none">
+              <div class="mc-stack d-flex" role="toolbar" aria-label="Controles móviles">
+                <button id="ctrl-search-mobile" class="mc-btn" data-action="search" title="Buscar" aria-label="Buscar">
+                  <span class="material-symbols-outlined">search</span>
+                </button>
+                <button id="ctrl-theme-mobile" class="mc-btn" data-action="theme" title="Alternar tema" aria-label="Alternar tema">
+                  <span class="material-symbols-outlined">brightness_2</span>
+                </button>
+                <a id="ctrl-admin-mobile" class="mc-btn" href="/admin/login.php" title="Admin" aria-label="Admin">
+                  <span class="material-symbols-outlined">settings</span>
+                </a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </header>
+  
+    <section class="parallax-banner" role="region" aria-label="Banner principal">
+                <picture>
+                          <img class="parallax-media" src="/media/Planos.png" alt="Imagen de cabecera">
+              </picture>
+        <div class="parallax-overlay">
+      <div class="container hero">
+                <h1 id="hero-title" class="section-title-lg">Admin - Nueva plantilla</h1>
+                  <p id="hero-sub">Bienvenido a Xlerion — soluciones y servicios.</p>
+              </div>
+    </div>
+  </section>
+  <!-- Desktop controls moved into navbar (compact mobile controls remain in offcanvas) -->
+
+  <!-- Search modal (simple, accessible) -->
+  <div class="modal fade" id="siteSearchModal" tabindex="-1" aria-labelledby="siteSearchLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="siteSearchLabel">Buscar en Xlerion</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <form action="/search" method="get" role="search">
+            <label for="site-search-input" class="visually-hidden">Buscar</label>
+            <div class="input-group">
+              <input id="site-search-input" name="q" type="search" class="form-control" placeholder="Buscar..." aria-label="Buscar en el sitio">
+              <button class="btn btn-primary" type="submit">Buscar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <main class="container">
+        <div class="admin-dashboard">
+  <aside class="admin-sidebar card-preview"><nav id="adminSidebarNav" aria-label="Menú administración">
+          <a class="nav-link" href="/admin/dashboard.php"><span class="nav-icon" aria-hidden="true"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 5h16v14H4z" stroke="currentColor" stroke-width="1.2"/><path d="M4 9h16" stroke="currentColor" stroke-width="1.2"/><path d="M10 5v14" stroke="currentColor" stroke-width="1.2"/></svg></span><span class="nav-label">Resumen</span></a>
+          <a class="nav-link" href="/admin/pages.php"><span class="nav-icon" aria-hidden="true"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="3" width="14" height="18" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M9 7h6" stroke="currentColor" stroke-width="1.2"/><path d="M9 11h6" stroke="currentColor" stroke-width="1.2"/></svg></span><span class="nav-label">Páginas</span></a>
+          <a class="nav-link" href="/admin/posts.php"><span class="nav-icon" aria-hidden="true"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4h16v4H4zM4 10h16v10H4z" stroke="currentColor" stroke-width="1.2"/><path d="M8 14h8" stroke="currentColor" stroke-width="1.2"/></svg></span><span class="nav-label">Entradas</span></a>
+          <a class="nav-link" href="/admin/resources"><span class="nav-icon" aria-hidden="true"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3l8 4v4c0 5-3.5 9-8 10-4.5-1-8-5-8-10V7l8-4z" stroke="currentColor" stroke-width="1.2" fill="none"/></svg></span><span class="nav-label">Recursos</span></a>
+          <a class="nav-link" href="/admin/contacts.php"><span class="nav-icon" aria-hidden="true"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.2"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6" stroke="currentColor" stroke-width="1.2" fill="none"/></svg></span><span class="nav-label">Contactos</span></a>
+          <a class="nav-link" href="/admin/media.php"><span class="nav-icon" aria-hidden="true"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M10 9l5 3-5 3V9z" fill="currentColor"/></svg></span><span class="nav-label">Medios</span></a>
+          <a class="nav-link" href="/admin/settings.php"><span class="nav-icon" aria-hidden="true"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 15.5A3.5 3.5 0 1112 8.5a3.5 3.5 0 010 7z" stroke="currentColor" stroke-width="1.2"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.06.06A2 2 0 014.27 17.9l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09a1.65 1.65 0 001.51-1 1.65 1.65 0 00-.33-1.82l-.06-.06A2 2 0 016.1 4.27l.06.06a1.65 1.65 0 001.82.33H8.1A1.65 1.65 0 009.6 3.15V3a2 2 0 014 0v.15c.2.09.38.21.54.35h.01a1.65 1.65 0 001.82-.33l.06-.06A2 2 0 0117.73 6.1l-.06.06c-.15.17-.26.36-.33.56v.01c-.18.13-.37.25-.57.34H16.9A1.65 1.65 0 0018.4 9.6V10a1.65 1.65 0 001 1.51z" stroke="currentColor" stroke-width="0.9" fill="none"/></svg></span><span class="nav-label">Ajustes</span></a>
+          <a class="nav-link" href="/admin/templates"><span class="nav-icon" aria-hidden="true"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M7 8h10" stroke="currentColor" stroke-width="1.2"/><path d="M7 12h10" stroke="currentColor" stroke-width="1.2"/><path d="M7 16h6" stroke="currentColor" stroke-width="1.2"/></svg></span><span class="nav-label">Plantillas</span></a>
+          <a class="nav-link" href="/admin/footer.php"><span class="nav-icon" aria-hidden="true"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="18" height="6" rx="1" fill="currentColor"/><rect x="3" y="11" width="12" height="2" rx="1" fill="currentColor"/><rect x="3" y="15" width="8" height="2" rx="1" fill="currentColor"/><rect x="3" y="19" width="18" height="2" rx="1" fill="currentColor"/></svg></span><span class="nav-label">Footer</span></a>
+          <a class="nav-link" href="/admin/logout.php"><span class="nav-icon" aria-hidden="true"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4" stroke="currentColor" stroke-width="1.2"/><path d="M10 17l5-5-5-5M14.5 12H3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="nav-label">Salir</span></a>
+      </nav>
+<style>
+  .admin-sidebar.card-preview { width:210px; padding:.35rem .55rem .90rem; }
+  @media (min-width: 992px){
+    /* Limit height and allow scroll on desktop to avoid clipped links */
+  .admin-sidebar.card-preview { max-height:100vh; overflow-y:auto; margin-top:0; }
+  .admin-sidebar.card-preview::after { content:''; position:sticky; bottom:0; display:block; height:16px; background:linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.15)); pointer-events:none; }
+  }
+  #adminSidebarNav a.nav-link { display:flex; align-items:center; gap:.55rem; padding:.5rem .55rem; border-radius:6px; font-weight:600; text-decoration:none; color:inherit; }
+  #adminSidebarNav a.nav-link:hover { background:rgba(255,255,255,0.08); }
+  #adminSidebarNav a.nav-link.active { background:var(--accent); color:#000; }
+  #adminSidebarNav .nav-icon { display:inline-flex; }
+  @media (max-width: 991px){ .admin-sidebar.card-preview { display:none !important; } }
+  /* Mobile dialog */
+  @media (max-width: 991px){
+    .admin-sidebar-toggle-btn { position:fixed; left:14px; bottom:18px; z-index:12000; display:inline-flex; align-items:center; justify-content:center; background:var(--accent); color:#000; border:none; border-radius:999px; padding:.65rem .9rem; font-size:1.05rem; font-weight:600; cursor:pointer; box-shadow:0 8px 18px rgba(0,0,0,0.28); }
+    .admin-sidebar-toggle-btn:focus { outline:2px solid #000; outline-offset:2px; }
+    #adminPanelDialog { position:fixed; top:50%; left:50%; transform:translate(-50%, -50%) scale(.92); width:min(420px,92vw); max-height:80vh; overflow:auto; background:var(--bg); color:var(--fg); border-radius:14px; padding:1rem 1rem 1.2rem; box-shadow:0 26px 70px -10px rgba(0,0,0,0.45); z-index:13000; opacity:0; pointer-events:none; transition:opacity .25s ease, transform .25s ease; }
+    #adminPanelDialog.show { opacity:1; transform:translate(-50%, -50%) scale(1); pointer-events:auto; }
+    #adminPanelBackdrop { position:fixed; inset:0; background:rgba(0,0,0,0.55); backdrop-filter:blur(2px); z-index:11000; opacity:0; transition:opacity .25s ease; pointer-events:none; }
+    #adminPanelBackdrop.show { opacity:1; pointer-events:auto; }
+    #adminPanelDialog nav a { display:flex; align-items:center; gap:.55rem; padding:.55rem .6rem; border-radius:6px; font-weight:600; text-decoration:none; color:inherit; }
+    #adminPanelDialog nav a.active { background:var(--accent); color:#000; }
+    #adminPanelDialog .panel-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:.5rem; }
+    #adminPanelDialog .panel-title { font-size:1.05rem; font-weight:700; }
+    #adminPanelDialog .panel-close { background:var(--accent); color:#000; border:none; border-radius:6px; padding:.4rem .7rem; font-weight:600; cursor:pointer; }
+    #adminPanelDialog .panel-close:focus { outline:2px solid #000; outline-offset:2px; }
+  }
+</style>
+<script>
+  (function(){
+    // Sticky offset below main header (desktop)
+    function updateSidebarTop(){
+      try {
+        if (window.matchMedia('(max-width: 991px)').matches) return;
+        var nav = document.getElementById('adminSidebarNav');
+        if(!nav) return;
+  var aside = document.querySelector('aside.admin-sidebar.card-preview');
+        if(!aside) return;
+        var header = document.querySelector('header.site-header') || document.querySelector('.admin-header');
+        var headerHeight = header ? Math.ceil(header.getBoundingClientRect().height) : 0;
+        // Use sticky so normal document flow preserved and links remain visible
+  aside.style.position = 'sticky';
+  // Minimal gap below header
+  var topOffset = Math.max(0, headerHeight - 4);
+  aside.style.top = topOffset + 'px';
+  aside.style.transform = 'none';
+        aside.style.zIndex = 1020;
+        // Compute available height below header for scrolling
+  var available = window.innerHeight - topOffset - 12;
+        if (available > 200){
+          aside.style.maxHeight = available + 'px';
+          aside.style.overflowY = 'auto';
+        } else {
+          aside.style.maxHeight = (window.innerHeight - topOffset - 4) + 'px';
+          aside.style.overflowY = 'auto';
+        }
+        // Modest internal padding (avoid pushing content too far down)
+  aside.style.paddingTop = '4px';
+  aside.style.paddingBottom = '14px';
+      } catch(e){ /* ignore */ }
+    }
+    document.addEventListener('DOMContentLoaded', updateSidebarTop);
+    window.addEventListener('resize', updateSidebarTop);
+    setTimeout(updateSidebarTop, 300);
+    // Mobile dialog
+    function initAdminPanel(){
+      if (window.innerWidth >= 992) return;
+      if (document.getElementById('adminSidebarToggleBtn')) return;
+      var btn=document.createElement('button');
+      btn.id='adminSidebarToggleBtn';
+      btn.className='admin-sidebar-toggle-btn';
+      btn.type='button';
+      btn.setAttribute('aria-controls','adminPanelDialog');
+      btn.setAttribute('aria-expanded','false');
+      btn.setAttribute('title','Abrir menú admin');
+      btn.innerHTML='☰';
+      document.body.appendChild(btn);
+      var backdrop=document.createElement('div'); backdrop.id='adminPanelBackdrop'; document.body.appendChild(backdrop);
+      var dialog=document.createElement('div'); dialog.id='adminPanelDialog'; dialog.setAttribute('role','dialog'); dialog.setAttribute('aria-modal','true'); dialog.setAttribute('aria-label','Panel de administración');
+      var header=document.createElement('div'); header.className='panel-header';
+      var title=document.createElement('div'); title.className='panel-title'; title.textContent='Panel admin';
+      var close=document.createElement('button'); close.type='button'; close.className='panel-close'; close.textContent='Cerrar'; close.setAttribute('aria-label','Cerrar panel');
+      header.appendChild(title); header.appendChild(close); dialog.appendChild(header);
+      var navWrap=document.createElement('nav'); navWrap.setAttribute('aria-label','Menú admin móvil');
+      var list=document.createElement('div'); list.className='panel-links'; navWrap.appendChild(list); dialog.appendChild(navWrap);
+      document.body.appendChild(dialog);
+      // Populate links from desktop nav
+      var links=Array.from(document.querySelectorAll('#adminSidebarNav a.nav-link'));
+      links.forEach(function(a){ list.appendChild(a.cloneNode(true)); });
+      var lastFocused=null;
+      function open(){ lastFocused=document.activeElement; dialog.classList.add('show'); backdrop.classList.add('show'); btn.setAttribute('aria-expanded','true'); btn.innerHTML='×'; btn.setAttribute('title','Cerrar menú admin'); setTimeout(function(){ dialog.focus(); },30); }
+      function closePanel(){ dialog.classList.remove('show'); backdrop.classList.remove('show'); btn.setAttribute('aria-expanded','false'); btn.innerHTML='☰'; btn.setAttribute('title','Abrir menú admin'); if(lastFocused && lastFocused.focus) lastFocused.focus(); }
+      btn.addEventListener('click', function(){ (btn.getAttribute('aria-expanded')==='true')?closePanel():open(); });
+      close.addEventListener('click', closePanel); backdrop.addEventListener('click', closePanel); document.addEventListener('keydown', function(e){ if(e.key==='Escape') closePanel(); });
+      window.addEventListener('resize', function(){ if(window.innerWidth>=992){ closePanel(); dialog.remove(); backdrop.remove(); btn.remove(); } });
+    }
+    document.addEventListener('DOMContentLoaded', initAdminPanel);
+  })();
+</script>
+</aside>
+  <main class="admin-main">
+    <div class="card-preview">
+      <h2 class="section-title-lg">Nueva plantilla</h2>
+      <form method="post" onsubmit="TemplatesEditor.syncBeforeSubmit(event)">
+        <!-- Load site CSS and fallback editor styles for canvas preview -->
+        <link rel="stylesheet" href="/css/styles.css">
+        <link rel="stylesheet" href="/xlerion_cmr/public/styles.css">
+        <link rel="stylesheet" href="/css/templates-editor-fallback.css">
+        <div class="d-flex gap-3">
+          <aside style="width:300px;min-width:220px;">
+            <div class="card-preview p-2">
+              <h4 class="mb-2">Paleta de componentes</h4>
+              <div id="templatesPalette" class="d-flex flex-column gap-2">
+                <div class="palette-group mb-2">
+                  <h6 class="mb-1">Acciones rápidas</h6>
+                  <div class="d-flex flex-column gap-2">
+                    <button type="button" class="btn btn-sm btn-outline-light palette-item" data-insert="hero" draggable="true">Insertar Hero</button>
+                    <button type="button" class="btn btn-sm btn-outline-light palette-item" data-insert="card" draggable="true">Insertar Card</button>
+                    <button type="button" class="btn btn-sm btn-outline-light palette-item" data-insert="two-col" draggable="true">Insertar Grid 2-col</button>
+                    <button type="button" class="btn btn-sm btn-outline-light palette-item" data-insert="header" draggable="true">Insertar Header</button>
+                    <button type="button" class="btn btn-sm btn-outline-light palette-item" data-insert="footer" draggable="true">Insertar Footer</button>
+                    <button type="button" class="btn btn-sm btn-outline-light palette-item" data-insert="section" draggable="true">Insertar Sección</button>
+                    <button type="button" class="btn btn-sm btn-outline-light palette-item" data-insert="resource" draggable="true">Insertar Recurso</button>
+                    <button type="button" class="btn btn-sm btn-outline-light palette-item" data-insert="image" draggable="true">Insertar Imagen</button>
+                  </div>
+                </div>
+                <div class="palette-group mb-2">
+                  <h6 class="mb-1">Estructura</h6>
+                  <div class="d-flex flex-column gap-2">
+                    <button type="button" class="btn btn-sm btn-outline-light palette-item" data-insert="header" draggable="true">Header</button>
+                    <button type="button" class="btn btn-sm btn-outline-light palette-item" data-insert="hero" draggable="true">Hero</button>
+                    <button type="button" class="btn btn-sm btn-outline-light palette-item" data-insert="section" draggable="true">Section</button>
+                    <button type="button" class="btn btn-sm btn-outline-light palette-item" data-insert="footer" draggable="true">Footer</button>
+                  </div>
+                </div>
+                <div class="palette-group mb-2">
+                  <h6 class="mb-1">Layouts</h6>
+                  <div class="d-flex flex-column gap-2">
+                    <button type="button" class="btn btn-sm btn-outline-light palette-item" data-insert="two-col" draggable="true">Grid 2-col</button>
+                    <button type="button" class="btn btn-sm btn-outline-light palette-item" data-insert="card" draggable="true">Card</button>
+                  </div>
+                </div>
+                <div class="palette-group mb-2">
+                  <h6 class="mb-1">Media y recursos</h6>
+                  <div class="d-flex flex-column gap-2">
+                    <button type="button" class="btn btn-sm btn-outline-light palette-item" data-insert="image" draggable="true">Imagen</button>
+                    <button type="button" class="btn btn-sm btn-outline-light palette-item" data-insert="video" draggable="true">Video</button>
+                    <button type="button" class="btn btn-sm btn-outline-light palette-item" data-insert="resource" draggable="true">Resource</button>
+                  </div>
+                </div>
+                <div class="mt-2 small text-muted">Arrastra o haz clic para insertar en el editor. Las secciones agrupan componentes por función.</div>
+              </div>
+            </div>
+          </aside>
+          <div style="flex:1;">
+        <div class="mb-3">
+          <label class="form-label">Cargar plantilla existente</label>
+          <div class="d-flex gap-2">
+            <select id="templatesLoadSelect" class="form-select">
+              <option value="">-- seleccionar --</option>
+            </select>
+            <button type="button" id="templatesLoadBtn" class="btn btn-outline-light">Cargar</button>
+          </div>
+          <small class="text-muted">Carga una maqueta existente para editarla o reutilizarla.</small>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Nombre</label>
+          <input class="form-control" name="name" value="" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Descripción</label>
+          <input class="form-control" name="description" value="">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Maqueta (Editor visual)</label>
+                  <div class="templates-editor-toolbar mb-2 d-flex gap-2 align-items-center">
+                    <button type="button" class="btn btn-sm btn-outline-light" data-action="toggle-outline">Mostrar contornos</button>
+                    <button type="button" class="btn btn-sm btn-outline-light" data-action="toggle-preview">Previsualizar HTML</button>
+                    <button type="button" class="btn btn-sm btn-outline-light" id="templatesRealPreviewBtn">Preview real</button>
+                    <button type="button" class="btn btn-sm btn-outline-light" data-action="clear">Limpiar</button>
+                    <div class="text-muted small">(Usa la paleta a la izquierda para insertar componentes)</div>
+                  </div>
+
+                  <div class="d-flex gap-2" style="min-height:220px;">
+                    <div id="templatesViewer" style="flex:1;display:flex;flex-direction:column;border:1px solid var(--card-border);border-radius:6px;overflow:hidden;min-height:480px;">
+                      <div class="p-1 d-flex gap-1 border-bottom" style="background:var(--card-bg)">
+                        <button type="button" id="btnViewVisual" class="btn btn-sm btn-primary" data-action="view-visual">Visual</button>
+                        <button type="button" id="btnViewHtml" class="btn btn-sm btn-outline-light" data-action="view-html">HTML</button>
+                      </div>
+                      <div style="position:relative;flex:1 1 auto;min-height:220px">
+                        <div id="templatesCanvas" class="templates-canvas" style="position:absolute;inset:0;width:100%;height:100%;overflow:auto;"></div>
+                        <!-- Template for block controls (inserted into each .tpl-block) -->
+                        <template id="tplBlockControls">
+                          <div class="tpl-controls" style="position:absolute;right:8px;top:8px;z-index:40;display:flex;flex-direction:column;gap:6px">
+                            <button type="button" class="btn btn-sm btn-outline-light tpl-move-up" title="Subir">↑</button>
+                            <button type="button" class="btn btn-sm btn-outline-light tpl-move-down" title="Bajar">↓</button>
+                            <button type="button" class="btn btn-sm btn-outline-light tpl-remove" title="Eliminar">✕</button>
+                          </div>
+                        </template>
+                        <pre id="templatesEditorHtmlPane" class="templates-htmlpane" style="position:absolute;inset:0;display:none;margin:0;padding:12px;white-space:pre-wrap;overflow:auto;"></pre>
+                      </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Utilities: preview / clear (separated from insert toolbar) -->
+                  <div class="mb-3 d-flex gap-2" style="margin-top:8px;">
+                    <button type="button" class="btn btn-sm btn-outline-light" data-action="toggle-preview">Previsualizar HTML</button>
+                    <button type="button" id="templatesRealPreviewBtn" class="btn btn-sm btn-outline-light">Preview real</button>
+                    <button type="button" class="btn btn-sm btn-outline-light" data-action="clear">Limpiar</button>
+                    <div style="flex:1"></div>
+                    <button class="btn btn-sm btn-primary" type="submit">Crear</button>
+                    <button type="button" id="btnOpenPreviewWindow" class="btn btn-sm btn-outline-light">Abrir en ventana</button>
+                  </div>
+                    </div>
+                  </div>
+                  <textarea id="templatesEditor" name="data_html" style="display:none"></textarea>
+                  <style>
+                    /* Editor outline helpers: apply to the editor element itself and its children (textarea needs direct outline) */
+                    #templatesEditor.templates-editor-outline, #templatesEditor.templates-editor-outline * { outline: 1px dashed rgba(0,128,192,0.45); }
+                    /* Also allow toggling outlines on the visual canvas container so the button affects the visible preview */
+                    #templatesCanvas.templates-editor-outline, #templatesCanvas.templates-editor-outline * { outline: 1px dashed rgba(0,128,192,0.45); }
+                    #templatesEditor .placeholder-img{opacity:.95;border:1px dashed rgba(0,0,0,0.06);padding:4px;border-radius:6px}
+                    /* block reorder visuals */
+                    /* keep wrapper neutral so Bootstrap components keep their own box model */
+                    #templatesEditor .tpl-block{ border:0; padding:0; margin:8px 0; position:relative; display:block; box-sizing:border-box; width:100%; }
+                    /* use outline for drop hint so we don't alter inner layout (avoid borders/padding) */
+                    #templatesEditor .tpl-block.tpl-drop-before{ outline:3px solid rgba(0,123,255,0.18); }
+                    #templatesEditor .tpl-block.is-dragging{ opacity:0.6; }
+                    #templatesEditor .tpl-handle{ position:absolute; left:0; top:0; width:18px; bottom:0; background:transparent; cursor:grab; }
+                    #templatesEditor .tpl-handle:active{ cursor:grabbing; }
+                    #templatesEditor .tpl-ghost{ box-shadow:0 6px 18px rgba(0,0,0,0.18); border-radius:6px; opacity:.95; }
+                    /* ensure images inside blocks scale properly, but avoid forcing max-width on all children (breaks .row gutters) */
+                    #templatesEditor .tpl-block img{ max-width:100%; height:auto; display:block; }
+                    #templatesEditor .tpl-block.just-inserted{ min-height:34px; }
+                    #templatesEditor .tpl-block.tpl-neutral{ padding:0; margin:8px 0; border:0; }
+                    /* Editor-scoped button sizing: keep buttons compact and match text height */
+                    .templates-editor-toolbar .btn, #templatesViewer .btn, .tpl-controls .btn { padding: .25rem .45rem; line-height: 1.1; font-size: .86rem; }
+                    .tpl-controls .btn { padding: .18rem .35rem; }
+                    /* dark mode canvas adjustments */
+                    :root.theme-dark #templatesCanvas, :root.theme-dark #templatesEditor.templates-editor-outline { background: #0b0b0b; color: #e6eef6; }
+                    :root.theme-dark #templatesCanvas .tpl-block, :root.theme-dark #templatesEditor .tpl-block { background: #101214; color: #e6eef6; }
+                    :root.theme-dark #templatesCanvas .tpl-content, :root.theme-dark #templatesEditor .tpl-content { color: #e6eef6; }
+                    /* Palette group headings */
+                    #templatesPalette .palette-group h6 { margin:0; font-size:0.86rem; color:var(--muted); }
+                  </style>
+
+                  <small class="text-muted d-block mt-2">El HTML aquí será guardado y reutilizable en nuevas páginas.</small>
+                </div>
+
+          <!-- Editor (single instance) -->
+        </div>
+
+        
+      </form>
+    </div>
+    <script>
+      // embed available templates for the editor to load
+      window.__XLERION_AVAILABLE_TEMPLATES = [{"id":14,"name":"Sanitizer Integration","html":"\u003Cdiv\u003E\u003Ca\u003Ebad\u003C\/a\u003E\u003Cimg src=\u0022data:image\/png;base64,AAA\u0022 data-custom=\u0022keep\u0022\u003E\u003Ciframe src=\u0022https:\/\/www.youtube.com\/embed\/abc\u0022 allowfullscreen=\u0022\u0022\u003E\u003C\/iframe\u003E\u003C\/div\u003E\r\n\u003Cdiv\u003E\r\n  \u003Cimg src=\u0022\/images\/placeholder.png\u0022 alt=\u0022Recurso\u0022\u003E\r\n  \u003Cdiv\u003E\r\n    Recurso\r\n    \u003Cp\u003EDescripci\u00f3n corta\u003C\/p\u003E\r\n  \u003C\/div\u003E\r\n\u003C\/div\u003E\r\n"},{"id":13,"name":"Sanitizer Integration","html":"\u003Cdiv\u003E\u003Ca\u003Ebad\u003C\/a\u003E\u003Cimg src=\u0022data:image\/png;base64,AAA\u0022 alt=\u0022data:image\/png;base64,AAA\u0022 \/\u003E\u003Ciframe\u003E\u003C\/iframe\u003E\u003Ciframe\u003E\u003C\/iframe\u003E\u003C\/div\u003E"},{"id":12,"name":"Sanitizer Integration","html":"\u003Cdiv\u003E\u003Ca\u003Ebad\u003C\/a\u003E\u003Cimg src=\u0022data:image\/png;base64,AAA\u0022 alt=\u0022data:image\/png;base64,AAA\u0022 \/\u003E\u003Ciframe\u003E\u003C\/iframe\u003E\u003Ciframe src=\u0022https:\/\/www.youtube.com\/embed\/abc\u0022\u003E\u003C\/iframe\u003E\u003C\/div\u003E"},{"id":11,"name":"Sanitizer Integration","html":"\u003Cdiv onclick=\u0022alert(\u0027x\u0027)\u0022\u003E\u003Ca href=\u0022javascript:alert(1)\u0022\u003Ebad\u003C\/a\u003E\u003Cimg src=\u0022data:image\/png;base64,AAA\u0022 data-custom=\u0022keep\u0022\u003E\u003Ciframe src=\u0022https:\/\/evil.example.com\/embed\/1\u0022\u003E\u003C\/iframe\u003E\u003Ciframe src=\u0022https:\/\/www.youtube.com\/embed\/abc\u0022 allowfullscreen\u003E\u003C\/iframe\u003E\u003C\/div\u003E"},{"id":10,"name":"tmp-api","html":"\u003Cp\u003Ehi\u003C\/p\u003E"},{"id":9,"name":"QA Template Session","html":"\u003Cdiv\u003E\r\n  \u003Ch1\u003EPrueba \u003Cem\u003EPlantilla\u003C\/em\u003E\u003C\/h1\u003E\r\n  \u003Cimg src=\u0022data:image\/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA\u0022 alt=\u0022inline\u0022\u003E\r\n  \u003Ca\u003EClick me\u003C\/a\u003E\r\n  \u003Cdiv data-custom=\u0022keep-me\u0022\u003ECustom data attribute\u003C\/div\u003E\r\n  \u003Ciframe src=\u0022https:\/\/www.youtube.com\/embed\/dQw4w9WgXcQ\u0022 allowfullscreen=\u0022\u0022\u003E\u003C\/iframe\u003E\r\n\u003C\/div\u003E\r\n"},{"id":8,"name":"QA Template Session","html":""},{"id":7,"name":"API Test","html":"\u003Cp\u003Ehi\u003C\/p\u003E"},{"id":5,"name":"API Test Updated","html":"\u003Cp\u003Ehello updated\u003C\/p\u003E"},{"id":4,"name":"Basic Layout","html":""},{"id":2,"name":"Landing (Hero)","html":""},{"id":3,"name":"Blog Post","html":""}];
+  window.__XLERION_ALLOWED_CLASSES = ["container","row","col","card","card-body","btn","btn-primary","btn-outline-light","tpl-block","placeholder-img","card-preview"];
+  window.__XLERION_ALLOWED_CLASS_PATTERNS = ["\/^col-(?:xs|sm|md|lg|xl|xxl)-?\\d*$\/","\/^col-(auto|\\d+)$\/","\/^p[trblxy]?-?[0-5]$\/","\/^m[trblxy]?-?[0-5]$\/","\/^text-[a-z0-9_-]+$\/"];
+    </script>
+    <script src="/js/templates-editor.js" defer></script>
+    <script>
+      // Show preview inside a modal overlay with a sandboxed iframe. Provide an option to open in a new window.
+      (function(){
+        // Ensure modal styles exist
+        if (!document.getElementById('tpl-preview-modal-style')){
+          var st = document.createElement('style'); st.id = 'tpl-preview-modal-style';
+          st.textContent = '\n#templatesRealPreviewModal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:1050}\n#templatesRealPreviewModal .tpl-modal-backdrop{position:absolute;inset:0;background:rgba(0,0,0,0.55)}\n#templatesRealPreviewModal .tpl-modal-window{position:relative;width:90%;height:85%;max-width:1100px;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.3);z-index:1060;display:flex;flex-direction:column}\n#templatesRealPreviewModal .tpl-modal-header{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#f6f6f6;border-bottom:1px solid rgba(0,0,0,0.06)}\n#templatesRealPreviewModal .tpl-modal-title{font-weight:600}\n#templatesRealPreviewModal .tpl-modal-body{flex:1;display:block;padding:0;background:#fff}\n#templatesRealPreviewModal iframe{border:0;width:100%;height:100%}\n#templatesRealPreviewModal .tpl-modal-actions{display:flex;gap:8px}\n';
+          document.head.appendChild(st);
+        }
+
+        function createModal(){
+          var modal = document.createElement('div'); modal.id = 'templatesRealPreviewModal'; modal.style.display = 'none';
+          modal.innerHTML = '\n+            <div class="tpl-modal-backdrop" data-close="1"></div>\n+            <div class="tpl-modal-window">\n+              <div class="tpl-modal-header">\n+                <div class="tpl-modal-title">Previsualización</div>\n+                <div class="tpl-modal-actions">\n+                  <button type="button" class="btn btn-sm btn-outline-light" id="tplPreviewOpenWindow">Abrir en ventana</button>\n+                  <button type="button" class="btn btn-sm btn-outline-danger" id="tplPreviewClose">Cerrar</button>\n+                </div>\n+              </div>\n+              <div class="tpl-modal-body"><iframe id="tplPreviewIframe" sandbox="allow-same-origin allow-forms" ></iframe></div>\n+            </div>\n+';
+          document.body.appendChild(modal);
+          // handlers
+          modal.querySelector('[data-close]')?.addEventListener('click', function(){ hideModal(); });
+          modal.querySelector('#tplPreviewClose')?.addEventListener('click', function(){ hideModal(); });
+          modal.querySelector('#tplPreviewOpenWindow')?.addEventListener('click', function(){
+            try{
+              var html = document.getElementById('templatesEditor')?.value || '';
+              var w = window.open('', '_blank');
+              if (!w) return alert('No se pudo abrir la ventana. Revisa bloqueadores.');
+              var doc = w.document; doc.open(); doc.write('<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Preview</title></head><body style="margin:0">');
+              doc.write(html);
+              doc.write('</body></html>'); doc.close();
+            }catch(e){ alert('Error al abrir en ventana: ' + (e && e.message)); }
+          });
+          return modal;
+        }
+
+        function showModal(){
+          var modal = document.getElementById('templatesRealPreviewModal') || createModal();
+          var iframe = modal.querySelector('#tplPreviewIframe');
+          var html = document.getElementById('templatesEditor')?.value || '';
+          try{ iframe.contentDocument.open(); iframe.contentDocument.write(html); iframe.contentDocument.close(); }catch(e){
+            // fallback: set srcdoc if available
+            try{ iframe.setAttribute('srcdoc','' + html); }catch(ee){}
+          }
+          modal.style.display = 'flex';
+        }
+
+        function hideModal(){ var m = document.getElementById('templatesRealPreviewModal'); if (m) m.style.display='none'; }
+
+        document.getElementById('templatesRealPreviewBtn')?.addEventListener('click', function(){ showModal(); });
+      })();
+    </script>
+  </main>
+</div>
+  </main>
+          <footer class="site-footer" role="contentinfo" aria-label="Pie de página de Xlerion">
+          <div class="container py-3">
+            <div class="row">
+                                                                  </div>
+                    <div class="footer-links-block">
+            <div class="footer-links-title">Enlaces rápidos</div>
+            <ul class="list-unstyled">
+                          <li><a href="/">Inicio</a></li>
+                          <li><a href="/proyectos">Proyectos</a></li>
+                          <li><a href="/soluciones">Soluciones</a></li>
+                          <li><a href="/documentacion">Documentación</a></li>
+                          <li><a href="/contact">Contacto</a></li>
+                        </ul>
+          </div>
+        </div>
+  <!-- Removed duplicated 'Redes' column (was duplicated earlier). Social icons are rendered in the previous column. -->
+        <div class="col-12 col-md-3 footer-subscribe">
+          <h5 style="color:#ffffff">Suscríbete</h5>
+          <p class="footer-subscribe-text" style="color:#ffffff">Recibe novedades y convocatorias por correo.</p>
+                      <form action="/subscribe" method="post" class="d-flex align-items-center" aria-label="Formulario de suscripción" style="gap:.5rem">
+              <input class="form-control me-2" type="email" name="email" placeholder="tu@correo.com" aria-label="email" style="height:36px;padding:.45rem .6rem">
+              <button class="btn btn-primary" type="submit" style="height:36px;padding:.35rem .7rem">Suscribir</button>
+            </form>
+                                          <p class="mt-2" style="color:#ffffff">También nos encuentras en: .</p>
+                  </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-12 text-center small copyright">© Xlerion - Todos los derechos reservados</div>
+      </div>
+    </div>
+  </footer>
+  <!-- Bootstrap JS (CDN) with SRI -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous" defer></script>
+  <style>
+    /* When we inline the SVG we add .site-logo-inline to the svg element to
+       protect it from global <img> filter rules that may dim images. */
+    svg.site-logo-inline { height: 40px; max-height:44px; display:inline-block; vertical-align:middle; }
+  </style>
+    <script>
+    // small runtime for site controls (no external deps)
+    document.addEventListener('DOMContentLoaded', function(){
+      // Menu toggle: manual control to allow closing with same button & cleanup stray backdrops
+      var menuBtn = document.getElementById('ctrl-menu-toggle');
+      var mobileOffcanvas = document.getElementById('mobileMenu');
+      var offInstance = null;
+      if(menuBtn && mobileOffcanvas){
+        offInstance = new bootstrap.Offcanvas(mobileOffcanvas);
+        menuBtn.addEventListener('click', function(e){
+          e.preventDefault();
+          var expanded = menuBtn.getAttribute('aria-expanded') === 'true';
+          if(expanded){ offInstance.hide(); } else { offInstance.show(); }
+        });
+        // sync aria-expanded
+        mobileOffcanvas.addEventListener('show.bs.offcanvas', function(){ menuBtn.setAttribute('aria-expanded','true'); menuBtn.setAttribute('aria-label','Cerrar menú'); });
+        mobileOffcanvas.addEventListener('hidden.bs.offcanvas', function(){ menuBtn.setAttribute('aria-expanded','false'); menuBtn.setAttribute('aria-label','Abrir menú');
+          // remove any lingering backdrops (defensive)
+          setTimeout(function(){
+            document.querySelectorAll('.offcanvas-backdrop.show').forEach(function(b){ b.parentNode && b.parentNode.removeChild(b); });
+          },150);
+        });
+        // Escape key closes when open (extra reliability)
+        document.addEventListener('keydown', function(ev){ if(ev.key==='Escape' && menuBtn.getAttribute('aria-expanded')==='true'){ offInstance.hide(); } });
+      }
+
+  // Search modal (button and Ctrl+K)
+  var searchBtn = document.getElementById('ctrl-search');
+  var showSearch = function(){ var modalEl = document.getElementById('siteSearchModal'); if(modalEl){ var m = new bootstrap.Modal(modalEl); m.show(); document.getElementById('site-search-input')?.focus(); } };
+  if(searchBtn){ searchBtn.addEventListener('click', showSearch); }
+  document.addEventListener('keydown', function(e){ if((e.ctrlKey||e.metaKey) && e.key.toLowerCase() === 'k'){ e.preventDefault(); showSearch(); } });
+
+      // Theme toggle: toggle dark body class and persist + set aria-pressed
+      var themeBtn = document.getElementById('ctrl-theme');
+      if (themeBtn) {
+        // helper to update DOM based on theme
+        var updateThemeUI = function(t){
+          // ensure both theme classes are managed explicitly
+          if(t === 'dark'){
+            document.documentElement.classList.add('theme-dark');
+            document.documentElement.classList.remove('theme-light');
+          } else {
+            document.documentElement.classList.remove('theme-dark');
+            document.documentElement.classList.add('theme-light');
+          }
+          // update aria-pressed for accessibility (pressed = dark)
+          themeBtn.setAttribute('aria-pressed', (t === 'dark') ? 'true' : 'false');
+          // update icon inside button (Material Symbols) — show sun for light, moon for dark
+          var ic = themeBtn.querySelector('span');
+          if(ic){ ic.textContent = (t === 'dark') ? 'dark_mode' : 'light_mode'; }
+          // small transition helper: briefly apply class to animate color changes
+          document.documentElement.classList.add('theme-transition');
+          window.setTimeout(function(){ document.documentElement.classList.remove('theme-transition'); }, 300);
+        };
+
+        // determine initial preference: stored value or system preference
+        var stored = localStorage.getItem('xlerion_theme');
+  var initial = stored ? stored : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        updateThemeUI(initial);
+
+        themeBtn.addEventListener('click', function(){
+          var current = (localStorage.getItem('xlerion_theme') || (document.documentElement.classList.contains('theme-dark') ? 'dark' : 'light'));
+          var next = (current === 'dark') ? 'light' : 'dark';
+          localStorage.setItem('xlerion_theme', next);
+          updateThemeUI(next);
+        });
+      }
+
+      // Ensure offcanvas aria-expanded is kept in sync with the navbar toggler
+  // (legacy sync code replaced by manual control above)
+    });
+  </script>
+  <script>
+    // Robust logo swap: inline SVG when dark theme is active, restore <img> in light theme.
+    (function(){
+      var logoImg = document.getElementById('siteLogoImg');
+      if (!logoImg) return;
+      var originalSrc = logoImg.getAttribute('data-logo-src') || logoImg.getAttribute('src');
+      var inlined = null;
+      var debounce = false;
+
+      function findExistingInline(parent){
+        try { return parent.querySelector('svg.site-logo-inline'); } catch(e){ return null; }
+      }
+
+      function fetchAndInlineSvg(url){
+        return fetch(url, {credentials: 'same-origin'}).then(function(res){
+          if (!res.ok) throw new Error('failed to fetch logo');
+          return res.text();
+        }).then(function(text){
+          var div = document.createElement('div');
+          div.innerHTML = text.trim();
+          var svg = div.querySelector('svg');
+          if (!svg) throw new Error('no svg found');
+          svg.classList.add('site-logo-inline');
+          svg.removeAttribute('width'); svg.removeAttribute('height');
+          return svg;
+        });
+      }
+
+      function inlineLogo(){
+        if (inlined || !originalSrc) return;
+        if (!/\.svg(\?|$)/i.test(originalSrc)) return;
+        // if an inline svg already exists in the DOM, reuse it instead of creating another
+        var existing = findExistingInline(logoImg.parentNode);
+        if (existing){ inlined = existing; logoImg.style.display = 'none'; return; }
+
+        fetchAndInlineSvg(originalSrc).then(function(svg){
+          try{
+            var dupe = findExistingInline(logoImg.parentNode);
+            if (dupe && dupe !== svg) { dupe.parentNode.removeChild(dupe); }
+            svg.setAttribute('role','img');
+            var alt = logoImg.getAttribute('alt') || '';
+            if (alt) svg.setAttribute('aria-label', alt);
+            // replace the <img> node with the inline svg so we don't keep hidden duplicates
+            var placeholder = document.createComment('site-logo-placeholder');
+            var parent = logoImg.parentNode;
+            parent.replaceChild(placeholder, logoImg);
+            parent.insertBefore(svg, placeholder.nextSibling);
+            inlined = { svg: svg, placeholder: placeholder, originalImg: logoImg };
+          }catch(e){ /* safe fallback */ }
+        }).catch(function(){ /* silent fallback to <img> */ });
+      }
+
+      function restoreImg(){
+        try{
+          if (inlined && inlined.svg && inlined.placeholder && inlined.originalImg){
+            var p = inlined.placeholder;
+            var parent = p.parentNode;
+            if (inlined.svg.parentNode) parent.removeChild(inlined.svg);
+            parent.replaceChild(inlined.originalImg, p);
+          } else {
+            // fallback: remove any inline svg we can find and ensure an <img> exists
+            var existing = findExistingInline(logoImg.parentNode);
+            if (existing && existing.parentNode) existing.parentNode.removeChild(existing);
+            if (!document.getElementById('siteLogoImg')){
+              // restore original node if we have a reference
+              if (inlined && inlined.originalImg && inlined.originalImg.parentNode == null){
+                logoImg.parentNode.appendChild(inlined.originalImg);
+              }
+            }
+          }
+        }catch(e){ /* ignore */ }
+        inlined = null;
+      }
+
+      var observer = new MutationObserver(function(){
+        if (debounce) return; debounce = true;
+        setTimeout(function(){ debounce = false; var isDark = document.documentElement.classList.contains('theme-dark'); if (isDark) inlineLogo(); else restoreImg(); }, 40);
+      });
+      observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+
+      // initial run
+      if (document.documentElement.classList.contains('theme-dark')) inlineLogo();
+    })();
+  </script>
+  </body>
+<script src="/nav-selection.js" defer></script>
+</html>
+

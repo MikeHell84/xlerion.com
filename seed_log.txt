@@ -1,0 +1,4 @@
+Inserted template Basic Layout with id: 1
+Inserted template Landing (Hero) with id: 2
+Inserted template Blog Post with id: 3
+Done.

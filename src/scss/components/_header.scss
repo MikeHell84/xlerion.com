@@ -1,0 +1,19 @@
+/* Header / site-header styles partial */
+.site-header{position:sticky;top:0;z-index:1050;background:var(--header-bg);color:var(--bg); border-radius: 0 0 12px 12px;}
+.site-header{position:sticky;top:0;z-index:1050;background:linear-gradient(90deg,var(--deep),#002a66);color:var(--bg);}
+.site-header { background: #000000 !important; }
+
+.site-header .mc-btn, .site-header .nav-control, .site-header .nav-control-tab, .site-header .navbar .nav-link{padding-top:0.55rem;padding-bottom:0.55rem}
+.site-header .mc-btn{height:auto}
+
+.site-header::after{ content:''; position:absolute; left:6px; right:6px; top:6px; bottom:6px; border-radius:0 0 8px 8px; pointer-events:none; box-shadow: 0 0 0 3px rgba(40,40,40,0.06) inset }
+.theme-dark .site-header::after{ box-shadow: 0 0 0 3px rgba(0,238,255,0.08) inset }
+
+/* header nav area fixes for light theme */
+html.theme-light header.site-header .navbar .dropdown-menu{ background:#fff }
+
+/* Reduce prominence of floating site-controls in light theme and provide an easy opt-out */
+#site-controls{ z-index:1200; /* keep above base content but under critical UI like header and modals */ }
+
+/* allow hiding site-controls when page author adds .hide-site-controls on body */
+body.hide-site-controls #site-controls{ display:none !important }

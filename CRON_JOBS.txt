@@ -1,0 +1,14 @@
+# Cron jobs lines to add in cPanel -> Cron Jobs (use absolute path to php CLI in cPanel if required)
+# Daily backup at 02:15
+php -q /home/USER/public_html/backup.php
+
+# Daily digest at 07:00
+php -q /home/USER/public_html/scripts/digest.php
+
+# Weekly optimize (Sunday 03:00)
+php -q /home/USER/public_html/scripts/optimize_db.php
+
+# Daily sitemap generation at 04:00
+php -q /home/USER/public_html/scripts/sitemap.php
+
+# Note: replace /home/USER/public_html with your cPanel home path; for Laravel use /home/USER/public_html/artisan schedule:run every minute if using scheduler

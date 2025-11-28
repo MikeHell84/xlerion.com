@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="index,follow">
+  <title>Soluciones</title>
+  <!-- Bootstrap CSS (CDN) with SRI -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <!-- Material Symbols (Google) -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <base href="/">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+  <!-- Pre-render theme script: apply saved or system theme before paint to avoid FOUC -->
+  <script>!function(){try{var s=localStorage.getItem('xlerion_theme');var t=s?s:(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');if(t==='dark'){document.documentElement.classList.add('theme-dark');document.documentElement.classList.remove('theme-light')}else{document.documentElement.classList.remove('theme-dark');document.documentElement.classList.add('theme-light')}}catch(e){/*ignore*/}}();</script>
+  <!-- Tailwind CDN for rapid prototyping (no build required) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Configure Tailwind theme colors to match Xlerion palette
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            xlerion: {
+              accent: '#00EEFF',
+              cyan: '#43FFFF',
+              deep: '#004080',
+              coal: '#121212',
+              muted: '#2C2C2C',
+              white: '#FFFFFF'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root{
+      --accent:#00EEFF; /* bright cyan */
+      --accent-2:#43FFFF; /* cyan accent */
+      --deep:#004080; /* deep blue */
+      --bg:#FFFFFF; /* white background */
+      --fg:#121212; /* primary text */
+      --muted:#2C2C2C; /* muted dark */
+    }
+    html,body{height:100%;}
+  /* IE-friendly font stack */
+  body{font-family:"Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; margin:0;background:var(--bg);color:var(--fg);-webkit-font-smoothing:antialiased}
+  header{background:linear-gradient(90deg,var(--deep),#002a66);color:var(--bg);padding:1rem}
+  /* Make the main header/nav sticky at the top */
+  header.site-header, nav.navbar, .navbar { position: sticky; top: 0; z-index: 1100; }
+  nav a{color:var(--deep);margin-right:1rem;text-decoration:none;font-weight:600}
+    .container{max-width:980px;margin:1.25rem auto;padding:0 1rem}
+    footer{border-top:1px solid #eee;padding:1rem;color:#666;background:transparent}
+    .btn{background:var(--accent);color:#000;padding:.5rem 1rem;border-radius:6px;text-decoration:none;display:inline-block}
+    .hero{padding:2rem;border-radius:8px;background:linear-gradient(180deg, rgba(0,238,255,0.06), rgba(67,255,255,0.03));margin-bottom:1rem}
+    h1,h2,h3{color:var(--fg)}
+    a { color: var(--deep);} 
+    @media (prefers-color-scheme: dark) {
+      :root{ --bg:#121212; --fg:#FFFFFF; }
+      header{color:var(--fg)}
+    }
+
+    /* --- Contact improvements --- */
+    .contact-card{background:rgba(0,0,0,0.03);padding:1rem;border-radius:8px;display:flex;flex-direction:column;gap:.6rem}
+    .contact-card h5{margin:0 0 .25rem 0;font-size:1.05rem}
+    .contact-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.45rem}
+    .contact-item{display:flex;align-items:center;gap:.5rem;color:var(--muted);font-size:0.95rem}
+    .contact-item a{color:var(--deep);text-decoration:none}
+    .contact-item .material-symbols-outlined{font-size:18px;opacity:.9}
+    .contact-cta{background:var(--deep);color:var(--bg);padding:.5rem .75rem;border-radius:6px;display:inline-block;text-decoration:none}
+    .contact-meta{font-size:.9rem;color:#666;margin-top:.5rem}
+    @media (max-width:767px){
+      .contact-card{padding:.75rem}
+    }
+    /* Modal theme support: make modal content follow root theme classes */
+    html.theme-dark .modal-content {
+      background: #121212;
+      color: #FFFFFF;
+      border-color: #2C2C2C;
+    }
+    html.theme-dark .modal-header,
+    html.theme-dark .modal-footer {
+      border-color: rgba(255,255,255,0.06);
+    }
+    html.theme-dark .modal-body { color: #e6e6e6; }
+    html.theme-dark .btn-outline-primary { color: var(--accent); border-color: rgba(0,238,255,0.12); }
+    html.theme-dark .btn-outline-primary:hover { background: rgba(0,238,255,0.04); }
+    html.theme-dark .modal-backdrop.show { background-color: rgba(0,0,0,0.6); }
+    /* Inputs inside modals should remain readable */
+    html.theme-dark .modal .form-control { background: #1a1a1a; color: #fff; border-color: #2c2c2c; }
+  /* Modal image sizing and gallery overlay */
+  .pm-main-image { width:100%; height:380px; object-fit:cover; display:block; border-radius:6px; }
+  @media (min-width:992px) { .pm-main-image { height:420px; } }
+  /* Project thumbnails: ensure list thumbnails and card images are uniform and responsive */
+  .project-thumb { width:100%; height:180px; object-fit:cover; display:block; border-radius:6px; }
+  .project-card-img { width:100%; height:200px; object-fit:cover; display:block; }
+  @media (min-width:768px) { .project-thumb { height:200px; } .project-card-img { height:220px; } }
+  @media (min-width:992px) { .project-thumb { height:220px; } .project-card-img { height:260px; } }
+  /* Fullscreen gallery overlay */
+  #pm-gallery-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.95); display:none; align-items:center; justify-content:center; z-index:2000; }
+  #pm-gallery-overlay.show { display:flex; }
+  #pm-gallery-overlay img { max-width:95%; max-height:95%; object-fit:contain; }
+  #pm-gallery-overlay .g-btn { position:absolute; top:16px; right:16px; z-index:2010 }
+  #pm-gallery-overlay .g-prev, #pm-gallery-overlay .g-next { position:absolute; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.4); border:none;color:#fff;padding:.6rem .8rem;border-radius:6px }
+  #pm-gallery-overlay .g-prev { left:12px } #pm-gallery-overlay .g-next { right:12px }
+  </style>
+</head>
+<body>
+    <header class="site-header">
+      
+      <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">
+                        <img src="/media/LogoX.svg" alt="Xlerion" style="height:36px;max-height:40px;display:inline-block;vertical-align:middle">
+          </a>
+          <!-- Toggler opens offcanvas on mobile -->
+          <button id="ctrl-menu-toggle" class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-controls="mobileMenu" aria-label="Abrir menú">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <!-- Desktop menu (visible on large screens) -->
+          <div class="navbar-collapse d-none d-lg-flex" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="material-symbols-outlined nav-icon" aria-hidden="true">info</span> Información</a><ul class="dropdown-menu" role="menu"><li role="none"><a class="dropdown-item" role="menuitem" tabindex="-1" href="/acerca-del-creador" title="Acerca del Creador" aria-label="Acerca del Creador"><span class="material-symbols-outlined nav-icon" aria-hidden="true">person</span> Acerca del Creador</a></li><li role="none"><a class="dropdown-item" role="menuitem" tabindex="-1" href="/filosof-a" title="Filosofía" aria-label="Filosofía"><span class="material-symbols-outlined nav-icon" aria-hidden="true">chevron_right</span> Filosofía</a></li><li role="none"><a class="dropdown-item" role="menuitem" tabindex="-1" href="/filosofia" title="Filosofía" aria-label="Filosofía"><span class="material-symbols-outlined nav-icon" aria-hidden="true">emoji_objects</span> Filosofía</a></li><li role="none"><a class="dropdown-item" role="menuitem" tabindex="-1" href="/inicio" title="Inicio" aria-label="Inicio"><span class="material-symbols-outlined nav-icon" aria-hidden="true">home</span> Inicio</a></li><li role="none"><a class="dropdown-item" role="menuitem" tabindex="-1" href="/legal" title="Legal y Privacidad" aria-label="Legal y Privacidad"><span class="material-symbols-outlined nav-icon" aria-hidden="true">gavel</span> Legal y Privacidad</a></li></ul></li><li class="nav-item dropdown"><a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="material-symbols-outlined nav-icon" aria-hidden="true">build</span> Servicios</a><ul class="dropdown-menu" role="menu"><li role="none"><a class="dropdown-item" role="menuitem" tabindex="-1" href="/proyectos" title="Proyectos" aria-label="Proyectos"><span class="material-symbols-outlined nav-icon" aria-hidden="true">work</span> Proyectos</a></li><li role="none"><a class="dropdown-item" role="menuitem" tabindex="-1" href="/soluciones" title="Soluciones" aria-label="Soluciones" aria-current="page"><span class="material-symbols-outlined nav-icon" aria-hidden="true">build</span> Soluciones</a></li></ul></li><li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="material-symbols-outlined nav-icon" aria-hidden="true">menu_book</span> Recursos</a><ul class="dropdown-menu" role="menu"><li role="none"><a class="dropdown-item" role="menuitem" tabindex="-1" href="/blog" title="Blog" aria-label="Blog"><span class="material-symbols-outlined nav-icon" aria-hidden="true">rss_feed</span> Blog</a></li><li role="none"><a class="dropdown-item" role="menuitem" tabindex="-1" href="/convocatorias-alianzas" title="Convocatorias y Alianzas" aria-label="Convocatorias y Alianzas"><span class="material-symbols-outlined nav-icon" aria-hidden="true">campaign</span> Convocatorias y Alianzas</a></li><li role="none"><a class="dropdown-item" role="menuitem" tabindex="-1" href="/documentacion" title="Documentación" aria-label="Documentación"><span class="material-symbols-outlined nav-icon" aria-hidden="true">description</span> Documentación</a></li></ul></li><li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="material-symbols-outlined nav-icon" aria-hidden="true">folder</span> Otros</a><ul class="dropdown-menu" role="menu"><li role="none"><a class="dropdown-item" role="menuitem" tabindex="-1" href="/filosofia-modular-videojuegos" title="Aplicación de la filosofía modular en videojuegos" aria-label="Aplicación de la filosofía modular en videojuegos"><span class="material-symbols-outlined nav-icon" aria-hidden="true">chevron_right</span> Aplicación de la filosofía modular en videojuegos</a></li><li role="none"><a class="dropdown-item" role="menuitem" tabindex="-1" href="/branding-t-cnico-creativo-con-l-gica-simb-lica-y-funcional" title="Branding Técnico-Creativo con Lógica Simbólica y Funcional" aria-label="Branding Técnico-Creativo con Lógica Simbólica y Funcional"><span class="material-symbols-outlined nav-icon" aria-hidden="true">chevron_right</span> Branding Técnico-Creativo con Lógica Simbólica y Funcional</a></li><li role="none"><a class="dropdown-item" role="menuitem" tabindex="-1" href="/data" title="data" aria-label="data"><span class="material-symbols-outlined nav-icon" aria-hidden="true">chevron_right</span> data</a></li><li role="none"><a class="dropdown-item" role="menuitem" tabindex="-1" href="/diagnostico-tecnico-cultural" title="Diagnóstico técnico como herramienta cultural" aria-label="Diagnóstico técnico como herramienta cultural"><span class="material-symbols-outlined nav-icon" aria-hidden="true">chevron_right</span> Diagnóstico técnico como herramienta cultural</a></li><li role="none"><a class="dropdown-item" role="menuitem" tabindex="-1" href="/total-darkness-proyecto" title="Total_Darkness_proyecto" aria-label="Total_Darkness_proyecto"><span class="material-symbols-outlined nav-icon" aria-hidden="true">chevron_right</span> Total_Darkness_proyecto</a></li></ul></li>            </ul>
+            <ul class="navbar-nav ms-auto align-items-center">
+              <!-- Right-aligned contact CTA (desktop) -->
+              <li class="nav-item d-none d-lg-flex align-items-center">
+                <a class="nav-link d-flex align-items-center gap-2 contact-cta" href="/contacto" title="Contacto" aria-label="Contacto">
+                  <span class="material-symbols-outlined" aria-hidden="true">mail</span>
+                  <span class="d-none d-sm-inline">Contacto</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Floating controls: outside the main menu, bottom-right of header (desktop only) -->
+      <div class="menu-controls-floating d-none d-lg-flex" aria-label="Controles flotantes del menú">
+        <div class="mc-stack">
+          <button id="ctrl-search" class="mc-btn" data-action="search" title="Buscar" aria-label="Buscar">
+            <span class="material-symbols-outlined">search</span>
+          </button>
+          <button id="ctrl-theme" class="mc-btn" data-action="theme" title="Alternar tema" aria-label="Alternar tema">
+            <span class="material-symbols-outlined">brightness_2</span>
+          </button>
+          <a id="ctrl-admin" class="mc-btn" href="/admin/login.php" title="Admin" aria-label="Admin">
+            <span class="material-symbols-outlined">settings</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Offcanvas mobile menu -->
+      <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="mobileMenuLabel">Menú</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav">
+            <li class="nav-item mt-2"><div class="nav-link text-muted small fw-semibold">Información</div></li><li class="nav-item"><a class="nav-link" href="/acerca-del-creador" title="Acerca del Creador" aria-label="Acerca del Creador"><span class="material-symbols-outlined nav-icon" aria-hidden="true">person</span> Acerca del Creador</a></li><li class="nav-item"><a class="nav-link" href="/filosof-a" title="Filosofía" aria-label="Filosofía"><span class="material-symbols-outlined nav-icon" aria-hidden="true">chevron_right</span> Filosofía</a></li><li class="nav-item"><a class="nav-link" href="/filosofia" title="Filosofía" aria-label="Filosofía"><span class="material-symbols-outlined nav-icon" aria-hidden="true">emoji_objects</span> Filosofía</a></li><li class="nav-item"><a class="nav-link" href="/inicio" title="Inicio" aria-label="Inicio"><span class="material-symbols-outlined nav-icon" aria-hidden="true">home</span> Inicio</a></li><li class="nav-item"><a class="nav-link" href="/legal" title="Legal y Privacidad" aria-label="Legal y Privacidad"><span class="material-symbols-outlined nav-icon" aria-hidden="true">gavel</span> Legal y Privacidad</a></li><li class="nav-item mt-2"><div class="nav-link text-muted small fw-semibold">Servicios</div></li><li class="nav-item"><a class="nav-link" href="/proyectos" title="Proyectos" aria-label="Proyectos"><span class="material-symbols-outlined nav-icon" aria-hidden="true">work</span> Proyectos</a></li><li class="nav-item"><a class="nav-link active" href="/soluciones" title="Soluciones" aria-label="Soluciones" aria-current="page"><span class="material-symbols-outlined nav-icon" aria-hidden="true">build</span> Soluciones</a></li><li class="nav-item mt-2"><div class="nav-link text-muted small fw-semibold">Recursos</div></li><li class="nav-item"><a class="nav-link" href="/blog" title="Blog" aria-label="Blog"><span class="material-symbols-outlined nav-icon" aria-hidden="true">rss_feed</span> Blog</a></li><li class="nav-item"><a class="nav-link" href="/convocatorias-alianzas" title="Convocatorias y Alianzas" aria-label="Convocatorias y Alianzas"><span class="material-symbols-outlined nav-icon" aria-hidden="true">campaign</span> Convocatorias y Alianzas</a></li><li class="nav-item"><a class="nav-link" href="/documentacion" title="Documentación" aria-label="Documentación"><span class="material-symbols-outlined nav-icon" aria-hidden="true">description</span> Documentación</a></li><li class="nav-item mt-2"><div class="nav-link text-muted small fw-semibold">Otros</div></li><li class="nav-item"><a class="nav-link" href="/filosofia-modular-videojuegos" title="Aplicación de la filosofía modular en videojuegos" aria-label="Aplicación de la filosofía modular en videojuegos"><span class="material-symbols-outlined nav-icon" aria-hidden="true">chevron_right</span> Aplicación de la filosofía modular en videojuegos</a></li><li class="nav-item"><a class="nav-link" href="/branding-t-cnico-creativo-con-l-gica-simb-lica-y-funcional" title="Branding Técnico-Creativo con Lógica Simbólica y Funcional" aria-label="Branding Técnico-Creativo con Lógica Simbólica y Funcional"><span class="material-symbols-outlined nav-icon" aria-hidden="true">chevron_right</span> Branding Técnico-Creativo con Lógica Simbólica y Funcional</a></li><li class="nav-item"><a class="nav-link" href="/data" title="data" aria-label="data"><span class="material-symbols-outlined nav-icon" aria-hidden="true">chevron_right</span> data</a></li><li class="nav-item"><a class="nav-link" href="/diagnostico-tecnico-cultural" title="Diagnóstico técnico como herramienta cultural" aria-label="Diagnóstico técnico como herramienta cultural"><span class="material-symbols-outlined nav-icon" aria-hidden="true">chevron_right</span> Diagnóstico técnico como herramienta cultural</a></li><li class="nav-item"><a class="nav-link" href="/total-darkness-proyecto" title="Total_Darkness_proyecto" aria-label="Total_Darkness_proyecto"><span class="material-symbols-outlined nav-icon" aria-hidden="true">chevron_right</span> Total_Darkness_proyecto</a></li>            <li class="nav-item mt-2"><a class="nav-link" href="/admin/login.php">Admin</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+  
+    <section class="parallax-banner" role="region" aria-label="Banner principal">
+                <picture>
+                          <img class="parallax-media" src="/media/Planos.png" alt="Imagen de cabecera">
+              </picture>
+        <div class="parallax-overlay">
+      <div class="container hero">
+                <h1 id="hero-title" class="hero-content text-center">Soluciones</h1>
+              </div>
+    </div>
+  </section>
+  <!-- Desktop controls moved into navbar (compact mobile controls remain in offcanvas) -->
+
+  <!-- Search modal (simple, accessible) -->
+  <div class="modal fade" id="siteSearchModal" tabindex="-1" aria-labelledby="siteSearchLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="siteSearchLabel">Buscar en Xlerion</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <form action="/search" method="get" role="search">
+            <label for="site-search-input" class="visually-hidden">Buscar</label>
+            <div class="input-group">
+              <input id="site-search-input" name="q" type="search" class="form-control" placeholder="Buscar..." aria-label="Buscar en el sitio">
+              <button class="btn btn-primary" type="submit">Buscar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <main class="container">
+        
+  <section class="container my-5">
+    <div class="soluciones-hero">
+      <h1 class="hero-content text-center">Soluciones</h1>
+      <p class="lead">Texto principal: Xlerion desarrolla herramientas técnicas especializadas para entornos de alta exigencia como videojuegos AAA, multimedia avanzada, visión computacional y producción interactiva. Cada solución se d...</p>      <div class="hero-cta">
+        <a href="/contacto" class="btn btn-primary">Solicitar diagnóstico</a>
+        <a href="/proyectos" class="btn btn-outline-light ms-2">Ver proyectos</a>
+      </div>
+    </div>
+
+    <div class="soluciones-container mt-4">
+      <div>
+        <div class="soluciones-features">
+          <!-- Feature cards: try to extract headings from content or use fallbacks -->
+                      <article class="feature-card" role="article" aria-label="feature-1">
+              <div class="feature-icon">1</div>
+              <div>
+                <h4>Servicio X</h4>
+                <p>Descripción breve del servicio, beneficios y aplicación.</p>
+              </div>
+            </article>
+                      <article class="feature-card" role="article" aria-label="feature-2">
+              <div class="feature-icon">2</div>
+              <div>
+                <h4>Servicio X</h4>
+                <p>Descripción breve del servicio, beneficios y aplicación.</p>
+              </div>
+            </article>
+                      <article class="feature-card" role="article" aria-label="feature-3">
+              <div class="feature-icon">3</div>
+              <div>
+                <h4>Servicio X</h4>
+                <p>Descripción breve del servicio, beneficios y aplicación.</p>
+              </div>
+            </article>
+                      <article class="feature-card" role="article" aria-label="feature-4">
+              <div class="feature-icon">4</div>
+              <div>
+                <h4>Servicio X</h4>
+                <p>Descripción breve del servicio, beneficios y aplicación.</p>
+              </div>
+            </article>
+                  </div>
+      </div>
+
+      <aside>
+        <div class="soluciones-cta">
+          <h5>¿Listo para una evaluación técnica?</h5>
+          <p class="small text-muted">Programamos una reunión inicial sin costo para entender tus necesidades.</p>
+          <a class="btn btn-primary" href="/contacto">Programar llamada</a>
+          <a class="btn btn-outline-light mt-2" href="/documentacion">Ver documentación técnica</a>
+        </div>
+
+        <div class="card card-preview mt-3">
+          <div class="card-body">
+            <h6 class="card-title">Recursos</h6>
+            <p class="card-text">Guías, integraciones y casos de estudio disponibles para descarga.</p>
+            <a href="/documentacion" class="btn btn-link">Ir a documentación</a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+
+
+  </main>
+  <footer class="site-footer" role="contentinfo" aria-label="Pie de página de Xlerion">
+    <div class="container py-3">
+      <div class="row">
+        <div class="col-12 col-md-4 mb-3">
+          <!-- Contact card: semantic, accessible and action-oriented -->
+          <section class="contact-card" aria-labelledby="contact-heading">
+            <h5 id="contact-heading">Contacto</h5>
+            <ul class="contact-list" aria-label="Información de contacto">
+              <li class="contact-item">
+                <span class="material-symbols-outlined" aria-hidden="true">place</span>
+                <span>Nocaima, Cundinamarca</span>
+              </li>
+              <li class="contact-item">
+                <span class="material-symbols-outlined" aria-hidden="true">mail</span>
+                <a href="mailto:contactus@xlerion.com" rel="noopener noreferrer">contactus@xlerion.com</a>
+              </li>
+              <li class="contact-item">
+                <span class="material-symbols-outlined" aria-hidden="true">phone</span>
+                <a href="tel:+573208605600">+57 320 860 5600</a>
+              </li>
+            </ul>
+
+            <p class="contact-meta">Horario: Lun–Vie, 9:00–18:00 · Respuesta en <strong>24‑48 horas</strong></p>
+
+            <p class="mt-2">
+              <a class="contact-cta" href="/contact" role="button" aria-label="Ir al formulario de contacto">Enviar mensaje</a>
+              <a class="btn ms-2" href="/proyectos" aria-label="Ver proyectos">Ver proyectos</a>
+            </p>
+          </section>
+        </div>
+        <div class="col-6 col-md-2 mb-3">
+          <h5>Enlaces</h5>
+          <ul class="list-unstyled">
+            <li><a href="/">Inicio</a></li>
+            <li><a href="/proyectos">Proyectos</a></li>
+            <li><a href="/soluciones">Soluciones</a></li>
+            <li><a href="/documentacion">Documentación</a></li>
+            <li><a href="/contact">Contacto</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-md-3 mb-3">
+          <h5>Redes</h5>
+          <div class="social-icons" role="navigation" aria-label="Redes sociales">
+            <a class="social-link" href="https://www.linkedin.com/company/xlerion" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <!-- LinkedIn SVG -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-9h3v9zm-1.5-10.268c-.966 0-1.75-.785-1.75-1.75s.784-1.75 1.75-1.75 1.75.785 1.75 1.75-.784 1.75-1.75 1.75zm13.5 10.268h-3v-4.5c0-1.074-.021-2.454-1.496-2.454-1.498 0-1.727 1.171-1.727 2.381v4.573h-3v-9h2.879v1.233h.041c.401-.76 1.379-1.556 2.839-1.556 3.037 0 3.599 2.    273 3.599 5.23v4.093z"/></svg>
+            </a>
+            <a class="social-link" href="https://www.instagram.com/ultimatexlerion/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <!-- Instagram SVG -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.34 3.608 1.314.975.975 1.252 2.242 1.314 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.339 2.633-1.314 3.608-.975.975-2.242 1.252-3.608 1.314-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.339-3.608-1.314-.975-.975-1.252-2.242-1.314-3.608-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.062-1.366.339-2.633 1.314-3.608.975-.975 2.242-1.252 3.608-1.314 1.266-.058 1.646-.07 4.85-.07m0-2.163c-3.259 0-3.667.012-4.947.072-1.558.071-2.944.34-3.995 1.392-1.052 1.05-1.321 2.436-1.392 3.995-.06 1.28-.072 1.688-.072 4.947s.012 3.667.072 4.947c.071 1.558.34 2.944 1.392 3.995 1.05 1.052 2.436 1.321 3.995 1.392 1.28.06 1.688.072 4.947.072s3.667-.012 4.947-.072c1.558-.071 2.944-.34 3.995-1.392 1.052-1.05 1.321-2.436 1.392-3.995.06-1.28.072-1.688.072-4.947s-.012-3.667-.072-4.947c-.071-1.558-.34-2.944-1.392-3.995-1.05-1.052-2.436-1.321-3.995-1.392-1.28-.06-1.688-.072-4.947-.072z"/><path d="M12 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a3.999 3.999 0 1 1 0-7.998 3.999 3.999 0 0 1 0 7.998z"/></svg>
+            </a>
+            <a class="social-link" href="https://www.facebook.com/xlerionultimate" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+              <!-- Facebook SVG -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M22 12c0-5.523-4.477-10-10-10s-10 4.477-10 10c0 4.991 3.657 9.128 8.438 9.878v-6.99h-2.54v-2.888h2.54v-2.2c0-2.507 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.772-1.63 1.562v1.873h2.773l-.443 2.888h-2.33v6.99c4.781-.75 8.438-4.887 8.438-9.878z"/></svg>
+            </a>
+            <a class="social-link" href="https://www.behance.net/xlerionultimate" target="_blank" rel="noopener noreferrer" aria-label="Behance">
+              <!-- Behance SVG (simple b icon) -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M8.5 10.5c0-1.657-1.343-3-3-3h-3v9h3c1.657 0 3-1.343 3-3v-3zm11.5 7.5h-7v-2h7v2zm0-4h-4.5c.276-.46.5-1 .5-1.6 0-1.933-1.567-3.5-3.5-3.5h-4v9h4c2.485 0 4.5-2.015 4.5-4.5 0-.29-.03-.57-.06-.85.52.18 1.06.35 1.56.35 1.93 0 3.5-1.57 3.5-3.5 0-1.93-1.57-3.5-3.5-3.5h-1v2h1c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5c-.46 0-.86-.24-1.1-.6-.14.29-.25.61-.36.92.46.15 1 .23 1.46.23 1.93 0 3.5 1.57 3.5 3.5 0 1.93-1.57 3.5-3.5 3.5z"/></svg>
+            </a>
+            <a class="social-link" href="https://www.indiegogo.com/es/profile/miguel_rodriguez-martinez_edb9?redirect_reason#/overview" target="_blank" rel="noopener noreferrer" aria-label="Indiegogo">
+              <!-- Indiegogo (text mark) -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.2" />
+                <text x="12" y="16" font-family="Arial, Helvetica, sans-serif" font-size="10" text-anchor="middle" fill="currentColor">IG</text>
+              </svg>
+            </a>
+            <a class="social-link" href="https://www.kickstarter.com/profile/xlerionstudios" target="_blank" rel="noopener noreferrer" aria-label="Kickstarter">
+              <!-- Kickstarter (K badge) -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.2" />
+                <text x="12" y="16" font-family="Arial, Helvetica, sans-serif" font-size="10" font-weight="700" text-anchor="middle" fill="currentColor">K</text>
+              </svg>
+            </a>
+            <a class="social-link" href="https://www.patreon.com/xlerionstudios" target="_blank" rel="noopener noreferrer" aria-label="Patreon">
+              <!-- Patreon (P badge) -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" fill="currentColor" />
+                <text x="12" y="16" font-family="Arial, Helvetica, sans-serif" font-size="10" font-weight="700" text-anchor="middle" fill="#fff">P</text>
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div class="col-12 col-md-3">
+          <h5>Suscríbete</h5>
+          <p>Recibe novedades y convocatorias por correo.</p>
+          <form action="/subscribe" method="post" class="d-flex" aria-label="Formulario de suscripción">
+            <input class="form-control me-2" type="email" name="email" placeholder="tu@correo.com" aria-label="email">
+            <button class="btn btn-primary" type="submit">Suscribir</button>
+          </form>
+          <p class="mt-2">También nos encuentras en: <a href="https://www.indiegogo.com/es/profile/miguel_rodriguez-martinez_edb9?redirect_reason#/overview" target="_blank" rel="noopener noreferrer">Indiegogo</a>, <a href="https://www.kickstarter.com/profile/xlerionstudios" target="_blank" rel="noopener noreferrer">Kickstarter</a> y <a href="https://www.patreon.com/xlerionstudios" target="_blank" rel="noopener noreferrer">Patreon</a>.</p>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-12 text-center small copyright">© Xlerion - Todos los derechos reservados</div>
+      </div>
+    </div>
+  </footer>
+  <!-- Bootstrap JS (CDN) with SRI -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous" defer></script>
+    <script>
+    // small runtime for site controls (no external deps)
+    document.addEventListener('DOMContentLoaded', function(){
+      // Menu toggle: trigger Bootstrap offcanvas used for mobile menu
+      var menuBtn = document.getElementById('ctrl-menu-toggle');
+      if(menuBtn){
+        menuBtn.addEventListener('click', function(){
+          var off = document.getElementById('mobileMenu');
+          if(off){ var oc = new bootstrap.Offcanvas(off); oc.toggle(); }
+        });
+      }
+
+  // Search modal (button and Ctrl+K)
+  var searchBtn = document.getElementById('ctrl-search');
+  var showSearch = function(){ var modalEl = document.getElementById('siteSearchModal'); if(modalEl){ var m = new bootstrap.Modal(modalEl); m.show(); document.getElementById('site-search-input')?.focus(); } };
+  if(searchBtn){ searchBtn.addEventListener('click', showSearch); }
+  document.addEventListener('keydown', function(e){ if((e.ctrlKey||e.metaKey) && e.key.toLowerCase() === 'k'){ e.preventDefault(); showSearch(); } });
+
+      // Theme toggle: toggle dark body class and persist + set aria-pressed
+      var themeBtn = document.getElementById('ctrl-theme');
+      if (themeBtn) {
+        // helper to update DOM based on theme
+        var updateThemeUI = function(t){
+          // ensure both theme classes are managed explicitly
+          if(t === 'dark'){
+            document.documentElement.classList.add('theme-dark');
+            document.documentElement.classList.remove('theme-light');
+          } else {
+            document.documentElement.classList.remove('theme-dark');
+            document.documentElement.classList.add('theme-light');
+          }
+          // update aria-pressed for accessibility (pressed = dark)
+          themeBtn.setAttribute('aria-pressed', (t === 'dark') ? 'true' : 'false');
+          // update icon inside button (Material Symbols) — show sun for light, moon for dark
+          var ic = themeBtn.querySelector('span');
+          if(ic){ ic.textContent = (t === 'dark') ? 'dark_mode' : 'light_mode'; }
+          // small transition helper: briefly apply class to animate color changes
+          document.documentElement.classList.add('theme-transition');
+          window.setTimeout(function(){ document.documentElement.classList.remove('theme-transition'); }, 300);
+        };
+
+        // determine initial preference: stored value or system preference
+        var stored = localStorage.getItem('xlerion_theme');
+  var initial = stored ? stored : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        updateThemeUI(initial);
+
+        themeBtn.addEventListener('click', function(){
+          var current = (localStorage.getItem('xlerion_theme') || (document.documentElement.classList.contains('theme-dark') ? 'dark' : 'light'));
+          var next = (current === 'dark') ? 'light' : 'dark';
+          localStorage.setItem('xlerion_theme', next);
+          updateThemeUI(next);
+        });
+      }
+
+      // Ensure offcanvas aria-expanded is kept in sync with the navbar toggler
+      var mobileOffcanvas = document.getElementById('mobileMenu');
+      var menuToggler = document.getElementById('ctrl-menu-toggle');
+      if(menuToggler && mobileOffcanvas){
+        // initialize
+        menuToggler.setAttribute('aria-expanded', 'false');
+        mobileOffcanvas.addEventListener('show.bs.offcanvas', function(){ menuToggler.setAttribute('aria-expanded', 'true'); });
+        mobileOffcanvas.addEventListener('hide.bs.offcanvas', function(){ menuToggler.setAttribute('aria-expanded', 'false'); });
+      }
+    });
+  </script>
+  </body>
+</html>

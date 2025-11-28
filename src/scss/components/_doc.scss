@@ -1,0 +1,49 @@
+// Doc and control related overrides migrated from public/styles.css
+// Keeps dark-mode icon colors, inline span color, and subtitle uppercase behavior
+
+// Variables expected from _variables.scss: --accent-2 is exposed as $accent-2 via :root fallback in CSS
+// Use CSS variables for runtime theming where appropriate
+
+html.theme-dark {
+  .material-symbols-outlined,
+  span.material-symbols-outlined,
+  .nav-link .material-symbols-outlined,
+  .mc-btn span,
+  .nav-control span,
+  #site-controls .sc-icon,
+  #site-controls .sc-label,
+  .nav-icon,
+  .social-link svg,
+  .navbar .nav-link .nav-icon,
+  .offcanvas .nav-link .material-symbols-outlined {
+    color: var(--accent-2) !important;
+    fill: currentColor !important;
+    opacity: 1 !important;
+    text-shadow: none !important;
+  }
+
+  .material-symbols-outlined:focus,
+  span.material-symbols-outlined:focus,
+  .mc-btn[aria-pressed="true"] .material-symbols-outlined,
+  .nav-control[aria-pressed="true"] span {
+    color: var(--accent-2) !important;
+    fill: currentColor !important;
+  }
+
+  // inline spans and doc section titles bright cyan in dark mode
+  span,
+  .doc-section-body span,
+  .doc-section-title h3,
+  h3.doc-section-title {
+    color: var(--accent-2) !important;
+  }
+}
+
+// Scoped uppercase helper: apply when the page wrapper includes .subtitle-upper
+.subtitle-upper {
+  h3.doc-section-title,
+  .doc-section-title {
+    text-transform: uppercase !important;
+    letter-spacing: 0.02em !important;
+  }
+}
