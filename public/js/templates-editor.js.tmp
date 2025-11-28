@@ -1,0 +1,30 @@
+// Compact minimal TemplatesEditor to restore palette -> canvas DnD and basic API
+(function(){
+  'use strict';
+
+  var snippets = window.__TEMPLATES_SNIPPETS || {
+    hero: '<section class="hero"><h2>Hero</h2></section>',
+    card: '<div class="card">Card</div>'
+  };
+
+  function byId(id){ return document.getElementById(id); }
+
+  function getCanvas(){ var el = byId('templatesCanvas'); if (el) return el; try{ return document.querySelector('.templates-canvas'); }catch(e){ return null; } }
+
+  function syncCanvasToTextarea(){
+    try{
+      var ta = byId('templatesEditor'); if(!ta) return; var c = getCanvas(); if(!c) return; ta.value = Array.from(c.children).filter(function(ch){ return ch && ch.classList && ch.classList.contains('tpl-block'); }).map(function(b){ var ct = b.querySelector('.tpl-content'); return ct ? ct.innerHTML : b.innerHTML; }).join('\n');
+    }catch(e){}
+  }
+
+  function addBlockToCanvas(html){ var c = getCanvas(); if(!c) return; var wrap=document.createElement('div'); wrap.className='tpl-block'; wrap.style.margin='8px 0'; var content=document.createElement('div'); content.className='tpl-content'; content.innerHTML = html || ''; wrap.appendChild(content); try{ wrap.setAttribute('draggable','true'); }catch(e){} c.appendChild(wrap); try{ wrap.scrollIntoView({behavior:'smooth', block:'nearest'}); }catch(e){} syncCanvasToTextarea(); }
+
+  function wirePalette(){ try{ document.querySelectorAll('.palette-item').forEach(function(p){ try{ p.setAttribute('draggable','true'); }catch(e){} p.addEventListener('click', function(){ var key = p.getAttribute('data-insert'); var html = p.getAttribute('data-html') || (key && snippets[key]) || ''; addBlockToCanvas(html); }); p.addEventListener('dragstart', function(ev){ var key = p.getAttribute('data-insert') || p.getAttribute('data-html') || ''; try{ ev.dataTransfer.setData('application/x-templates-palette', key); }catch(e){ try{ ev.dataTransfer.setData('text/plain', key); }catch(e){} } try{ ev.dataTransfer.effectAllowed='copy'; }catch(e){} window.__templates_current_drag = key; }); p.addEventListener('dragend', function(){ try{ window.__templates_current_drag = null; }catch(e){} }); }); }catch(e){} }
+
+  function wireCanvasDnD(){ var c = getCanvas(); if(!c) return; c.addEventListener('dragover', function(ev){ try{ ev.preventDefault(); ev.dataTransfer.dropEffect='copy'; }catch(e){ ev.preventDefault && ev.preventDefault(); } }); c.addEventListener('drop', function(ev){ try{ ev.preventDefault(); var key = null; try{ key = ev.dataTransfer && (ev.dataTransfer.getData('application/x-templates-palette') || ev.dataTransfer.getData('text/plain')); }catch(e){} if((!key || key==='') && window.__templates_current_drag) key = window.__templates_current_drag; var html = key ? (snippets[key] || key) : ''; if(!html) return; addBlockToCanvas(html); }catch(e){ console.error('TemplatesEditor drop error', e); } }); }
+
+  function init(){ try{ wirePalette(); wireCanvasDnD(); }catch(e){} window.TemplatesEditor = window.TemplatesEditor || {}; window.TemplatesEditor.insertHTML = addBlockToCanvas; window.TemplatesEditor.syncBeforeSubmit = function(){ syncCanvasToTextarea(); return true; }; }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+
+})();

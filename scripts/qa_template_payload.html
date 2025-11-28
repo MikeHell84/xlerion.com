@@ -1,0 +1,7 @@
+<div class="hero" onclick="alert('xss')">
+  <h1 class="title special-class">Prueba <em>Plantilla</em></h1>
+  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA" alt="inline" />
+  <a href="javascript:alert('bad')">Click me</a>
+  <div data-custom="keep-me">Custom data attribute</div>
+  <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+</div>

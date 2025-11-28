@@ -1,0 +1,7 @@
+vendor/
+node_modules/
+public/media/
+storage/database.sqlite
+archive/
+archive_untracked/
+prune_conflicts/

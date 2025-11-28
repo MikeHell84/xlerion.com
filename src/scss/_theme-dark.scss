@@ -1,0 +1,11 @@
+/* Dark theme overrides */
+.theme-dark {
+  --bg:#121212;
+  --fg:#ffffff;
+  --card-bg:#0f1720;
+  --card-border:rgba(255,255,255,0.04);
+  --header-bg:rgba(0,12,22,0.88);
+  --btn-contrast:#000;
+}
+
+.theme-dark body { background: var(--bg); color: var(--fg); }

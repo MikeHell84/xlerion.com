@@ -1,0 +1,133 @@
+/* Fallback styles for the templates visual canvas */
+:root{
+  --tpl-canvas-bg: #fff;
+  --tpl-canvas-color: #111;
+  --tpl-block-bg: #fafafa;
+  --tpl-block-border: rgba(0,0,0,0.06);
+  --tpl-control-bg: rgba(255,255,255,0.9);
+}
+#templatesCanvas{ background:var(--tpl-canvas-bg); padding:12px; box-sizing:border-box; }
+.tpl-block{ border:1px solid var(--tpl-block-border); border-radius:6px; padding:10px 12px 12px 28px; margin:10px 0; background:#fafafa; position:relative; }
+.tpl-block .tpl-controls{ position:absolute; right:8px; top:8px; display:flex; gap:6px; }
+.tpl-block .tpl-controls button{ font-size:12px; padding:4px 6px; }
+.tpl-handle{ position:absolute; left:6px; top:10px; width:14px; height:14px; background:rgba(0,0,0,0.06); border-radius:3px; cursor:grab; }
+.tpl-ghost{ box-shadow:0 8px 28px rgba(0,0,0,0.18); border-radius:6px; opacity:.95; }
+.tpl-block .tpl-content img{ max-width:100%; height:auto; display:block; }
+.tpl-canvas-hint{ color:#666; font-size:14px; }
+.tpl-block.editing{ outline:2px dashed rgba(0,123,255,0.25); }
+.tpl-block .tpl-controls .btn{ padding:.25rem .4rem; font-size:.75rem; }
+
+/* Theme: respect system or page theme classes */
+html.theme-dark {
+  --tpl-canvas-bg: #111214;
+  --tpl-canvas-color: #e6e6e6;
+  --tpl-block-bg: #171717;
+  --tpl-block-border: rgba(255,255,255,0.04);
+  --tpl-control-bg: rgba(0,0,0,0.2);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --tpl-canvas-bg: #111214;
+    --tpl-canvas-color: #e6e6e6;
+    --tpl-block-bg: #171717;
+    --tpl-block-border: rgba(255,255,255,0.04);
+    --tpl-control-bg: rgba(0,0,0,0.2);
+  }
+}
+
+/* Apply variables to our editor elements (scoped) */
+#templatesCanvas.templates-canvas, #templatesCanvas {
+  background: var(--tpl-canvas-bg) !important;
+  color: var(--tpl-canvas-color) !important;
+}
+.templates-htmlpane { background: var(--tpl-canvas-bg); color: var(--tpl-canvas-color); }
+.tpl-block{ background: var(--tpl-block-bg); color: inherit; border-color: var(--tpl-block-border); }
+.tpl-block .tpl-controls{ background: transparent; }
+.tpl-block .tpl-controls button{ background: var(--tpl-control-bg); color: inherit; border: none; }
+
+/* Logo sizing and dark adjustments */
+.site-logo{ height:40px; max-height:44px; display:inline-block; vertical-align:middle }
+html.theme-dark .site-logo{ /* if SVG uses currentColor, invert isn't necessary; otherwise preserve visibility */ filter: none; }
+
+/* Increase specificity so this rule overrides global .navbar-brand img !important sizing in the main stylesheet */
+header.site-header .navbar-brand img.site-logo,
+header.site-header .navbar-brand .site-logo,
+.navbar-brand img.site-logo {
+  height: 40px !important;
+  max-height: 44px !important;
+  display: inline-block !important;
+}
+
+@media (min-width: 992px) {
+  header.site-header .navbar-brand img.site-logo,
+  .navbar-brand img.site-logo {
+    height: 42px !important;
+  }
+}
+
+/* Ensure dark theme doesn't apply unwanted filters to our admin logo */
+html.theme-dark header.site-header .navbar-brand img.site-logo {
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+/* Match light-mode visual treatment so logo looks identical across themes */
+html.theme-light header.site-header .navbar-brand img.site-logo,
+html.theme-light .navbar-brand img.site-logo {
+  filter: grayscale(100%) brightness(.55) contrast(.95) !important;
+  opacity: .98 !important;
+}
+
+/* Also apply the same visual treatment in dark mode so the logo is present and matches light mode */
+html.theme-dark header.site-header .navbar-brand img.site-logo,
+html.theme-dark .navbar-brand img.site-logo {
+  filter: grayscale(100%) brightness(.55) contrast(.95) !important;
+  opacity: .98 !important;
+}
+
+/* Ensure admin header uses same treatment even when theme switches */
+header.site-header .navbar-brand img.site-logo {
+  image-rendering: -webkit-optimize-contrast !important;
+}
+@media (prefers-color-scheme: dark) {
+  header.site-header .navbar-brand img.site-logo {
+    filter: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* Cover navbar variants used across the site so logo parity holds */
+.navbar.navbar-expand-lg.sticky-top .navbar-brand img.site-logo,
+.navbar.navbar-expand-lg .navbar-brand img.site-logo,
+.navbar.sticky-top .navbar-brand img.site-logo {
+  height: 40px !important;
+  max-height: 44px !important;
+  image-rendering: -webkit-optimize-contrast !important;
+}
+
+/* Stronger overrides to counteract global .card/.panel white !important rules when in dark theme */
+html.theme-dark #templatesCanvas.templates-canvas,
+html.theme-dark .templates-htmlpane,
+html.theme-dark #templatesViewer,
+html.theme-dark .tpl-block,
+html.theme-dark .templates-htmlpane pre {
+  background: var(--tpl-canvas-bg) !important;
+  color: var(--tpl-canvas-color) !important;
+  border-color: var(--tpl-block-border) !important;
+}
+
+/* Also apply when system prefers dark but page not explicitly themed */
+@media (prefers-color-scheme: dark) {
+  #templatesCanvas.templates-canvas,
+  .templates-htmlpane,
+  #templatesViewer,
+  .tpl-block,
+  .templates-htmlpane pre {
+    background: var(--tpl-canvas-bg) !important;
+    color: var(--tpl-canvas-color) !important;
+    border-color: var(--tpl-block-border) !important;
+  }
+}
+
+/* Small utility to ensure text inside tpl-content inherits contrast */
+.tpl-block .tpl-content, .tpl-block .tpl-content * { color: inherit; }

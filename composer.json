@@ -1,0 +1,18 @@
+{
+  "name": "xlerion/xlerion_cmr",
+  "description": "Xlerion CMR lightweight PHP app",
+  "type": "project",
+  "require": {
+    "php": ">=8.0",
+    "ezyang/htmlpurifier": "^4.19",
+    "scssphp/scssphp": "^2.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Xlerion\\": "src/"
+    }
+  },
+  "config": {
+    "optimize-autoloader": true
+  }
+}

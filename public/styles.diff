@@ -1,0 +1,2495 @@
+diff --git a/original_styles.css b/public/styles.css
+index e590fa2..c3f006a 100644
+--- a/original_styles.css
++++ b/public/styles.css
+@@ -1,51 +1,44 @@
+-/* Main stylesheet for Xlerion CMR - small additions for accessibility and helpers */
+-:root{
+-  --accent:#00EEFF; /* bright cyan */
+-  --accent-2:#43FFFF; /* cyan accent */
+-  --deep:#004080; /* deep blue */
+-  --bg:#FFFFFF; /* white */
+-  --fg:#121212; /* charcoal */
+-  --muted:#2C2C2C;
+-}
+-/* smooth theme switch helper */
+-.theme-transition *{transition: background-color 240ms ease, color 240ms ease, border-color 240ms ease}
+-/* IE-friendly font stack with generic fallback */
+-body{font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; margin:0;background:var(--bg);color:var(--fg)}
+-.container{max-width:980px;margin:1.25rem auto;padding:0 1rem}
+-.btn{background:var(--accent);color:#002; padding:.5rem 1rem;border-radius:6px;text-decoration:none;display:inline-block;border:none}
+-.btn:hover{background:var(--accent-2)}
+-.flash{padding:.5rem;background:linear-gradient(90deg,rgba(0,238,255,0.06),rgba(67,255,255,0.03));margin:.5rem 0;border-left:4px solid var(--accent)}
+-/* Honeypot helper: visually hidden and inaccessible to assistive tech while remaining in DOM */
+-:root{
+-  /* Xlerion brand palette (from contenido.txt) */
+-  --accent: #00eeff;       /* azul brillante tecnol├│gico */
+-  --accent-2: #43ffff;     /* cian brillante */
+-  --deep: #004080;         /* azul profundo */
+-  --bg: #ffffff;           /* blanco puro */
+-  --fg: #121212;           /* negro carb├│n */
+-  --muted: #2C2C2C;        /* gris oscuro */
+-  --card-bg: #ffffff;
+-  --card-border: #e9eef6;
+-  --header-bg: rgba(0,32,64,0.78);
+-  --btn-contrast: #000000;
++:root{--accent:#0ef;--accent-2:#43ffff;--deep:#004080;--bg:#fff;--fg:#121212;--muted:#2c2c2c;--card-bg:#fff;--card-border:#e9eef6;--header-bg:rgba(0,32,64,.78);--btn-contrast:#000}body,html{font-family:Work Sans,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}.navbar.sticky-top{backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);background:rgba(0,0,0,.4)}.navbar{box-shadow:0 2px 10px rgba(0,0,0,.1);min-height:64px}.navbar .container{align-items:center;display:flex}.navbar-brand{color:var(--bg);font-size:1.25rem;font-weight:800}.navbar .nav-link{color:var(--accent);padding:.6rem .5rem}.navbar .nav-link[title]{cursor:pointer}.navbar .nav-link:focus,.navbar .nav-link:hover{color:var(--accent);text-decoration:none;text-shadow:0 0 8px rgba(0,238,255,.45)}.navbar .nav-link.active,.navbar .nav-link[aria-current=page]{background:linear-gradient(180deg,rgba(0,238,255,.04),rgba(0,238,255,.02));border-radius:14px;box-shadow:inset 0 0 0 2px rgba(0,238,255,.08),0 6px 18px rgba(0,0,0,.06);color:var(--bg)!important;padding-left:.75rem;padding-right:.75rem;text-shadow:none}.navbar .nav-list{display:flex;gap:1rem;justify-content:center}.navbar .nav-item.nav-group-main{align-items:center;display:flex}.navbar .nav-item.nav-group-main>.nav-link{font-weight:400}.navbar-collapse.d-none.d-lg-flex{display:flex!important;width:100%}.navbar-collapse.d-none.d-lg-flex>ul.navbar-nav.me-auto{display:flex;flex:1 1 auto;justify-content:center}.navbar-collapse.d-none.d-lg-flex>ul.navbar-nav.ms-auto{flex:0 0 auto}.navbar .nav-link{display:inline-block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.navbar-toggler{border-color:hsla(0,0%,100%,.18);margin-right:.25rem}.navbar-toggler-icon{filter:invert(1) brightness(1.2) contrast(1.1)}.navbar .dropdown-menu{border-radius:12px;overflow:hidden}.site-header{background:var(--header-bg);background:linear-gradient(90deg,var(--deep),#002a66);background:#000!important;border-radius:0 0 12px 12px;color:var(--bg);position:sticky;top:0;z-index:1050}.site-header .mc-btn,.site-header .nav-control,.site-header .nav-control-tab,.site-header .navbar .nav-link{padding-bottom:.55rem;padding-top:.55rem}.site-header .mc-btn{height:auto}.site-header:after{border-radius:0 0 8px 8px;bottom:6px;box-shadow:inset 0 0 0 3px rgba(40,40,40,.06);content:"";left:6px;pointer-events:none;position:absolute;right:6px;top:6px}.theme-dark .site-header:after{box-shadow:inset 0 0 0 3px rgba(0,238,255,.08)}html.theme-light header.site-header .navbar .dropdown-menu{background:#fff}html.theme-light{--bg:#dedede;--fg:#071127;--card-bg:#fff;--card-border:#e6eef8;--header-bg:#dedede;--btn-contrast:#000;--muted:#2b2b2b}.theme-light body{background:var(--bg)}.theme-dark{--bg:#121212;--fg:#fff;--card-bg:#0f1720;--card-border:hsla(0,0%,100%,.04);--header-bg:rgba(0,12,22,.88);--btn-contrast:#000}.theme-dark body{background:var(--bg);color:var(--fg)}
++
++/* Active link visual: soft filled pill with laser rim in dark and light */
++.navbar .nav-link.active, .navbar .nav-link[aria-current="page"]{
++  background: linear-gradient(180deg, rgba(0,238,255,0.04), rgba(0,238,255,0.02));
++  border-radius: 14px;
++  padding-left: .75rem; padding-right: .75rem;
++  box-shadow: 0 0 0 2px rgba(0,238,255,0.08) inset, 0 6px 18px rgba(0,0,0,0.06);
++  color: var(--bg) !important;
++  text-shadow: none;
++}
++
++/* stronger rim on hover when active to emulate laser rim */
++.navbar .nav-link.active:hover, .navbar .nav-link[aria-current="page"]:hover{
++  box-shadow: 0 0 14px rgba(0,238,255,0.35), 0 6px 18px rgba(0,0,0,0.06);
++}
++
++/* Center primary group items (Information, Services, Resources, Otros) in desktop navbar */
++.navbar .nav-list{display:flex;justify-content:center;gap:1rem}
++/* Target main groups added via .nav-group-main on top-level LI */
++.navbar .nav-item.nav-group-main{display:flex;align-items:center}
++.navbar .nav-item.nav-group-main > .nav-link{font-weight:400}
++
++/* Ensure 'Otros' group matches the visual weight and font of primary emphasized links
++   Some pages like 'Documentaci├│n' are shown bold; force 'Otros' label to follow same font and weight
++   by targeting the rendered LI with data-group="Otros" (set in `views/layout.php`). */
++li.nav-item[data-group="Otros"] > a.nav-link,
++li.nav-item.nav-group[data-group="Otros"] > a.nav-link{
++  font-family: 'Work Sans', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
++  font-weight: 600 !important; /* match Documentaci├│n/title emphasis */
++  text-transform: none !important; /* keep same casing as other nav items */
+ }
+-.honeypot-hidden{display:none !important;position:absolute !important;left:-9999px !important;}
+-.site-header{position:sticky;top:0;z-index:1050;background:var(--header-bg);color:var(--bg);}
+-
+-.btn{background:var(--accent);color:var(--btn-contrast); padding:.5rem 1rem;border-radius:6px;text-decoration:none;display:inline-block;border:none}
+-.site-header{position:sticky;top:0;z-index:1050;background:linear-gradient(90deg,var(--deep),#002a66);color:var(--bg);}
+-/* TEMP: force header gradient to solid black for visual debugging */
+-.site-header { background: #000000 !important; }
+-.btn:hover{background:var(--accent-2)}
+-.brand{font-weight:700;color:var(--bg);text-decoration:none;font-size:1.2rem}
+-.navbar.sticky-top{ background: rgba(0,0,0,0.4); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+-/* Navbar tuned for better touch targets and contrast */
+-.navbar{box-shadow:0 2px 10px rgba(0,0,0,0.10);min-height:64px}
+-.navbar .container{display:-ms-flexbox;display:flex;-ms-flex-align:center;align-items:center}
+-.navbar-brand{font-weight:800;font-size:1.25rem;color:var(--bg)}
+-.navbar .nav-link{color:rgba(255,255,255,0.98);padding:.6rem .5rem}
+-.navbar .nav-link[title]{ cursor: pointer; }
+-.navbar .nav-link:hover, .navbar .nav-link:focus{color:var(--accent);text-decoration:none; text-shadow:0 0 8px rgba(0,238,255,0.45);}
++
++/* Make the desktop navbar collapse use full width and center the left nav list so
++  primary groups appear visually centered while right-side controls remain right-aligned. */
++.navbar-collapse.d-none.d-lg-flex{display:flex !important;width:100%}
++.navbar-collapse.d-none.d-lg-flex > ul.navbar-nav.me-auto{flex:1 1 auto;display:flex;justify-content:center}
++.navbar-collapse.d-none.d-lg-flex > ul.navbar-nav.ms-auto{flex:0 0 auto}
++
++/* Ensure floating controls remain aligned to the right while menu is centered */
++.menu-controls-floating{right:1rem}
+ .site-header, header.site-header {
+   background: rgba(0,0,0,0.65) !important;
+   background-image: none !important;
+@@ -56,7 +49,7 @@ body{font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; margi
+ }
+ 
+ /* decorative inset margin for header */
+-.site-header::after{ content:''; position:absolute; left:6px; right:6px; top:6px; bottom:6px; border-radius:10px; pointer-events:none; box-shadow: 0 0 0 3px rgba(40,40,40,0.06) inset }
++.site-header::after{ content:''; position:absolute; left:6px; right:6px; top:6px; bottom:6px; border-radius:0 0 8px 8px; pointer-events:none; box-shadow: 0 0 0 3px rgba(40,40,40,0.06) inset }
+ .theme-dark .site-header::after{ box-shadow: 0 0 0 3px rgba(0,238,255,0.08) inset }
+ /* TEMP: force header tag background to black so user can identify the element */
+ header { background: #000 !important; }
+@@ -125,118 +118,234 @@ header { background: #000 !important; }
+ .admin-header{align-items:center !important}
+ .admin-header .mc-btn, .admin-header .nav-control, .admin-header .nav-control-tab, .admin-header .navbar .nav-link{padding-top:0.45rem;padding-bottom:0.45rem}
+ 
+-@media (prefers-color-scheme: dark){
+-  .mc-btn{background:rgba(255,255,255,0.04); color:var(--bg); border:1px solid rgba(255,255,255,0.06)}
+-  .mc-btn span{color:var(--accent-2)}
++/* ---------- Admin area improvements (UI/UX tidy) ---------- */
++/* Layout: sidebar + main column with comfortable padding and consistent card spacing */
++.admin-dashboard{display:flex;gap:1rem;align-items:flex-start;padding:1rem;box-sizing:border-box}
++.admin-sidebar{flex:0 0 220px;min-width:200px;padding:1rem;background:var(--card-bg);border-radius:10px;border:1px solid var(--card-border)}
++.admin-main{flex:1;min-width:0;padding:1rem}
++
++/* Sidebar nav: vertical, clear active state and hover affordance */
++.admin-sidebar nav{display:flex;flex-direction:column;gap:0.35rem}
++.admin-sidebar .nav-link{display:flex;align-items:center;padding:.6rem .75rem;border-radius:8px;color:var(--fg);text-decoration:none;border-left:4px solid transparent}
++.admin-sidebar .nav-link .nav-icon{margin-right:.5rem}
++.admin-sidebar .nav-link{padding-left:1.1rem}
++.admin-sidebar .nav-link .icon{width:18px;height:18px;display:inline-block;flex:0 0 22px;color:var(--accent) !important}
++.admin-sidebar .nav-link .nav-label{flex:1;text-align:center;display:inline-block}
++.admin-sidebar .nav-link .nav-icon{display:inline-flex;align-items:center;justify-content:center;margin-right:8px}
++.admin-sidebar .nav-link svg{display:block}
++.admin-sidebar .nav-link:hover{background:rgba(2,12,32,0.02);color:var(--deep)}
++.admin-sidebar .nav-link.active{background:linear-gradient(90deg, rgba(0,238,255,0.04), rgba(67,255,255,0.02));border-left-color:var(--accent);font-weight:700}
++/* Uppercase labels for admin nav */
++.admin-sidebar .nav-link{ text-transform:uppercase; letter-spacing:0.03em }
++
++/* Header: align title and actions, reduced vertical rhythm */
++.admin-header{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1rem}
++.admin-header .section-title-lg{margin:0}
++.admin-header p.text-muted{margin:0;color:var(--muted);font-weight:300}
++
++/* Card previews inside admin should have balanced padding */
++.admin-main .card-preview{padding:1rem;border-radius:10px}
++
++/* Forms: consistent spacing and full width on small screens */
++.admin-main .mb-3{margin-bottom:1rem}
++.admin-main label{font-weight:600;margin-bottom:.35rem;display:block}
++.admin-main .form-control,.admin-main .form-select{padding:.5rem .6rem;border-radius:8px;border:1px solid var(--card-border);background:var(--card-bg);box-shadow:none}
++.admin-main .form-control:focus{outline:none;box-shadow:0 6px 18px rgba(2,12,32,0.06)}
++
++/* Buttons inside admin: ensure contrast and consistent sizes */
++.admin-main .btn{border-radius:8px;padding:.5rem .9rem}
++.admin-main .btn-sm{padding:.35rem .6rem;border-radius:6px}
++.admin-main .btn-outline-light{color:var(--deep);background:transparent;border:1px solid rgba(2,12,32,0.06)}
++.admin-main .btn-primary{background:var(--deep);color:#fff;border:none}
++
++/* Resource selector visuals */
++.resource-thumb{width:52px;height:52px;object-fit:cover;border-radius:8px;border:1px solid var(--card-border);margin-right:.75rem}
++.resource-item{display:flex;align-items:center;gap:.6rem;padding:.5rem;border-radius:8px}
++.resource-item .form-check-input{flex:0 0 auto}
++.resource-item:hover{background:rgba(2,12,32,0.02);transform:translateY(-2px)}
++.resource-item .drag-handle{cursor:grab;padding-left:.5rem;opacity:0.75}
++
++/* Make list-group items comfortable */
++.list-group-item{padding:.8rem 1rem;border-radius:8px}
++.list-group-item .btn{min-width:86px}
++
++/* Responsive: stack sidebar above main on narrow screens */
++@media (max-width: 991px){
++  .admin-dashboard{flex-direction:column;padding:.75rem}
++  .admin-sidebar{flex:0 0 auto;width:100%;order:1}
++  .admin-main{order:2;padding-top:.75rem}
++}
++
++/* Small tweak to help resource filter input stand out */
++#resourcesFilter{padding:.45rem .6rem;border-radius:8px;border:1px solid var(--card-border);background:transparent}
++
++/* Make admin action groups inline and visually balanced */
++.admin-header .actions{display:flex;gap:.5rem;align-items:center}
++
++/* Slightly reduce card-preview hover lift inside admin to be subtle */
++.admin-main .card-preview:hover{transform:none;box-shadow:none}
++
++/* Force admin sidebar rim to respect border-radius for the bright cyan 'laser' rim */
++.theme-dark .admin-sidebar.card-preview,
++.theme-light .admin-sidebar.card-preview {
++  overflow: hidden !important;
++  border-radius: 12px !important;
++  position: relative !important;
+ }
+ 
+-/* Force visible and fixed on large screens to avoid being hidden by overflow/stacking contexts */
+-@media (min-width: 992px){
+-  .menu-controls-floating.d-none.d-lg-flex{display:flex !important}
+-  .menu-controls-floating{position:fixed !important; right:16px; top:50%; transform:translateY(-50%); z-index:99999}
+-  .menu-controls-floating .mc-stack{position:static; display:flex; flex-direction:column; gap:0.5rem; align-items:center}
++/* Make the pseudo-element that draws the inset rim match the same radius and spacing */
++.theme-dark .admin-sidebar.card-preview::after {
++  content: '';
++  position: absolute !important;
++  left: 6px !important;
++  right: 6px !important;
++  top: 6px !important;
++  bottom: 6px !important;
++  border-radius: 12px !important;
++  pointer-events: none !important;
++  box-shadow: 0 0 0 3px rgba(0,238,255,0.08) inset !important;
+ }
+ 
+-@media (max-width:1199px){
+-  /* shift floating controls inside header on medium screens to avoid overlapping content */
+-  .menu-controls-floating .mc-stack{right:0.6rem;bottom:0.15rem}
++.theme-light .admin-sidebar.card-preview::after {
++  content: '';
++  position: absolute !important;
++  left: 6px !important;
++  right: 6px !important;
++  top: 6px !important;
++  bottom: 6px !important;
++  border-radius: 12px !important;
++  pointer-events: none !important;
++  box-shadow: 0 0 0 3px rgba(40,40,40,0.06) inset !important;
+ }
+ 
+-@media (max-width:991px){
+-  .menu-controls-floating{display:none !important}
++/* Ensure body copy and h4 are white in dark theme for legibility */
++.theme-dark p,
++.theme-dark .doc-section-body p,
++.theme-dark .doc-content p,
++.theme-dark .doc-section-body li,
++.theme-dark .doc-content li {
++  color: #ffffff !important;
+ }
+ 
+-/* Better touch targets and visual feedback for nav links (pill style) */
+-.navbar .nav-link{padding:.45rem .7rem;border-radius:18px;transition:background .12s ease,color .12s ease, transform .08s ease;display:inline-flex;align-items:center;gap:0.35rem}
+-.navbar .nav-link:hover, .navbar .nav-link:focus{background:linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0.03));color:var(--accent);text-decoration:none;transform:translateY(-2px);text-shadow:0 0 10px rgba(0,238,255,0.45)}
+-.navbar .nav-link.active, .navbar .nav-link[aria-current="page"]{background:linear-gradient(90deg, rgba(67,255,255,0.04), rgba(0,238,255,0.03));color:var(--accent-2);font-weight:700;box-shadow:0 6px 18px rgba(2,12,32,0.06)}
++.theme-dark h4,
++.theme-dark .doc-section-body h4,
++.theme-dark .doc-content h4 {
++  color: #ffffff !important;
++  font-weight: 600 !important;
++}
+ 
+-/* Ensure logo image in brand scales well */
+-.navbar-brand img{height:36px;max-height:40px}
+ 
+-/* Accessible focus states */
+-.nav-link:focus-visible, .btn:focus-visible, .navbar-toggler:focus-visible{
+-  /* subtle light focus ring instead of bright blue */
+-  box-shadow: 0 0 0 3px rgba(255,255,255,0.08);
+-  outline: none;
+-  border-radius:6px;
++/* Mirror dark-mode dropdown styling for light-mode but use white surface instead of dark slate
++   This keeps the same inset rim, shadow depth and item hover behavior while switching the surface color. */
++.theme-light .dropdown-menu.mirrored-from-dark,
++.theme-light header.site-header .navbar .dropdown-menu.mirrored-from-dark,
++.theme-light .navbar .dropdown-menu.mirrored-from-dark,
++.theme-light .dropdown.mirrored-from-dark > .dropdown-menu {
++  /* white surface instead of #0b1220 */
++  background: #ffffff !important;
++  color: #0b1220 !important; /* dark text suitable for white background */
++  border: 1px solid rgba(16,24,32,0.06) !important; /* thin border to hold shape */
++  box-shadow: 0 10px 30px rgba(2,12,32,0.08) !important; /* preserve depth */
++}
++.theme-light .dropdown.mirrored-from-dark .dropdown-header {
++  color: rgba(16,24,32,0.64) !important;
++}
++.theme-light .dropdown.mirrored-from-dark .dropdown-item {
++  color: #0b1220 !important;
++}
++.theme-light .dropdown.mirrored-from-dark .dropdown-item:hover,
++.theme-light .dropdown.mirrored-from-dark .dropdown-item:focus {
++  background: rgba(2,12,32,0.04) !important; /* subtle hover on white */
++  color: #002233 !important;
+ }
+ 
+-/* Center the main nav items and avoid right-side overflow */
+-.navbar{padding-left:0.2rem;padding-right:0.6rem}
++/* Apply the inset rim similar to dark mode but with subtle gray tone for light mode */
++.theme-light .dropdown.mirrored-from-dark::after,
++.theme-light .dropdown.mirrored-from-dark > .dropdown-menu::after,
++.theme-light .navbar .dropdown.mirrored-from-dark > .dropdown-menu::after {
++  content: '';
++  position: absolute !important;
++  left: 6px !important;
++  right: 6px !important;
++  top: 6px !important;
++  bottom: auto !important;
++  height: 1px !important;
++  background: rgba(16,24,32,0.12) !important;
++  pointer-events: none !important;
++}
+ 
+-/* Remove any unwanted colored frame around the header/panel */
+-/* ensure header remains sticky and visible; remove unwanted frame but keep subtle shadow */
+-header, .site-header, .navbar, .container-fluid, .container {
+-  border: none !important;
+-  outline: none !important;
++/* Utility: if markup can't add .mirrored-from-dark, apply to all dropdowns under header in light theme as fallback */
++.theme-light header.site-header .navbar .dropdown-menu,
++.theme-light header.site-header .navbar .dropdown {
++  background: #ffffff !important;
++  color: #0b1720 !important;
++  border: 1px solid rgba(16,24,32,0.06) !important;
++  box-shadow: 0 10px 30px rgba(2,12,32,0.08) !important;
+ }
+ 
+-.site-header{box-shadow: 0 2px 10px rgba(0,0,0,0.12);padding-top:0.45rem;padding-bottom:0.45rem}
+ 
+-/* Override any gradient or blue background that creates a visible blue band.
+-   Force a semi-transparent black header consistent with the navbar. */
+-.site-header, header.site-header {
+-  background: rgba(0,0,0,0.65) !important;
+-  background-image: none !important;
+-  color: var(--bg) !important;
++/* Final high-specificity overrides to force white panels in the main nav dropdowns for light theme
++   and to convert any internal light-gray panels inside the dropdown to pure white. Placed at EOF
++   to outwin other stylesheets and inline styles. */
++:root {}
++
++.theme-light header.site-header .navbar .dropdown-menu,
++.theme-light header.site-header .navbar .dropdown,
++.theme-light .navbar .dropdown-menu,
++.theme-light .navbar .dropdown,
++.theme-light .dropdown-menu,
++.theme-light .navbar .dropdown .dropdown-menu,
++.theme-light header.site-header .navbar .nav-item .dropdown-menu {
++  background-color: #ffffff !important;
++  color: #0f1724 !important;
+   border: none !important;
++  box-shadow: 0 10px 30px rgba(2,12,32,0.06) !important;
+ }
+ 
+-/* ensure inner navbar also uses transparent black and no border */
+-.site-header .navbar, .site-header .navbar-expand-lg {
+-  background: transparent !important;
+-  border: none !important;
+-  box-shadow: none !important;
++/* Some dropdowns place inner panels inside a .dropdown-panel or .dropdown-inner element; ensure those are white */
++.theme-light .dropdown-menu .dropdown-panel,
++.theme-light .dropdown-menu .dropdown-inner,
++.theme-light .dropdown-menu .card-body,
++.theme-light .dropdown-menu .card-preview,
++.theme-light .dropdown-menu .card-body * {
++  background: #ffffff !important;
++  color: #0f1724 !important;
+ }
+ 
+-/* Prevent focused elements inside header from showing platform blue outlines */
+-.site-header :focus, .navbar :focus {
+-  outline: none !important;
+-  box-shadow: none !important;
++/* If Bootstrap or other styles insert .bg-light/.bg-gray classes inside the dropdown, neutralize them */
++.theme-light .dropdown-menu .bg-light,
++.theme-light .dropdown-menu .bg-gray,
++.theme-light .dropdown-menu .bg-white {
++  background: #ffffff !important;
++  color: #0f1724 !important;
+ }
+ 
+-/* Keep nav items on a single line and distribute across available width */
+-.navbar .navbar-nav.me-auto{ display:flex; flex:1 1 auto; justify-content:flex-start; align-items:center; gap:0.6rem; flex-wrap:wrap }
+-.navbar .navbar-nav.me-auto .nav-item{flex:0 0 auto; max-width:220px}
+-.navbar .navbar-collapse{display:flex;align-items:center}
+-.navbar .navbar-brand{margin-right:0.6rem; margin-left:0.3rem}
+-.navbar .container-fluid{padding-left:0.6rem;padding-right:0.6rem}
+-.navbar .container{padding-left:0.4rem;padding-right:0.4rem}
+-
+-@media (max-width:992px){
+-  /* revert to collapse behavior on smaller screens */
+-  /* allow nav items to wrap gently to avoid horizontal overflow on narrow devices like 414x896 */
+-  .navbar .navbar-nav.me-auto{flex-direction:row;flex-wrap:wrap;justify-content:flex-start;gap:0.35rem;overflow-x:auto;-webkit-overflow-scrolling:touch}
+-  .navbar .navbar-nav.me-auto .nav-item{width:auto;flex:0 0 auto}
+-  /* ensure collapsed panel has readable background and padding */
+-  .navbar-collapse{background:rgba(0,0,0,0.86);padding:0.6rem;border-radius:8px;margin-top:0.4rem}
+-  /* Offcanvas / collapsed menu: make links full-width and more tappable */
+-  .offcanvas .nav-link{display:block;padding:.75rem 1rem;border-radius:8px;margin-bottom:0.35rem}
+-  .offcanvas .nav-link:hover{background:rgba(255,255,255,0.04)}
+-  .navbar .nav-link{display:inline-flex;align-items:center;padding:.5rem .6rem;border-radius:6px}
+-  .material-symbols-outlined.nav-icon{font-size:20px}
+-  .navbar-brand{flex:0 0 auto}
+-  .navbar{padding-left:0.4rem;padding-right:0.4rem}
+-  /* reduce brand image size slightly on narrow screens */
+-  .navbar-brand img{height:32px}
+-}
+-
+-/* Desktop / wide screens: allow wider containers and distribute nav items */
+-@media (min-width:1200px){
+-  .container{max-width:1280px}
+-  .container-fluid{padding-left:2rem;padding-right:2rem}
+-  /* Center primary nav items and keep utilities (ms-auto) aligned right */
+-  .navbar{align-items:center}
+-  .navbar .navbar-nav.me-auto{justify-content:center; gap:0.9rem; flex: 1 1 auto}
+-  /* keep brand at far left */
+-  .navbar-brand{order:0}
+-  .navbar .navbar-nav.me-auto{order:1}
+-  .navbar .navbar-nav.ms-auto{order:2;margin-left:auto}
+-  .parallax-banner{height:70vh}
+-  .parallax-overlay .hero{max-width:1100px;text-align:left;padding-left:2rem;padding-right:2rem}
++/* Ensure the thin inner line remains visible on top of the white menu */
++.theme-light header.site-header .navbar .dropdown-menu::after,
++.theme-light .navbar .dropdown-menu::after,
++.theme-light .dropdown-menu::after {
++  left: 6px !important;
++  right: 6px !important;
++  top: 6px !important;
++  height: 1px !important;
++  background: rgba(16,24,32,0.12) !important;
++  content: '' !important;
++  position: absolute !important;
++  pointer-events: none !important;
+ }
+ 
++/* Also ensure any panels that were given a light-gray border or background inside navs are reset */
++.theme-light header.site-header nav .card-preview,
++.theme-light header.site-header nav .card-body,
++.theme-light header.site-header nav .panel,
++.theme-light header.site-header nav .panel-body,
++.theme-light header.site-header nav .nav-panel {
++  background: #ffffff !important;
++  border-color: rgba(16,24,32,0.06) !important;
++  color: #0f1724 !important;
++}
++
++
+   /* Hero content on home */
+   .hero-content{padding:2.2rem 1rem; color: #fff}
+   .hero-content .lead{font-size:1.125rem;opacity:0.95;margin-bottom:1rem}
+@@ -280,6 +389,28 @@ header, .site-header, .navbar, .container-fluid, .container {
+     .home-banner .parallax-overlay .hero{padding-left:1rem;padding-right:1rem}
+   }
+ 
++/* Stronger overlay and stacking to improve contrast and readability for documentation */
++.parallax-banner::after,
++.home-banner::after {
++  /* increase darkness slightly for documentation and other content pages */
++  background: linear-gradient(180deg, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.78) 100%) !important;
++  z-index:1 !important;
++  pointer-events:none;
++}
++
++/* Ensure hero content sits above overlay */
++.parallax-overlay .hero,
++.parallax-overlay .hero * { position:relative; z-index:2 }
++
++/* Tweak subtitle and hero CTA for better contrast */
++.parallax-overlay .hero #hero-sub { color: rgba(255,255,255,0.98); font-weight:700; letter-spacing:0.03em }
++.parallax-overlay .hero .hero-cta a.btn { box-shadow: 0 10px 24px rgba(2,12,32,0.18); border-radius:10px }
++
++/* Slightly reduce visual weight of hero title on very large screens */
++@media(min-width:1400px){
++  .parallax-overlay .hero h1.hero-content, .home-banner .parallax-overlay .hero h1 { font-size: clamp(1.8rem, 2.8vw, 3.2rem); }
++}
++
+   /* Darken the overlay on home to improve contrast against bright video frames */
+   /* Increased opacity to ensure legibility on bright frames while still showing motion */
+   .home-banner::after{ content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,0.48), rgba(0,0,0,0.68)); z-index:1 }
+@@ -296,6 +427,181 @@ header, .site-header, .navbar, .container-fluid, .container {
+ 
+   /* Modal theming */
+   .modal-content{background:linear-gradient(180deg,rgba(255,255,255,0.98),#fff)}
++  /* -------------------- Documentaci├│n: estilos espec├¡ficos -------------------- */
++  /* Scope selectors to the CMS-rendered documentation pages: main page uses .parallax-banner + .section-grid and .prose-left */
++  .section-grid[aria-labelledby^="page-header"],
++  .parallax-banner + .container .section-grid,
++  .prose-left {
++    --doc-max-width: 820px;
++  }
++#page-header-documentacion.page-header-visual,
++.section-grid.container .page-header-visual {
++  padding-top: 1.6rem !important; /* dejar espacio desde el banner para evitar la l├¡nea azul encima */
++}
++
++/* Si el header tiene id espec├¡fico generado por CMS, soportar la variante */
++#page-header-documentacion.page-header-visual,
++#page-header-documentacion.page-header-visual .lead {
++  padding-top: 1rem;
++}
++
++/* Hacer el excerpt un poco m├ís sobrio para la frase empresarial */
++.section-grid.container .page-header-visual .lead {
++  margin-bottom: 0.75rem;
++  color: var(--fg-muted, #6b7280);
++  font-weight: 500;
++}
++
++/* Modo claro: asegurar fondo blanco y texto oscuro en la secci├│n Documentaci├│n para buen contraste */
++.theme-light .section-grid.container {
++  background-color: #ffffff !important;
++  color: #111827 !important; /* texto principal oscuro */
++}
++.theme-light #page-header-documentacion.page-header-visual,
++.theme-light #page-header-documentacion.page-header-visual .lead {
++  background-color: transparent !important;
++  color: #1f2937 !important;
++  padding-top: 1.6rem !important;
++}
++
++/* Asegurar que los enlaces y botones sean visibles en modo claro dentro de la secci├│n */
++.theme-light .section-grid.container a,
++.theme-light .section-grid.container .btn {
++  color: #0f172a;
++}
++
++
++
++  /* Layout: left content + right sidebar on wide screens */
++  .section-grid .section-text { padding-right:1.25rem }
++  .section-grid .section-cards { padding-left:1.25rem }
++  @media (min-width: 992px) {
++    .section-grid .section-text { flex: 0 0 60%; max-width: 60%; }
++    .section-grid .section-cards { flex: 0 0 40%; max-width: 40%; }
++    .section-cards { position:sticky; top:88px; align-self:start }
++  }
++
++  /* Prose: readable measure, improved leading and link contrast */
++  .prose-left { max-width: var(--doc-max-width); margin:0; color:var(--fg); font-weight:300 }
++  .prose-left h2, .prose-left h3 { color:var(--muted); font-weight:700; margin-top:1.25rem; margin-bottom:.5rem }
++  .prose-left p { margin-bottom:1rem; font-size:1rem; line-height:1.65 }
++  .prose-left a { color:var(--deep); text-decoration:underline; text-decoration-color:rgba(0,64,128,0.06) }
++
++  /* Callouts for notes, tips and warnings used in docs */
++  .callout { border-left:4px solid var(--accent); background:linear-gradient(90deg, rgba(0,238,255,0.02), rgba(67,255,255,0.01)); padding:0.9rem 1rem; border-radius:8px; margin:0.9rem 0 }
++  .callout.note { border-left-color:var(--accent); }
++  .callout.warn { border-left-color:#FFB84D; background:linear-gradient(90deg, rgba(255,184,77,0.03), rgba(255,239,220,0.01)); }
++
++  /* Code blocks and inline code */
++  .prose-left pre { background:#0f1724; color:#e6eef6; padding:1rem; border-radius:8px; overflow:auto; font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', 'Courier New', monospace; font-size:.95rem }
++  .prose-left code { background:rgba(0,0,0,0.06); padding:0.15rem 0.32rem; border-radius:4px; font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', monospace }
++
++  /* Tables inside docs */
++  .prose-left table { width:100%; border-collapse:collapse; margin:1rem 0; font-size:.95rem }
++  .prose-left th, .prose-left td { border:1px solid rgba(0,0,0,0.06); padding:.6rem .75rem; text-align:left }
++  .prose-left thead th { background:rgba(0,0,0,0.04); font-weight:700 }
++
++  /* Card previews in the sidebar: elevated, consistent */
++  .section-cards .card-preview { border-radius:12px; overflow:hidden; border:1px solid rgba(2,12,32,0.04); box-shadow:0 8px 20px rgba(2,12,32,0.06); background:var(--card-bg) }
++  .section-cards .card-preview img { display:block; width:100%; height:180px; object-fit:cover }
++  /* Round card-body panels for consistent appearance */
++  .card-body{ border-radius:10px !important; }
++  .section-cards .card-body{ padding:1rem }
++  .section-cards .card-title{ font-weight:700; color:var(--deep); margin-bottom:.25rem }
++
++  /* Documentation: resource button tweaks
++     - add top spacing so buttons don't touch the paragraph above
++     - ensure icon aligns and inherits color
++     - force white text on dark button in light theme where needed
++  */
++  /* Resource button: use brand gradient, accessible contrast and consistent hover
++     - default: gradient background (cyan -> cyan2) with dark text for contrast
++     - light theme: dark slate solid bg with light text to stand out in white cards
++     - dark theme: dark panel bg with cyan label (accent) and subtle glow on focus
++  */
++  .section-cards .card-body .doc-resource-btn{
++    display:inline-flex;
++    align-items:center;
++    gap:0.5rem;
++    margin-top:0.6rem; /* separate from card-text above */
++    padding:0.5rem 0.9rem;
++    border-radius:10px;
++    background: linear-gradient(90deg,var(--accent),var(--accent-2));
++    color:#001018 !important; /* near-black text for best contrast on bright gradient */
++    text-decoration:none;
++    border: none;
++    font-weight:800;
++    box-shadow: 0 10px 24px rgba(2,12,32,0.08);
++    transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
++  }
++
++  .section-cards .card-body .doc-resource-btn .icon-inline{
++    display:inline-block; width:18px; height:18px; vertical-align:middle; fill:currentColor; color:inherit;
++  }
++
++  .section-cards .card-body .doc-resource-btn:hover,
++  .section-cards .card-body .doc-resource-btn:focus{
++    transform: translateY(-2px);
++    box-shadow: 0 16px 36px rgba(2,12,32,0.12);
++    filter:brightness(0.98);
++  }
++
++  /* Light theme: present as solid dark slate button with white text for clarity inside white cards */
++  .theme-light .section-cards .card-body .doc-resource-btn{
++    background: #111827 !important; /* dark slate */
++    color: #ffffff !important;
++    box-shadow: 0 8px 20px rgba(2,12,32,0.06) !important;
++  }
++  .theme-light .section-cards .card-body .doc-resource-btn:hover,
++  .theme-light .section-cards .card-body .doc-resource-btn:focus{
++    background: #000000 !important;
++    color: #ffffff !important;
++  }
++
++  /* Dark theme: darker button surface with cyan text to match site accents */
++  .theme-dark .section-cards .card-body .doc-resource-btn{
++    background: rgba(0,0,0,0.6) !important;
++    color: var(--accent) !important;
++    box-shadow: 0 8px 20px rgba(0,0,0,0.6) !important;
++    border: 1px solid rgba(0,238,255,0.06) !important;
++  }
++  .theme-dark .section-cards .card-body .doc-resource-btn:focus-visible{
++    outline:3px solid rgba(0,238,255,0.12);
++    outline-offset:2px;
++  }
++
++  /* Make CTA in sidebar prominent but harmonious with header style */
++  .soluciones-cta{ background:linear-gradient(90deg,var(--accent),var(--accent-2)); color:#001; padding:1rem; border-radius:10px; box-shadow:0 8px 18px rgba(2,12,32,0.08); }
++  .soluciones-cta .btn{ background:#001; color:var(--accent); font-weight:700 }
++
++  /* Improve visual separation of header phrase and content */
++  .page-header-visual .visual-phrase { font-size:1.05rem; color:var(--muted); margin-bottom:0.5rem; font-weight:600 }
++
++  /* Small helper: make anchors with .btn-link inside docs more visible */
++  .prose-left .btn-link{ color:var(--deep); font-weight:700 }
++
++  /* Tweak card previews inside main grid for better hierarchy */
++  .card-preview.dark { background: linear-gradient(180deg, rgba(3,16,30,0.04), rgba(255,255,255,0.01)); }
++
++  /* Subtle divider for long docs (used between major sections) */
++  .prose-left hr { border:none; height:1px; background:linear-gradient(90deg, rgba(0,0,0,0.06), rgba(0,0,0,0.02)); margin:1.3rem 0 }
++
++  /* Mobile adjustments: stack and increase paddings */
++  @media (max-width:991px){
++    .section-grid .section-text, .section-grid .section-cards { max-width:100%; flex:1 1 100%; padding:0 }
++    .section-cards { position:static; margin-top:1rem }
++    .prose-left pre { font-size:.88rem }
++  }
++
++  /* Decorative accent for in-page anchors and table-of-contents links */
++  .prose-left .anchor { display:inline-block; width:8px; height:8px; background:var(--accent); border-radius:50%; margin-right:.5rem }
++
++  /* Ensure the hero subtitle uses uppercase and is legible */
++  .parallax-overlay .hero #hero-sub { text-transform:uppercase; letter-spacing:0.02em; color:rgba(255,255,255,0.95); font-weight:500 }
++
++  /* Accessibility: increase focus ring contrast for links inside docs */
++  .prose-left a:focus-visible { outline:3px solid rgba(0,238,255,0.16); outline-offset:2px; }
++
+   .modal-title{color:var(--deep)}
+ 
+   /* Dark card variant */
+@@ -311,22 +617,49 @@ header, .site-header, .navbar, .container-fluid, .container {
+ }
+ 
+ /* --- Compatibility fallbacks --- */
+-/* Text-size adjust for mobile browsers */
+-/* Text-size adjust for mobile browsers (webkit/ms prefixed and unprefixed) */
+-html, body{ -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; text-size-adjust:100%; }
+-
+-/* User-select fallback for Safari and IE10/11 */
+-.nav-link, .btn{ -webkit-user-select: none; -ms-user-select: none; user-select: none }
++/*
++  Purpose: include safe, low-risk fallbacks for older engines (IE10/11, older Safari)
++  without changing visual layout in modern browsers. These helpers target a few
++  properties highlighted in the audit: text-size-adjust, flex-direction/grow/order,
++  text-align:match-parent and user-select prefixed variants.
++*/
++
++/* Text-size adjust: unprefixed for modern browsers plus -webkit/-ms as safe fallbacks */
++html, body {
++  -webkit-text-size-adjust: 100%; /* older iOS Safari */
++  -ms-text-size-adjust: 100%;     /* IE Mobile */
++  text-size-adjust: 100%;         /* modern browsers */
++}
+ 
+-/* Flexbox fallbacks for older IE */
+-.navbar .nav-list{display:-ms-flexbox;display:flex; -ms-flex-wrap:wrap; flex-wrap:wrap}
++/* User-select fallback: include -ms- for IE10/11 and -webkit for older Safari/WebKit */
++.nav-link, .btn, .material-symbols-outlined, .social-link {
++  -webkit-user-select: none;
++  -ms-user-select: none;
++  user-select: none;
++}
+ 
+-/* match-parent fallback for text-align (Safari/older engines) */
+-.nav-link{ text-align: -webkit-match-parent; text-align: match-parent }
++/* Flexbox fallbacks for older IE10/11: map common flex properties to -ms- equivalents.
++   These are intentionally conservative helpers for cases where we use flex shorthand. */
++.d-flex { display: -ms-flexbox; display: flex; }
++.flex-row { -ms-flex-direction: row; flex-direction: row; }
++.flex-column { -ms-flex-direction: column; flex-direction: column; }
++.flex-wrap { -ms-flex-wrap: wrap; flex-wrap: wrap; }
++.flex-grow-1 { -ms-flex-positive: 1; flex-grow: 1; }
++.flex-shrink-0 { -ms-flex-negative: 0; flex-shrink: 0; }
++
++/* Order fallback for older IE */
++.order-0 { -ms-flex-order: 0; order: 0; }
++.order-1 { -ms-flex-order: 1; order: 1; }
++.order-2 { -ms-flex-order: 2; order: 2; }
++
++/* match-parent fallback for text-align: keep -webkit-match-parent where supported
++   but include plain match-parent for engines that implemented the unprefixed value
++   (Safari 15.4+, modern browsers). This duplicate is safe in all engines. */
++.nav-link { text-align: -webkit-match-parent; text-align: match-parent; }
+ 
+ /* Improve base type rhythm and smoothing */
+-html{font-size:16px}
+-body{line-height:1.45;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
++html { font-size: 16px; }
++body { line-height: 1.45; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+ 
+ @media (max-width:800px){
+   .main-nav{display:none}
+@@ -362,6 +695,8 @@ main{flex:1 0 auto}
+ }
+ 
+ .mb-3{ color: #2f3438 !important }
++/* Force hero descriptive paragraph to white when shown over dark banner */
++.hero-content .mb-3, .home-banner .parallax-overlay .hero .mb-3, .parallax-overlay .hero .mb-3 { color: #fff !important; opacity:0.95 !important }
+ /* Theme-specific overrides to keep contrast */
+ .parallax-banner .parallax-overlay .mb-3,
+ .parallax-banner .parallax-overlay .mb-3 *{ color: inherit !important }
+@@ -412,10 +747,20 @@ main{flex:1 0 auto}
+ 
+ /* theme helper: dark mode class toggled on :root for quick theme switch */
+ .theme-dark{--bg:#121212;--fg:#ffffff; --card-bg:#0f1720; --card-border:rgba(255,255,255,0.04); --header-bg:rgba(0,12,22,0.88); --btn-contrast:#000}
+-/* Make sure main content text is readable in dark mode */
+ .theme-dark body, .theme-dark main, .theme-dark .container, .theme-dark .admin-main, .theme-dark .card-preview, .theme-dark .list-group-item {
+   color: #ffffff !important;
+ }
++.theme-dark .card-body,
++.theme-dark .card-preview .card-body,
++.theme-dark .card-preview,
++.theme-dark .list-group-item,
++.theme-dark .admin-sidebar.card-preview,
++.theme-dark .contact-card,
++.theme-dark .feature-card{
++  background: var(--card-bg) !important;
++  color: #e8eef6 !important;
++  border-color: var(--card-border) !important;
++}
+ .theme-dark a, .theme-dark a:link, .theme-dark a:visited { color: var(--accent-2) !important; }
+ .theme-dark .small, .theme-dark .text-muted { color: rgba(255,255,255,0.75) !important; }
+ .theme-dark input, .theme-dark textarea, .theme-dark select { background: #0b1220; color: #fff; border:1px solid rgba(255,255,255,0.06); }
+@@ -444,6 +789,33 @@ main{flex:1 0 auto}
+ .theme-dark .btn:hover, .theme-dark .btn:focus{ background:#070707 !important; color: var(--accent-2) !important }
+ .theme-dark .btn .material-symbols-outlined, .theme-dark .mc-btn span { color: var(--accent) !important }
+ 
++/* Override: selected/active/pressed state in dark theme should use dark gray + white text (company blue replaced) */
++.theme-dark .btn.active,
++.theme-dark .btn[aria-pressed="true"],
++.theme-dark .btn:active,
++.theme-dark .nav-link.active,
++.theme-dark .nav-link[aria-current="page"],
++.theme-dark .mc-btn[aria-pressed="true"],
++.theme-dark .mc-btn.active,
++.theme-dark .dropdown-item.active,
++.theme-dark .dropdown-item[aria-pressed="true"],
++.theme-dark .nav-control[aria-pressed="true"],
++.theme-dark .nav-control.active {
++  background: #2b2b2b !important; /* dark gray */
++  color: #ffffff !important;      /* white text */
++  border-color: rgba(255,255,255,0.06) !important;
++  box-shadow: none !important;
++}
++
++/* Ensure icons inside active controls are white */
++.theme-dark .btn.active .material-symbols-outlined,
++.theme-dark .mc-btn[aria-pressed="true"] span,
++.theme-dark .nav-control[aria-pressed="true"] span,
++.theme-dark .dropdown-item.active .material-symbols-outlined {
++  color: #ffffff !important;
++  fill: currentColor !important;
++}
++
+ /* Admin-area specific fixes: make all admin buttons and small buttons readable in dark mode */
+ .theme-dark .admin-main .btn, .theme-dark .admin-main .btn-sm, .theme-dark .admin-main .btn-outline-light, .theme-dark .admin-main .btn-danger, .theme-dark .admin-main .btn-primary {
+   background:#000 !important; color: var(--accent) !important; border-color: rgba(255,255,255,0.06) !important;
+@@ -469,13 +841,15 @@ body{background:var(--bg);color:var(--fg);transition:background-color 240ms ease
+ 
+ /* Light theme explicit overrides: brighter backgrounds and stronger contrast */
+ .theme-light{
+-  --bg:#fbfdff; /* very light, slightly cool */
+-  --fg:#071127; /* deep charcoal for high contrast */
+-  --card-bg:#ffffff;
+-  --card-border:#e6eef8;
+-  --header-bg:rgba(255,255,255,0.96);
+-  --btn-contrast:#000000;
+-  --muted:#2b2b2b;
++  /* Light theme palette: background set to pure white for the whole site.
++     If you prefer a subtle light gray instead, replace --bg value with #f6f8fa or #f3f4f6. */
++  --bg: #dedede; /* light gray background requested */
++  --fg: #071127; /* deep charcoal for high contrast */
++  --card-bg: #ffffff;
++  --card-border: #e6eef8;
++  --header-bg: #dedede; /* header surface in light theme: match page background */
++  --btn-contrast: #000000;
++  --muted: #2b2b2b;
+ }
+ 
+ /* Explicit light-theme overrides for components that are otherwise forced to dark via !important */
+@@ -488,6 +862,90 @@ body{background:var(--bg);color:var(--fg);transition:background-color 240ms ease
+ .theme-light .navbar .nav-link:hover{ color: var(--deep); text-shadow: none; background: rgba(0,0,0,0.02); }
+ .theme-light .navbar-toggler-icon{ filter: none }
+ 
++/* Improve readability of navbar items in light theme: darker text and semi-bold */
++.theme-light .navbar .nav-link{
++  color: #374151 !important; /* dark gray */
++  font-weight: 400 !important; /* normal weight for nav labels */
++}
++
++/* Extra specific rule to override any other color on nav link text in light theme */
++.theme-light header.site-header .navbar .nav-link,
++.theme-light .site-header .navbar .nav-link,
++.theme-light .navbar.navbar-expand-lg .nav-link {
++  color: #374151 !important;
++}
++
++/* Style the Contact button in the main nav: light gray background and dark text */
++.theme-light .navbar .nav-link.contact,
++.theme-light .navbar .nav-link[aria-label="contact"]{
++  background: #374151 !important; /* dark slate */
++  color: #ffffff !important; /* white text/icon */
++  border-radius: 8px;
++  padding: 0.45rem 0.9rem;
++  box-shadow: none;
++  border: 1px solid rgba(0,0,0,0.08) !important;
++}
++
++/* Contact button hover: black bg and cyan text/icon */
++.theme-light .navbar .nav-link.contact:hover,
++.theme-light .navbar .nav-link[aria-label="contact"]:hover{
++  background: #000000 !important;
++  color: var(--accent) !important;
++}
++
++/* Ensure icons inside the contact nav link follow the color rules (e.g., material icons or svg) */
++.theme-light .navbar .nav-link.contact .material-symbols-outlined,
++.theme-light .navbar .nav-link.contact svg,
++.theme-light .navbar .nav-link[aria-label="contact"] .material-symbols-outlined,
++.theme-light .navbar .nav-link[aria-label="contact"] svg {
++  color: inherit !important;
++  fill: currentColor !important;
++}
++
++/* Very specific override for the header contact CTA that appears as .contact-cta (used in layout.php) */
++.theme-light .navbar .nav-link.contact-cta,
++.theme-light .navbar .nav-link.contact-cta .material-symbols-outlined,
++.theme-light .navbar .nav-link.contact-cta svg,
++.theme-light .navbar .nav-link[aria-label="Contacto"],
++.theme-light .navbar .nav-link[aria-label="Contacto"] .material-symbols-outlined,
++.theme-light .navbar .nav-link[aria-label="Contacto"] svg {
++  /* Modernized contact CTA: compact, pill-shaped, clear contrast, and icon inherits color */
++  background: var(--deep);
++  color: var(--bg);
++  display: inline-flex;
++  align-items: center;
++  gap: .5rem;
++  height: 38px; /* compact height */
++  padding: 0 .9rem;
++  font-size: .95rem;
++  line-height: 1;
++  border-radius: 999px; /* pill */
++  text-decoration: none;
++  box-shadow: 0 1px 6px rgba(2, 6, 23, 0.08);
++  transition: transform .12s ease, box-shadow .12s ease, background-color .12s ease, color .12s ease;
++  white-space: nowrap;
++
++.contact-cta:focus {
++  outline: 2px solid rgba(0, 168, 255, 0.18);
++  outline-offset: 2px;
++}
++.contact-cta:hover {
++  transform: translateY(-1px);
++  box-shadow: 0 6px 18px rgba(2, 6, 23, 0.12);
++}
++}
++
++.theme-light .navbar .nav-link.contact-cta:hover,
++.theme-light .navbar .nav-link[aria-label="Contacto"]:hover {
++  background: #000000 !important;
++  color: var(--accent) !important; /* cyan on hover */
++}
++
++/* Ensure the focus/hover states remain visible in light theme for these controls */
++.theme-light .nav-control:hover, .theme-light .nav-control-tab:hover, .theme-light .mc-btn:hover{
++  background: #4b5563 !important;
++}
++
+ /* Floating controls tuned for light theme */
+ .theme-light .mc-btn{ background: var(--bg); color: var(--fg); border:1px solid rgba(10,20,30,0.06); box-shadow:0 8px 20px rgba(2,12,32,0.06); }
+ .theme-light .mc-btn span{ color: var(--deep); }
+@@ -517,6 +975,22 @@ body{background:var(--bg);color:var(--fg);transition:background-color 240ms ease
+ .theme-light .social-link{ background: rgba(10,12,16,0.02); color:#2f3438 }
+ .theme-light .social-link svg{ fill: #2f3438 }
+ 
++/* Ensure elements accidentally marked white in the light theme become readable */
++.theme-light .text-white, .theme-light .text-white *{ color: var(--fg) !important; }
++.theme-light .text-muted, .theme-light .small, .theme-light .card-text, .theme-light .contact-item{ color: var(--muted) !important; }
++
++/* Buttons and outline variants on light theme should use darker labels */
++.theme-light .btn, .theme-light .mc-btn, .theme-light .nav-control, .theme-light .nav-control-tab{ color: var(--fg) !important; background: var(--bg) !important }
++.theme-light .btn-outline-light{ color: var(--fg) !important; border-color: rgba(10,20,30,0.06) !important }
++
++/* Specific fix: feature card descriptions in soluciones were too light on the light theme */
++.soluciones-features .feature-card p{ color: var(--muted) !important; }
++.theme-light .soluciones-features .feature-card p{ color: #374151 !important; /* cool dark gray for good contrast */ }
++
++/* Also ensure soluciones hero lead is dark on light theme */
++.theme-light .soluciones-hero .lead{ color: var(--fg) !important; opacity:0.95 }
++
++
+ /* Buttons that used the cyan accent can be toned down on light theme to dark text with subtle accent borders */
+ .theme-light .btn-primary{ background: #e8fbfc; color: #04314a; border-color: rgba(0,238,255,0.12) }
+ .theme-light .btn-outline-light{ color: #2f3438; border-color: rgba(10,20,30,0.06) }
+@@ -534,6 +1008,55 @@ body{background:var(--bg);color:var(--fg);transition:background-color 240ms ease
+ /* Ensure nav link icons and labels use the muted gray rather than brand cyan */
+ .theme-light .nav-icon{ color: #6b6f75 !important }
+ 
++/* Strong override for contact CTA appearance in light theme: white bg, dark-gray text/icon;
++   on hover -> black bg, white text/icon. Targets header nav-link and any .contact-cta anchors. */
++.theme-light header.site-header .navbar .nav-link.contact-cta,
++.theme-light header.site-header .navbar a.contact-cta,
++.theme-light .navbar .nav-link.contact-cta,
++.theme-light a.contact-cta{
++  background: #ffffff !important;
++  color: #2f3438 !important;
++  border: 1px solid rgba(16,24,32,0.06) !important;
++  box-shadow: none !important;
++  height: 38px !important;
++  padding: 0 .9rem !important;
++  display: inline-flex !important;
++  align-items: center !important;
++  gap: .45rem !important;
++  border-radius: 999px !important;
++  text-decoration: none !important;
++  transition: background-color .12s ease, color .12s ease, transform .08s ease !important;
++}
++.theme-light header.site-header .navbar .nav-link.contact-cta svg,
++.theme-light header.site-header .navbar .nav-link.contact-cta .material-symbols-outlined,
++.theme-light a.contact-cta svg,
++.theme-light a.contact-cta .material-symbols-outlined{
++  color: #2f3438 !important;
++  fill: currentColor !important;
++}
++.theme-light header.site-header .navbar .nav-link.contact-cta:hover,
++.theme-light header.site-header .navbar a.contact-cta:hover,
++.theme-light .navbar .nav-link.contact-cta:hover,
++.theme-light a.contact-cta:hover{
++  background: #000000 !important;
++  color: #ffffff !important;
++  transform: translateY(-1px) !important;
++}
++.theme-light header.site-header .navbar .nav-link.contact-cta:hover svg,
++.theme-light header.site-header .navbar a.contact-cta:hover svg,
++.theme-light .navbar .nav-link.contact-cta:hover svg,
++.theme-light a.contact-cta:hover svg,
++.theme-light header.site-header .navbar .nav-link.contact-cta:hover .material-symbols-outlined,
++.theme-light header.site-header .navbar a.contact-cta:hover .material-symbols-outlined,
++.theme-light .navbar .nav-link.contact-cta:hover .material-symbols-outlined,
++.theme-light a.contact-cta:hover .material-symbols-outlined{
++  color: #ffffff !important;
++  fill: currentColor !important;
++}
++
++/* Disabled state: preserve contrast */
++.contact-cta[disabled], .contact-cta.disabled{ opacity: .65; cursor: not-allowed }
++
+ 
+ /* Tighter parallax sizing to avoid overflow when object-fit rounding triggers >100% width */
+ .parallax-media{min-width:100%;min-height:100%;max-width:none;max-height:none}
+@@ -607,157 +1130,1404 @@ footer.container{padding:1.25rem 1rem;background:transparent;color:rgba(0,0,0,0.
+   -webkit-backdrop-filter: blur(4px);
+   backdrop-filter: blur(4px);
+ }
+-.page-header-visual .visual-phrase{
+-  font-size:1.15rem;
+-  font-weight:700;
+-  color:var(--bg);
+-  line-height:1.3;
+-  /* ensure clear readability on most backgrounds */
+-  text-shadow: 0 4px 16px rgba(2,12,32,0.18);
+-  /* push text down slightly to avoid overlapping decorative line */
+-  padding-top: 2%;
+-}
+-/* laser line: thin bright-blue gradient with glow (inside the header) */
+-.page-header-visual::before{
+-  content:'';
+-  position:absolute;
+-  left:12px;
+-  right:12px;
+-  top:14px; /* slightly lower to avoid overlapping inline content */
+-  height:2px;
+-  border-radius:4px;
+-  background:linear-gradient(90deg,var(--accent),var(--accent-2));
+-  box-shadow:0 0 10px rgba(67,255,255,0.18),0 0 18px rgba(0,238,255,0.08);
+-  pointer-events:none; /* decorative only */
+-}
+-.page-header-visual::after{
+-  content:'';
+-  position:absolute;
+-  left:8px;
+-  right:8px;
+-  top:16px; /* subtle secondary glow line */
+-  height:1px;
+-  background:linear-gradient(90deg, rgba(67,255,255,0.45), rgba(0,238,255,0.45));
+-  opacity:0.95;
+-  pointer-events:none;
++
++/* ===== Nav group: remove square wrapper or apply rounded corners =====
++   Targets the top-level nav-group items like
++   <li class="nav-item dropdown nav-group nav-group-main">...
++   - Remove any solid rectangular background/box-shadow
++   - Give a soft border-radius to the trigger and dropdown panel
++   - Works for both light and dark themes via high-specificity selectors
++*/
++/* Ensure the li wrapper doesn't produce a filled rectangle */
++html.theme-light header.site-header .navbar .nav-item.nav-group-main,
++html.theme-light .navbar .nav-item.nav-group-main,
++html.theme-light .navbar li.nav-item.nav-group,
++.theme-dark .navbar .nav-item.nav-group-main,
++.theme-dark header.site-header .navbar .nav-item.nav-group-main {
++  background: transparent !important;
++  padding: 0 !important;
++  border: 0 !important;
++  box-shadow: none !important;
++  border-radius: 12px !important; /* keep a soft corner if any background appears */
++  overflow: visible !important;
+ }
+ 
+-/* Dark theme: keep the laser line bright blue, and make header text white */
+-.theme-dark .page-header-visual::before{
+-  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+-  box-shadow:0 0 12px rgba(67,255,255,0.28);
++/* Round the trigger link so it doesn't look like a sharp rectangle */
++.navbar .nav-item.nav-group-main > .nav-link,
++.navbar .nav-item.nav-group-main > a.nav-link,
++html.theme-light .navbar .nav-item.nav-group-main > .nav-link,
++html.theme-light .navbar .nav-item.nav-group-main > a.nav-link {
++  border-radius: 10px !important;
++  padding-left: .6rem !important;
++  padding-right: .6rem !important;
+ }
+-.theme-dark .page-header-visual::after{
+-  background: linear-gradient(90deg, rgba(67,255,255,0.6), rgba(0,238,255,0.6));
++
++/* Ensure dropdown panel has rounded corners too (override any square panels) */
++.navbar .dropdown-menu,
++html.theme-light .navbar .dropdown-menu,
++.theme-dark .navbar .dropdown-menu {
++  border-radius: 12px !important;
++  overflow: hidden !important;
+ }
+-.theme-dark .page-header-visual .visual-phrase{ color: #ffffff !important; }
+ 
+-/* Adapt visuals for light theme to keep laser visible */
+-.theme-light .page-header-visual{ background:var(--card-bg); box-shadow:0 6px 18px rgba(3,24,48,0.06); }
+-.theme-light .page-header-visual .visual-phrase{ color:var(--fg); }
++/* Optional: if you prefer to completely remove any visible box, uncomment this rule */
++/* .navbar .nav-item.nav-group-main, .navbar .dropdown-menu { background: transparent !important; box-shadow: none !important; } */
+ 
+-/* Responsive adjustments for small screens */
+-@media (max-width:600px){
+-  .page-header-visual{ padding:0.75rem 1rem; padding-bottom:1.2rem; margin-bottom:1.2rem }
+-  .page-header-visual .visual-phrase{ font-size:1rem; padding-top:1.2% }
+-  .page-header-visual::before{ left:8px; right:8px; top:12px }
+-  .page-header-visual::after{ left:6px; right:6px; top:14px }
++/* Absolute final override targeting the exact header nav-item wrapper for the Contact CTA
++   Ensures: normal = white bg, dark-gray text/icon; hover = black bg, white text/icon. */
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta {
++  background: #ffffff !important;
++  color: #2f3438 !important;
++  border: 1px solid rgba(16,24,32,0.06) !important;
++  box-shadow: none !important;
++  height: 38px !important;
++  padding: 0 .9rem !important;
++  display: inline-flex !important;
++  align-items: center !important;
++  gap: .45rem !important;
++  border-radius: 999px !important;
++  text-decoration: none !important;
++  transition: background-color .12s ease, color .12s ease, transform .08s ease !important;
++}
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta svg,
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta .material-symbols-outlined,
++.theme-light a.contact-cta svg,
++.theme-light a.contact-cta .material-symbols-outlined{
++  color: #2f3438 !important;
++  fill: currentColor !important;
++}
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover,
++.theme-light header.site-header .navbar a.contact-cta:hover,
++.theme-light .navbar .nav-link.contact-cta:hover,
++.theme-light a.contact-cta:hover{
++  background: #000000 !important;
++  color: #ffffff !important;
++  transform: translateY(-1px) !important;
++}
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover svg,
++.theme-light header.site-header .navbar a.contact-cta:hover svg,
++.theme-light .navbar .nav-link.contact-cta:hover svg,
++.theme-light a.contact-cta:hover svg,
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover .material-symbols-outlined,
++.theme-light header.site-header .navbar a.contact-cta:hover .material-symbols-outlined,
++.theme-light .navbar .nav-link.contact-cta:hover .material-symbols-outlined,
++.theme-light a.contact-cta:hover .material-symbols-outlined{
++  color: #ffffff !important;
++  fill: currentColor !important;
+ }
+ 
+-/* Polaroid-style variant for header when it contains images */
+-.page-header-polaroid{
+-  background:#fff;
+-  color:#071127;
+-  border-radius:12px;
+-  padding:0.75rem;
+-  box-shadow: 0 14px 36px rgba(2,12,32,0.18), 0 6px 16px rgba(2,12,32,0.08);
+-  transform: rotate(-1deg);
+-  display:inline-block;
+-  border: 12px solid #fff; /* outer polaroid border */
+-}
+-.page-header-polaroid .visual-phrase{ color:#071127; font-weight:700; padding-top:0.6rem; }
+-.page-header-polaroid .polaroid-caption{ display:block; text-align:center; font-size:0.92rem; padding:0.6rem 0 0.9rem 0; color:rgba(7,17,39,0.8); }
+-/* hide decorative laser when polaroid is used */
+-.page-header-polaroid::before, .page-header-polaroid::after{ display:none }
+-
+-
+-/* Admin dashboard layout -------------------------------------------------- */
+-.admin-dashboard{display:flex;gap:1rem;padding:1rem}
+-.admin-sidebar{width:220px;flex:0 0 220px;padding:0.8rem}
+-.admin-sidebar .nav-link{display:block;padding:0.6rem 0;color:var(--fg);text-decoration:none;border-bottom:1px dashed rgba(0,0,0,0.04)}
+-.admin-sidebar .nav-link:hover{color:var(--deep);}
+-.admin-sidebar.card-preview{border-radius:12px;padding:0.9rem;background:var(--card-bg);box-shadow:0 8px 26px rgba(2,12,32,0.06);}
+-.admin-main{flex:1;min-width:0}
+-.admin-header{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem}
+-.admin-header .section-title-lg{margin:0;padding:0}
+-.admin-stats .card-preview{padding:1rem;margin-bottom:0.75rem}
+-.admin-header{position:relative;border-radius:10px;padding:1.2rem 0.8rem 1rem 1.2rem}
+-.admin-header::after{ content:''; position:absolute; left:6px; right:6px; top:6px; bottom:6px; border-radius:8px; pointer-events:none; box-shadow: 0 0 0 3px rgba(40,40,40,0.06) inset }
+-.theme-dark .admin-header::after{ box-shadow: 0 0 0 3px rgba(0,238,255,0.08) inset }
+-
+-/* add top padding for text inside admin header to visually center below the inset */
+-.admin-header h1, .admin-header h2, .admin-header p, .admin-header .section-title-lg{ padding-top:1.1rem; padding-left:0.9rem; padding-bottom:0.8rem }
+-.admin-pipeline, .admin-pages{background:transparent}
+-.list-group-item{background:var(--card-bg);border:1px solid var(--card-border);margin-bottom:0.45rem;border-radius:8px}
+-.list-group-item .btn{padding:0.35rem 0.5rem;font-size:0.9rem}
+-
+-@media (max-width:900px){
+-  .admin-dashboard{flex-direction:column}
+-  .admin-sidebar{width:100%;flex:0 0 auto}
+-}
+-
+-/* Hide the duplicate H1 inside admin pages since banner already shows section title */
+-.admin-header .section-title-lg{display:none !important}
+-.admin-main{padding-top:0.5rem}
+-
+-/* Dark theme: make admin sidebar fully black with bright-cyan accents for links/icons */
+-.theme-dark .admin-sidebar{
+-  background: #000 !important;
+-  border-right: 1px solid rgba(255,255,255,0.06);
++/* Disabled state: preserve contrast */
++.contact-cta[disabled], .contact-cta.disabled{ opacity: .65; cursor: not-allowed }
++
++/* -------- Dark mode: ensure dropdowns (submenus like 'Otros') use dark background -------- */
++/* Some dropdowns were rendering white in dark mode; force a dark surface for readability. */
++.theme-dark .dropdown-menu {
++  background: #0b1220 !important; /* dark slate */
++  color: #e8eef6 !important;
++  border: 1px solid rgba(255,255,255,0.06) !important;
++  box-shadow: 0 10px 30px rgba(0,0,0,0.6) !important;
+ }
+-.theme-dark .admin-sidebar.card-preview{ box-shadow: 0 10px 36px rgba(0,0,0,0.6); border-radius: 12px; position:relative; }
+-.theme-dark .admin-sidebar.card-preview::after{ content:''; position:absolute; left:6px; right:6px; top:6px; bottom:6px; border-radius:10px; pointer-events:none; box-shadow: 0 0 0 3px rgba(0,238,255,0.08) inset; }
+-.theme-dark .admin-sidebar .nav-link{
+-  color: var(--accent) !important;
+-  border-bottom-color: rgba(255,255,255,0.04) !important;
++
++/* ================= FINAL CONSOLIDATED LIGHT THEME MENU STYLE (copy dark, adapt to white) ================= */
++/* Goal: replicate dark-mode menu aesthetics in light mode but with white surfaces and dark-gray text/icons.
++   Includes: nav links, active state, dropdowns, contact CTA and control buttons all rounded. */
++html.theme-light header.site-header,
++html.theme-light .site-header {
++  background: #ffffff !important;
++  color: #1f2937 !important;
++  box-shadow: 0 4px 16px rgba(2,12,32,0.06) !important;
+ }
+-.theme-dark .admin-sidebar .nav-link:hover{
+-  color: var(--accent-2) !important;
++/* Ensure header remains pure white even if --header-bg is set to a different value
++   (we set --header-bg to #dedede for page background but prefer header white). */
++html.theme-light .site-header { background: #ffffff !important; }
++
++/* If header includes data-theme-bg="site-dedede", apply #dedede in light theme */
++html.theme-light .site-header[data-theme-bg="site-dedede"] {
++  background: #dedede !important;
++}
++
++/* Option A: Force light theme background to #dedede (global light theme) */
++html.theme-light {
++  --bg: #dedede;
++}
++
++/* Ensure page background uses the variable in case other rules override it */
++html.theme-light body {
++  background: var(--bg) !important;
++}
++
++/* Light-theme text normalization
++   Replace explicit white/bright text with a dark gray for better contrast in light mode.
++   This targets selectors that previously forced white text (found in the CSS search). */
++html.theme-light .hero-content,
++html.theme-light .hero-content .mb-3,
++html.theme-light .home-banner .parallax-overlay .hero .mb-3,
++html.theme-light .parallax-overlay .hero .mb-3,
++html.theme-light .site-footer .form-control,
++html.theme-light .site-footer h5,
++html.theme-light .site-footer .copyright,
++html.theme-light .section-stripe,
++html.theme-light .card-preview.dark,
++html.theme-light .card-preview.dark *,
++html.theme-light .page-header-visual,
++html.theme-light .page-header-visual * {
++  color: var(--muted) !important;
++}
++
++/* Additional catch-all for elements that accidentally have white text in light mode */
++html.theme-light .text-white, html.theme-light .has-white-text {
++  color: var(--muted) !important;
++}
++
++/* Light theme: headings/subtitles use dark gray and body text is slightly heavier for legibility */
++html.theme-light h1,
++html.theme-light h2,
++html.theme-light h3,
++html.theme-light h4,
++html.theme-light h5,
++html.theme-light h6,
++html.theme-light .section-title-lg,
++html.theme-light .page-header-visual .visual-phrase,
++html.theme-light .prose-left h2,
++html.theme-light .prose-left h3,
++html.theme-light .section-stripe .ss-title,
++html.theme-light .card-title,
++html.theme-light .page-header-visual .lead {
++  color: var(--muted) !important;
++  font-weight: 700 !important;
++}
++
++/* Design request: make section titles white in light theme when layout expects white headings */
++html.theme-light .section-title,
++html.theme-light .section-heading,
++html.theme-light .page-header-visual .visual-phrase.white-title,
++html.theme-light .section-title-lg.white,
++html.theme-light .prose-left h2.white,
++html.theme-light h2.section,
++html.theme-light h3.section,
++html.theme-light h4.section,
++html.theme-light h5.section,
++html.theme-light h6.section {
++  color: #ffffff !important;
++}
++
++/* Parallax/banner headings: force white over images in light theme */
++html.theme-light .parallax-overlay .hero h1,
++html.theme-light .parallax-overlay .hero h2,
++html.theme-light .home-banner .parallax-overlay .hero h1,
++html.theme-light .home-banner .parallax-overlay .hero h2,
++html.theme-light .page-header-visual h1,
++html.theme-light .page-header-visual h2,
++html.theme-light .parallax-overlay .hero .lead,
++html.theme-light .home-banner .parallax-overlay .hero .lead,
++html.theme-light .page-header-visual .visual-phrase {
++  color: #ffffff !important;
++}
++
++/* Ensure hero content retains text-shadow for legibility on varying image frames */
++html.theme-light .parallax-overlay .hero h1,
++html.theme-light .home-banner .parallax-overlay .hero h1 {
++  text-shadow: 0 6px 18px rgba(0,0,0,0.35) !important;
++}
++
++/* Increase generic content text weight for readability in light mode */
++html.theme-light body,
++html.theme-light .prose-left,
++html.theme-light .prose-left p,
++html.theme-light .section-grid .prose-left p,
++html.theme-light .section-grid .prose-left ul,
++html.theme-light .section-grid .prose-left ol {
++  color: var(--fg) !important;
++  font-weight: 400 !important; /* from 200/300 to 400 */
++}
++
++/* Ensure documentation section body is readable in light theme */
++html.theme-light .doc-section-body,
++html.theme-light .doc-section-body p,
++html.theme-light .doc-section-body ul,
++html.theme-light .doc-section-body ol,
++html.theme-light .doc-section-body li {
++  color: var(--muted) !important; /* dark gray */
++  font-weight: 500 !important;    /* slightly heavier for legibility */
++  line-height: 1.65 !important;
++}
++
++/* Light-theme: make blockquotes and contact-card text dark and legible */
++html.theme-light blockquote,
++html.theme-light blockquote.contact-card,
++html.theme-light .contact-card,
++html.theme-light blockquote.contact-card footer.small,
++html.theme-light .contact-card footer.small,
++html.theme-light blockquote p,
++html.theme-light .contact-card p,
++html.theme-light .contact-card li {
++  color: var(--muted) !important;
++  font-weight: 500 !important;
++}
++
++/* Ensure quoted text uses adequate contrast in light mode */
++html.theme-light blockquote, html.theme-light q, html.theme-light cite {
++  font-weight: 500 !important;
++  color: var(--muted) !important;
++}
++
++/* Apply same readable styles to generic paragraphs, list items and buttons in light mode */
++html.theme-light p,
++html.theme-light li,
++html.theme-light .btn,
++html.theme-light a.btn,
++html.theme-light .card-text,
++html.theme-light .blog-card .card-text {
++  color: var(--muted) !important;
++  font-weight: 500 !important;
++}
++html.theme-light header.site-header::after { box-shadow: 0 0 0 3px rgba(16,24,32,0.05) inset !important; }
++
++/* Remove black debug backgrounds in light theme */
++html.theme-light header, html.theme-light .section-stripe { background: #ffffff !important; }
++html.theme-light .section-stripe { box-shadow: 0 2px 10px rgba(2,12,32,0.06); border:1px solid rgba(0,0,0,0.06); }
++html.theme-light .section-stripe .ss-title, html.theme-light .section-stripe .ss-excerpt { color:#1f2937 !important; }
++
++/* Nav links: pill shape, dark gray text, subtle hover */
++html.theme-light .navbar .nav-link {
++  color: #374151 !important;
++  background: transparent !important;
++  border-radius: 999px !important;
++  padding: .55rem .95rem !important;
++  font-weight: 500 !important;
++  line-height:1 !important;
++}
++html.theme-light .navbar .nav-link:hover,
++html.theme-light .navbar .nav-link:focus {
++  background: rgba(0,0,0,0.04) !important;
++  color: #1f2937 !important;
++  text-shadow:none !important;
++}
++
++/* Active nav link: subtle filled pill + laser rim glow replicate dark mode feel */
++html.theme-light .navbar .nav-link.active,
++html.theme-light .navbar .nav-link[aria-current="page"] {
++  background: linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.03)) !important;
++  box-shadow: 0 0 0 2px rgba(0,0,0,0.06) inset, 0 8px 20px rgba(2,12,32,0.08) !important;
++  color: #111827 !important;
++}
++html.theme-light .navbar .nav-link.active:hover,
++html.theme-light .navbar .nav-link[aria-current="page"]:hover {
++  box-shadow: 0 0 0 2px rgba(0,0,0,0.08) inset, 0 12px 28px rgba(2,12,32,0.12) !important;
++}
++
++/* Icons inherit link color and remain dark gray */
++html.theme-light .navbar .nav-link .nav-icon,
++html.theme-light .navbar .nav-link .material-symbols-outlined { color: #374151 !important; }
++html.theme-light .navbar .nav-link.active .nav-icon,
++html.theme-light .navbar .nav-link[aria-current="page"] .nav-icon { color: #111827 !important; }
++
++/* Dropdown menus: white surface, rounded, inner line, dark text/icons */
++html.theme-light .navbar .dropdown-menu {
++  background: #ffffff !important;
++  color: #1f2937 !important;
++  border: 1px solid rgba(16,24,32,0.06) !important;
++  border-radius: 14px !important;
++  box-shadow: 0 12px 30px rgba(2,12,32,0.08) !important;
++  padding: .35rem .4rem !important;
++  position: absolute !important; /* float like dark mode */
++  top: 100% !important; /* directly under trigger link */
++  left: 0 !important;
++  z-index: 1300 !important;
++  margin-top: 4px !important; /* small gap */
++  transform: translateY(0) !important;
++  min-width: 240px; /* keep reasonable width */
++}
++html.theme-light .navbar .dropdown-menu::after {
++  content:''; position:absolute; left:8px; right:8px; top:8px; height:1px;
++  background: rgba(16,24,32,0.14); pointer-events:none; border-radius:2px;
++}
++html.theme-light .navbar .dropdown-item {
++  color: #1f2937 !important; border-radius: 10px !important; padding:.45rem .75rem !important;
++}
++html.theme-light .navbar .dropdown-item:hover,
++html.theme-light .navbar .dropdown-item:focus {
++  background: rgba(0,0,0,0.06) !important; color:#0f1724 !important;
++}
++html.theme-light .navbar .dropdown-header { color:#6b7280 !important; font-weight:600 !important; }
++
++/* Contact CTA: already specified, ensure consistent pill radius & icon color */
++html.theme-light .navbar .nav-link.contact-cta,
++html.theme-light header.site-header .navbar .nav-link.contact-cta,
++html.theme-light a.contact-cta {
++  border-radius: 999px !important;
++  font-weight:600 !important;
++  color:#374151 !important;
++}
++html.theme-light .navbar .nav-link.contact-cta .material-symbols-outlined, html.theme-light a.contact-cta .material-symbols-outlined { color:#374151 !important; }
++/* === Light Theme Menu Shape & Contact Icon Clean Overrides (Added) === */
++html.theme-light header.site-header .navbar .nav-link,
++html.theme-light header.site-header .navbar .nav-link.dropdown-toggle,
++html.theme-light .navbar .nav-link,
++html.theme-light .navbar .nav-link.dropdown-toggle {
++  -webkit-border-radius: 999px !important;
++  -moz-border-radius: 999px !important;
++  border-radius: 999px !important;
++}
++html.theme-light header.site-header .navbar .nav-item > .nav-link.dropdown-toggle::after,
++html.theme-light .navbar .nav-item > .nav-link.dropdown-toggle::after { margin-left: 0.35rem; }
++/* Contact CTA icon should not have colored background in light mode */
++html.theme-light .navbar .nav-link.contact-cta .material-symbols-outlined,
++html.theme-light header.site-header .navbar .nav-link.contact-cta .material-symbols-outlined,
++html.theme-light a.contact-cta .material-symbols-outlined {
++  background: transparent !important;
++  box-shadow: none !important;
++  padding: 0 !important;
++  border-radius: 0 !important;
+ }
+-.theme-dark .admin-sidebar .nav-link.active,
+-.theme-dark .admin-sidebar .nav-link[aria-current="page"]{
+-  background: rgba(255,255,255,0.03);
++/* Ensure the Contact CTA itself keeps pill shape */
++html.theme-light .navbar .nav-link.contact-cta,
++html.theme-light header.site-header .navbar .nav-link.contact-cta,
++html.theme-light a.contact-cta {
++  border-radius: 999px !important;
++}
++/* Wrapper cleanup: elimina cualquier caja cuadrada alrededor de los botones en modo claro */
++html.theme-light header.site-header .navbar .nav-item,
++html.theme-light .navbar .nav-item.nav-group-main,
++html.theme-light .navbar li.nav-item.nav-group {
++  background: transparent !important;
++  padding: 0 !important;
++  border: 0 !important;
++  box-shadow: none !important;
++}
++/* Refine wrapper display so square block footprint disappears */
++html.theme-light .navbar .nav-item,
++html.theme-light header.site-header .navbar .nav-item {
++  background-color: transparent !important;
++  background-image: none !important;
++  display: inline-block !important;
++  margin: 0 .1rem !important;
++  min-width: auto !important;
++}
++html.theme-light .navbar .nav-item > .nav-link,
++html.theme-light header.site-header .navbar .nav-item > .nav-link {
++  display: inline-flex !important;
++  margin: 0 !important;
++}
++
++/* Control buttons (search/theme/admin): rounded squares/pills and light styling */
++html.theme-light .mc-btn, html.theme-light .nav-control, html.theme-light .nav-control-tab {
++  border-radius:12px !important;
++  background:#ffffff !important;
++  color:#374151 !important;
++  border:1px solid rgba(16,24,32,0.06) !important;
++  box-shadow:0 8px 20px rgba(2,12,32,0.06) !important;
++}
++html.theme-light .mc-btn span, html.theme-light .nav-control span, html.theme-light .nav-control-tab span { color:#374151 !important; }
++html.theme-light .mc-btn:hover, html.theme-light .nav-control:hover, html.theme-light .nav-control-tab:hover {
++  background: rgba(0,0,0,0.05) !important; color:#1f2937 !important; transform:translateY(-2px) !important;
++}
++
++/* Footer links color unchanged; ensure no forced black from debug */
++html.theme-light .site-footer { background:#f8fafc !important; }
++
++/* Remove any legacy box-shadow or black backgrounds forced earlier */
++html.theme-light .navbar.sticky-top { background: rgba(255,255,255,0.90) !important; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
++
++/* Ensure transitions remain smooth */
++html.theme-light .navbar .nav-link, html.theme-light .navbar .dropdown-item { transition: background-color .14s ease, color .14s ease, box-shadow .18s ease; }
++
++/* ========================================================================================================= */
++.theme-dark .dropdown-header {
++  color: rgba(255,255,255,0.72) !important;
++}
++.theme-dark .dropdown-item {
++  color: #e8eef6 !important;
++}
++.theme-dark .dropdown-item:hover,
++.theme-dark .dropdown-item:focus {
++  background: rgba(0,238,255,0.04) !important;
+   color: var(--accent-2) !important;
+-  font-weight:700;
+ }
+-.theme-dark .admin-sidebar .nav-icon{ color: var(--accent) !important; }
+ 
+-/* Light theme variant for admin sidebar card-preview border/margin */
+-.theme-light .admin-sidebar.card-preview{ border-radius:12px; position:relative; }
+-.theme-light .admin-sidebar.card-preview::after{ content:''; position:absolute; left:6px; right:6px; top:6px; bottom:6px; border-radius:10px; pointer-events:none; box-shadow: 0 0 0 3px rgba(40,40,40,0.06) inset; }
++/* -------- Light mode: dropdown panels (e.g., 'Otros') should be white with a thin inner dark-gray line -------- */
++.theme-light .dropdown-menu {
++  background: #ffffff !important; /* white panel */
++  color: #0f1724 !important; /* dark text */
++  border: none !important; /* use inner line instead of outer heavy border */
++  box-shadow: 0 6px 18px rgba(2,12,32,0.06) !important;
++  /* subtle inner line for separation */
++  position: relative;
++}
++.theme-light .dropdown-menu::after {
++  /* thin inner line at the top edge to read as inner separator */
++  content: '';
++  position: absolute;
++  left: 6px;
++  right: 6px;
++  top: 6px;
++  height: 1px;
++  background: rgba(16,24,32,0.12) !important; /* slightly stronger dark-gray thin line */
++  pointer-events: none;
++}
++.theme-light .dropdown-item { color: #0f1724 !important; }
++.theme-light .dropdown-header { color: #6b7280 !important; }
++.theme-light .dropdown-item:hover, .theme-light .dropdown-item:focus { background: rgba(0,0,0,0.06) !important; color: #0f1724 !important; }
++
++/* Strong overrides to ensure the dropdown panel is pure white and inner-line is visible even when other rules exist */
++.theme-light header.site-header .navbar .dropdown-menu,
++.theme-light .navbar .dropdown-menu,
++.theme-light .dropdown-menu.show {
++  background: #ffffff !important;
++  border: none !important;
++  box-shadow: 0 8px 26px rgba(2,12,32,0.08) !important;
++}
++.theme-light header.site-header .navbar .dropdown-menu::after,
++.theme-light .navbar .dropdown-menu::after {
++  left: 6px !important;
++  right: 6px !important;
++  top: 6px !important;
++  height: 1px !important;
++  background: rgba(16,24,32,0.12) !important;
++}
++
++/* -------- Light mode: Contact CTA exact behavior (default white + gray icon/text; hover -> dark-gray background + white icon/text) -------- */
++/* Use a highly specific selector to override previous variants that produced 3 colours */
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta,
++.theme-light header.site-header .navbar a.contact-cta,
++.theme-light .navbar .nav-link.contact-cta,
++.theme-light a.contact-cta {
++  background: #ffffff !important; /* white surface */
++  color: #6b6f75 !important; /* medium gray icon/text */
++  border: 1px solid rgba(16,24,32,0.06) !important; /* thin outer line */
++  box-shadow: none !important;
++  height: 40px !important;
++  padding: 0 .9rem !important;
++  font-weight: 600 !important;
++  display: inline-flex !important;
++  align-items: center !important;
++  gap: .5rem !important;
++  border-radius: 999px !important;
++  transition: background-color .12s ease, color .12s ease, transform .08s ease !important;
++}
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta .material-symbols-outlined,
++.theme-light header.site-header .navbar a.contact-cta .material-symbols-outlined,
++.theme-light .navbar .nav-link.contact-cta .material-symbols-outlined,
++.theme-light a.contact-cta .material-symbols-outlined,
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta svg,
++.theme-light header.site-header .navbar a.contact-cta svg,
++.theme-light .navbar .nav-link.contact-cta svg,
++.theme-light a.contact-cta svg {
++  color: #6b6f75 !important; /* icon matches text color */
++  fill: currentColor !important;
++}
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover,
++.theme-light header.site-header .navbar a.contact-cta:hover,
++.theme-light .navbar .nav-link.contact-cta:hover,
++.theme-light a.contact-cta:hover {
++  background: #374151 !important; /* dark gray */
++  color: #ffffff !important; /* text + icon white */
++  transform: translateY(-1px) !important;
++}
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover .material-symbols-outlined,
++.theme-light header.site-header .navbar a.contact-cta:hover .material-symbols-outlined,
++.theme-light .navbar .nav-link.contact-cta:hover .material-symbols-outlined,
++.theme-light a.contact-cta:hover .material-symbols-outlined,
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover svg,
++.theme-light header.site-header .navbar a.contact-cta:hover svg,
++.theme-light .navbar .nav-link.contact-cta:hover svg,
++.theme-light a.contact-cta:hover svg {
++  color: #ffffff !important;
++  fill: currentColor !important;
++}
++
++/* Remove any leftover background-image or gradient interfering with white surface */
++.theme-light .navbar .nav-link.contact-cta, .theme-light a.contact-cta { background-image: none !important; }
++
++/* -------- Light mode: unify Contact CTA behavior to match dark-mode behavior but inverted colors -------- */
++.theme-light .navbar .nav-link.contact-cta,
++.theme-light header.site-header .navbar .nav-link.contact-cta,
++.theme-light .navbar a.contact-cta {
++  background: #ffffff !important; /* white surface */
++  color: #6b6f75 !important; /* medium gray icon/text */
++  border: 1px solid rgba(16,24,32,0.06) !important; /* thin outer line */
++  box-shadow: 0 6px 18px rgba(2,12,32,0.04) !important; /* subtle depth */
++  height: 40px !important;
++  padding: 0 .9rem !important;
++  font-weight: 600 !important;
++  display: inline-flex !important;
++  align-items: center !important;
++  gap: .5rem !important;
++  border-radius: 999px !important;
++  transition: transform .12s ease, box-shadow .12s ease, background-color .12s ease, color .12s ease !important;
++}
++.theme-light .navbar .nav-link.contact-cta .material-symbols-outlined,
++.theme-light header.site-header .navbar .nav-link.contact-cta .material-symbols-outlined { color: inherit !important; }
++.theme-light .navbar .nav-link.contact-cta:hover,
++.theme-light header.site-header .navbar .nav-link.contact-cta:hover,
++.theme-light .navbar a.contact-cta:hover {
++  background: #374151 !important; /* dark gray on hover */
++  color: #ffffff !important; /* text + icon white */
++  transform: translateY(-2px) !important;
++  box-shadow: 0 12px 28px rgba(2,12,32,0.12) !important;
++}
++.theme-light .navbar .nav-link.contact-cta:focus-visible,
++.theme-light header.site-header .navbar .nav-link.contact-cta:focus-visible {
++  outline: 3px solid rgba(0,168,255,0.12) !important;
++  outline-offset: 3px !important;
++}
+ 
+ 
++/* Tighter parallax sizing to avoid overflow when object-fit rounding triggers >100% width */
++.parallax-media{min-width:100%;min-height:100%;max-width:none;max-height:none}
++.parallax-banner{height:50vh;min-height:220px}
+ 
+-/* Improve keyboard visibility within dropdown menus (Bootstrap adds focus outlines but we make menuitems clearer) */
+-.dropdown-menu [role="menuitem"]:focus, .dropdown-menu .dropdown-item:focus{
+-  outline:none;
+-  background:rgba(0,0,0,0.08);
+-  color:inherit;
++/* Dark-theme: ensure contact CTA uses dark-gray background + white text (company blue removed) */
++.theme-dark .navbar .nav-link.contact-cta,
++.theme-dark header.site-header .navbar .nav-link.contact-cta,
++.theme-dark a.contact-cta,
++.theme-dark .contact-cta {
++  background: #2b2b2b !important; /* dark gray */
++  color: #ffffff !important;      /* white text */
++  border-color: rgba(255,255,255,0.06) !important;
++  box-shadow: none !important;
++}
++.theme-dark .navbar .nav-link.contact-cta .material-symbols-outlined,
++.theme-dark a.contact-cta .material-symbols-outlined,
++.theme-dark .contact-cta .material-symbols-outlined {
++  color: #ffffff !important;
++  fill: currentColor !important;
++}
++.theme-dark .navbar .nav-link.contact-cta:hover,
++.theme-dark a.contact-cta:hover,
++.theme-dark .contact-cta:hover {
++  background: #1f1f1f !important;
++  color: #ffffff !important;
++}
++.theme-dark .navbar .nav-link.contact-cta.active,
++.theme-dark .navbar .nav-link.contact-cta[aria-pressed="true"],
++.theme-dark a.contact-cta.active,
++.theme-dark a.contact-cta[aria-pressed="true"],
++.theme-dark .contact-cta.active,
++.theme-dark .contact-cta[aria-pressed="true"] {
++  background: #2b2b2b !important;
++  color: #ffffff !important;
++  box-shadow: none !important;
+ }
+ 
+-@media (max-width:992px){
+-  .section-grid .section-cards{ order:2 }
+-  .section-grid .section-text{ order:1 }
++/* Small utility: improve contrast for form controls in dark mode */
++@media (prefers-color-scheme: dark){
++  :root{ --bg:#121212; --fg:#FFFFFF }
++  .navbar, .site-header{background:linear-gradient(90deg,#02162b,#00213f)}
++  .flash{background:linear-gradient(90deg, rgba(0,238,255,0.04), rgba(67,255,255,0.02));border-left-color:var(--accent)}
+ }
+ 
+-/* ==========================
+-  Navbar top-spacing tweak (appended at EOF)
+-  - Force header/navbar to sit flush with the top of the viewport.
+-  - Keep a small bottom padding for comfortable touch targets.
+-  - Marked important to override previous sticky/header rules.
+-  ========================== */
+-.site-header{ padding-top:0 !important; padding-bottom:0.35rem !important; }
+-header.site-header, header{ padding-top:0 !important; }
+-.navbar{ min-height:56px; padding-top:0 !important; padding-bottom:0 !important }
+-.site-header{ top:0; }
++/* Additional small tweaks */
++.nav-link{transition:color .15s ease, background .15s ease}
++.hero{padding:2rem 1rem;max-width:100%;box-shadow:0 4px 18px rgba(2,12,32,0.06)}
++footer.container{padding:1.25rem 1rem;background:transparent;color:rgba(0,0,0,0.6)}
++@media (max-width:800px){
++  .navbar{min-height:56px}
++  .navbar .nav-link{padding:.5rem .4rem}
++  .brand{font-size:1.05rem}
++}
+ 
++/* Parallax banner styles */
++.parallax-banner{position:relative;overflow:hidden;height:56vh;min-height:280px;display:block}
++.parallax-media{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;will-change:transform}
++.parallax-media[poster], .parallax-media video{object-fit:cover}
++.parallax-media[role="img"]{background-position:center center;background-size:cover;width:100%;height:100%;}
++.parallax-media{transition:transform 260ms cubic-bezier(.2,.9,.2,1), filter 220ms ease}
++.parallax-banner:hover .parallax-media{ filter:brightness(0.92) saturate(1.06) }
++
++/* Interactive inverse-mouse parallax: handled in JS; fallback subtle transform on hover */
++.parallax-banner:hover .parallax-media{ transform:translate(-50%,-50%) scale(1.05) }
++.parallax-overlay{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;height:100%;pointer-events:none}
++.parallax-overlay .hero{background:transparent;padding:2rem 1rem;text-align:center}
++.parallax-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.35));z-index:1}
++
++@media (max-width:800px){
++  .parallax-banner{height:42vh;min-height:200px}
++  .parallax-overlay .hero{padding:1rem}
++}
++
++/* Section layout helper: left-aligned prose and image/cards column */
++.section-grid .prose-left{ text-align:left; color:var(--fg); }
++.section-grid .prose-left p, .section-grid .prose-left ul, .section-grid .prose-left ol, .section-grid .prose-left h3{ margin-bottom:0.9rem; }
++.section-grid .section-cards{ display:flex; flex-direction:column; gap:0.75rem; }
++.section-grid .section-cards .card-preview{ background:var(--card-bg); border:1px solid var(--card-border); }
++.section-grid .section-cards img{ width:100%; height:auto; object-fit:cover; }
++.section-grid .card-preview .card-title{ color:var(--deep); }
++.prose-left img{ max-width:100%; height:auto; display:block; margin:0.5rem 0 }
++
++/* Section stripe: a horizontal blue band with section title and short snippet */
++.section-stripe{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0.9rem 1rem;border-radius:8px;background:linear-gradient(90deg,var(--deep),#003366);color:#fff;margin:1rem 0}
++/* TEMP: force section-stripe to black for debugging */
++.section-stripe { background: #000 !important; }
++.section-stripe .ss-title{font-weight:800;font-size:1.05rem;letter-spacing:0.02em;text-transform:uppercase}
++.section-stripe .ss-excerpt{opacity:0.95;color:rgba(255,255,255,0.95);font-size:0.98rem;max-width:72%;text-align:right}
++@media(max-width:768px){.section-stripe{flex-direction:column;align-items:flex-start}.section-stripe .ss-excerpt{text-align:left;max-width:100%}}
++
++/* Visual header: rounded container with a bright blue 'laser' line on top */
++.page-header-visual{
++  position:relative;
++  padding:1rem 1.25rem;
++  border-radius:14px;
++  background:rgba(255,255,255,0.02);
++  box-shadow:0 6px 20px rgba(2,12,32,0.12);
++  overflow:hidden;
++  /* visual improvements */
++  padding-bottom:1.8rem; /* space under laser */
++  margin-bottom:2rem;   /* separation from next block */
++  z-index:2;
++  -webkit-backdrop-filter: blur(4px);
++  backdrop-filter: blur(4px);
++}
++
++/* Absolute final override targeting the exact header nav-item wrapper for the Contact CTA
++   Ensures: normal = white bg, dark-gray text/icon; hover = black bg, white text/icon. */
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta {
++  background: #ffffff !important;
++  color: #2f3438 !important;
++  border: 1px solid rgba(16,24,32,0.06) !important;
++  box-shadow: none !important;
++  height: 38px !important;
++  padding: 0 .9rem !important;
++  display: inline-flex !important;
++  align-items: center !important;
++  gap: .45rem !important;
++  border-radius: 999px !important;
++  text-decoration: none !important;
++  transition: background-color .12s ease, color .12s ease, transform .08s ease !important;
++}
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta svg,
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta .material-symbols-outlined,
++.theme-light a.contact-cta svg,
++.theme-light a.contact-cta .material-symbols-outlined{
++  color: #2f3438 !important;
++  fill: currentColor !important;
++}
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover,
++.theme-light header.site-header .navbar a.contact-cta:hover,
++.theme-light .navbar .nav-link.contact-cta:hover,
++.theme-light a.contact-cta:hover{
++  background: #000000 !important;
++  color: #ffffff !important;
++  transform: translateY(-1px) !important;
++}
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover svg,
++.theme-light header.site-header .navbar a.contact-cta:hover svg,
++.theme-light .navbar .nav-link.contact-cta:hover svg,
++.theme-light a.contact-cta:hover svg,
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover .material-symbols-outlined,
++.theme-light header.site-header .navbar a.contact-cta:hover .material-symbols-outlined,
++.theme-light .navbar .nav-link.contact-cta:hover .material-symbols-outlined,
++.theme-light a.contact-cta:hover .material-symbols-outlined{
++  color: #ffffff !important;
++  fill: currentColor !important;
++}
++
++/* Disabled state: preserve contrast */
++.contact-cta[disabled], .contact-cta.disabled{ opacity: .65; cursor: not-allowed }
++
++
++/* Tighter parallax sizing to avoid overflow when object-fit rounding triggers >100% width */
++.parallax-media{min-width:100%;min-height:100%;max-width:none;max-height:none}
++.parallax-banner{height:50vh;min-height:220px}
++
++/* Small utility: improve contrast for form controls in dark mode */
++@media (prefers-color-scheme: dark){
++  :root{ --bg:#121212; --fg:#FFFFFF }
++  .navbar, .site-header{background:linear-gradient(90deg,#02162b,#00213f)}
++  .flash{background:linear-gradient(90deg, rgba(0,238,255,0.04), rgba(67,255,255,0.02));border-left-color:var(--accent)}
++}
++
++/* Additional small tweaks */
++.nav-link{transition:color .15s ease, background .15s ease}
++.hero{padding:2rem 1rem;max-width:100%;box-shadow:0 4px 18px rgba(2,12,32,0.06)}
++footer.container{padding:1.25rem 1rem;background:transparent;color:rgba(0,0,0,0.6)}
++@media (max-width:800px){
++  .navbar{min-height:56px}
++  .navbar .nav-link{padding:.5rem .4rem}
++  .brand{font-size:1.05rem}
++}
++
++/* Parallax banner styles */
++.parallax-banner{position:relative;overflow:hidden;height:56vh;min-height:280px;display:block}
++.parallax-media{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;will-change:transform}
++.parallax-media[poster], .parallax-media video{object-fit:cover}
++.parallax-media[role="img"]{background-position:center center;background-size:cover;width:100%;height:100%;}
++.parallax-media{transition:transform 260ms cubic-bezier(.2,.9,.2,1), filter 220ms ease}
++.parallax-banner:hover .parallax-media{ filter:brightness(0.92) saturate(1.06) }
++
++/* Interactive inverse-mouse parallax: handled in JS; fallback subtle transform on hover */
++.parallax-banner:hover .parallax-media{ transform:translate(-50%,-50%) scale(1.05) }
++.parallax-overlay{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;height:100%;pointer-events:none}
++.parallax-overlay .hero{background:transparent;padding:2rem 1rem;text-align:center}
++.parallax-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.35));z-index:1}
++
++@media (max-width:800px){
++  .parallax-banner{height:42vh;min-height:200px}
++  .parallax-overlay .hero{padding:1rem}
++}
++
++/* Section layout helper: left-aligned prose and image/cards column */
++.section-grid .prose-left{ text-align:left; color:var(--fg); }
++.section-grid .prose-left p, .section-grid .prose-left ul, .section-grid .prose-left ol, .section-grid .prose-left h3{ margin-bottom:0.9rem; }
++.section-grid .section-cards{ display:flex; flex-direction:column; gap:0.75rem; }
++.section-grid .section-cards .card-preview{ background:var(--card-bg); border:1px solid var(--card-border); }
++.section-grid .section-cards img{ width:100%; height:auto; object-fit:cover; }
++.section-grid .card-preview .card-title{ color:var(--deep); }
++.prose-left img{ max-width:100%; height:auto; display:block; margin:0.5rem 0 }
++
++/* Section stripe: a horizontal blue band with section title and short snippet */
++.section-stripe{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0.9rem 1rem;border-radius:8px;background:linear-gradient(90deg,var(--deep),#003366);color:#fff;margin:1rem 0}
++/* TEMP: force section-stripe to black for debugging */
++.section-stripe { background: #000 !important; }
++.section-stripe .ss-title{font-weight:800;font-size:1.05rem;letter-spacing:0.02em;text-transform:uppercase}
++.section-stripe .ss-excerpt{opacity:0.95;color:rgba(255,255,255,0.95);font-size:0.98rem;max-width:72%;text-align:right}
++@media(max-width:768px){.section-stripe{flex-direction:column;align-items:flex-start}.section-stripe .ss-excerpt{text-align:left;max-width:100%}}
++
++/* Visual header: rounded container with a bright blue 'laser' line on top */
++.page-header-visual{
++  position:relative;
++  padding:1rem 1.25rem;
++  border-radius:14px;
++  background:rgba(255,255,255,0.02);
++  box-shadow:0 6px 20px rgba(2,12,32,0.12);
++  overflow:hidden;
++  /* visual improvements */
++  padding-bottom:1.8rem; /* space under laser */
++  margin-bottom:2rem;   /* separation from next block */
++  z-index:2;
++  -webkit-backdrop-filter: blur(4px);
++  backdrop-filter: blur(4px);
++}
++
++/* Absolute final override targeting the exact header nav-item wrapper for the Contact CTA
++   Ensures: normal = white bg, dark-gray text/icon; hover = black bg, white text/icon. */
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta {
++  background: #ffffff !important;
++  color: #2f3438 !important;
++  border: 1px solid rgba(16,24,32,0.06) !important;
++  box-shadow: none !important;
++  height: 38px !important;
++  padding: 0 .9rem !important;
++  display: inline-flex !important;
++  align-items: center !important;
++  gap: .45rem !important;
++  border-radius: 999px !important;
++  text-decoration: none !important;
++  transition: background-color .12s ease, color .12s ease, transform .08s ease !important;
++}
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta svg,
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta .material-symbols-outlined,
++.theme-light a.contact-cta svg,
++.theme-light a.contact-cta .material-symbols-outlined{
++  color: #2f3438 !important;
++  fill: currentColor !important;
++}
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover,
++.theme-light header.site-header .navbar a.contact-cta:hover,
++.theme-light .navbar .nav-link.contact-cta:hover,
++.theme-light a.contact-cta:hover{
++  background: #000000 !important;
++  color: #ffffff !important;
++  transform: translateY(-1px) !important;
++}
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover svg,
++.theme-light header.site-header .navbar a.contact-cta:hover svg,
++.theme-light .navbar .nav-link.contact-cta:hover svg,
++.theme-light a.contact-cta:hover svg,
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover .material-symbols-outlined,
++.theme-light header.site-header .navbar a.contact-cta:hover .material-symbols-outlined,
++.theme-light .navbar .nav-link.contact-cta:hover .material-symbols-outlined,
++.theme-light a.contact-cta:hover .material-symbols-outlined{
++  color: #ffffff !important;
++  fill: currentColor !important;
++}
++
++/* Disabled state: preserve contrast */
++.contact-cta[disabled], .contact-cta.disabled{ opacity: .65; cursor: not-allowed }
++
++
++/* Tighter parallax sizing to avoid overflow when object-fit rounding triggers >100% width */
++.parallax-media{min-width:100%;min-height:100%;max-width:none;max-height:none}
++.parallax-banner{height:50vh;min-height:220px}
++
++/* Small utility: improve contrast for form controls in dark mode */
++@media (prefers-color-scheme: dark){
++  :root{ --bg:#121212; --fg:#FFFFFF }
++  .navbar, .site-header{background:linear-gradient(90deg,#02162b,#00213f)}
++  .flash{background:linear-gradient(90deg, rgba(0,238,255,0.04), rgba(67,255,255,0.02));border-left-color:var(--accent)}
++}
++
++/* Additional small tweaks */
++.nav-link{transition:color .15s ease, background .15s ease}
++.hero{padding:2rem 1rem;max-width:100%;box-shadow:0 4px 18px rgba(2,12,32,0.06)}
++footer.container{padding:1.25rem 1rem;background:transparent;color:rgba(0,0,0,0.6)}
++@media (max-width:800px){
++  .navbar{min-height:56px}
++  .navbar .nav-link{padding:.5rem .4rem}
++  .brand{font-size:1.05rem}
++}
++
++/* Parallax banner styles */
++.parallax-banner{position:relative;overflow:hidden;height:56vh;min-height:280px;display:block}
++.parallax-media{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;will-change:transform}
++.parallax-media[poster], .parallax-media video{object-fit:cover}
++.parallax-media[role="img"]{background-position:center center;background-size:cover;width:100%;height:100%;}
++.parallax-media{transition:transform 260ms cubic-bezier(.2,.9,.2,1), filter 220ms ease}
++.parallax-banner:hover .parallax-media{ filter:brightness(0.92) saturate(1.06) }
++
++/* Interactive inverse-mouse parallax: handled in JS; fallback subtle transform on hover */
++.parallax-banner:hover .parallax-media{ transform:translate(-50%,-50%) scale(1.05) }
++.parallax-overlay{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;height:100%;pointer-events:none}
++.parallax-overlay .hero{background:transparent;padding:2rem 1rem;text-align:center}
++.parallax-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.35));z-index:1}
++
++@media (max-width:800px){
++  .parallax-banner{height:42vh;min-height:200px}
++  .parallax-overlay .hero{padding:1rem}
++}
++
++/* Section layout helper: left-aligned prose and image/cards column */
++.section-grid .prose-left{ text-align:left; color:var(--fg); }
++.section-grid .prose-left p, .section-grid .prose-left ul, .section-grid .prose-left ol, .section-grid .prose-left h3{ margin-bottom:0.9rem; }
++.section-grid .section-cards{ display:flex; flex-direction:column; gap:0.75rem; }
++.section-grid .section-cards .card-preview{ background:var(--card-bg); border:1px solid var(--card-border); }
++.section-grid .section-cards img{ width:100%; height:auto; object-fit:cover; }
++.section-grid .card-preview .card-title{ color:var(--deep); }
++.prose-left img{ max-width:100%; height:auto; display:block; margin:0.5rem 0 }
++
++/* Section stripe: a horizontal blue band with section title and short snippet */
++.section-stripe{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0.9rem 1rem;border-radius:8px;background:linear-gradient(90deg,var(--deep),#003366);color:#fff;margin:1rem 0}
++/* TEMP: force section-stripe to black for debugging */
++.section-stripe { background: #000 !important; }
++.section-stripe .ss-title{font-weight:800;font-size:1.05rem;letter-spacing:0.02em;text-transform:uppercase}
++.section-stripe .ss-excerpt{opacity:0.95;color:rgba(255,255,255,0.95);font-size:0.98rem;max-width:72%;text-align:right}
++@media(max-width:768px){.section-stripe{flex-direction:column;align-items:flex-start}.section-stripe .ss-excerpt{text-align:left;max-width:100%}}
++
++/* Visual header: rounded container with a bright blue 'laser' line on top */
++.page-header-visual{
++  position:relative;
++  padding:1rem 1.25rem;
++  border-radius:14px;
++  background:rgba(255,255,255,0.02);
++  box-shadow:0 6px 20px rgba(2,12,32,0.12);
++  overflow:hidden;
++  /* visual improvements */
++  padding-bottom:1.8rem; /* space under laser */
++  margin-bottom:2rem;   /* separation from next block */
++  z-index:2;
++  -webkit-backdrop-filter: blur(4px);
++  backdrop-filter: blur(4px);
++}
++
++/* Absolute final override targeting the exact header nav-item wrapper for the Contact CTA
++   Ensures: normal = white bg, dark-gray text/icon; hover = black bg, white text/icon. */
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta {
++  background: #ffffff !important;
++  color: #2f3438 !important;
++  border: 1px solid rgba(16,24,32,0.06) !important;
++  box-shadow: none !important;
++  height: 38px !important;
++  padding: 0 .9rem !important;
++  display: inline-flex !important;
++  align-items: center !important;
++  gap: .45rem !important;
++  border-radius: 999px !important;
++  text-decoration: none !important;
++  transition: background-color .12s ease, color .12s ease, transform .08s ease !important;
++}
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta svg,
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta .material-symbols-outlined,
++.theme-light a.contact-cta svg,
++.theme-light a.contact-cta .material-symbols-outlined{
++  color: #2f3438 !important;
++  fill: currentColor !important;
++}
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover,
++.theme-light header.site-header .navbar a.contact-cta:hover,
++.theme-light .navbar .nav-link.contact-cta:hover,
++.theme-light a.contact-cta:hover{
++  background: #000000 !important;
++  color: #ffffff !important;
++  transform: translateY(-1px) !important;
++}
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover svg,
++.theme-light header.site-header .navbar a.contact-cta:hover svg,
++.theme-light .navbar .nav-link.contact-cta:hover svg,
++.theme-light a.contact-cta:hover svg,
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover .material-symbols-outlined,
++.theme-light header.site-header .navbar a.contact-cta:hover .material-symbols-outlined,
++.theme-light .navbar .nav-link.contact-cta:hover .material-symbols-outlined,
++.theme-light a.contact-cta:hover .material-symbols-outlined{
++  color: #ffffff !important;
++  fill: currentColor !important;
++}
++
++/* Disabled state: preserve contrast */
++.contact-cta[disabled], .contact-cta.disabled{ opacity: .65; cursor: not-allowed }
++
++
++/* Tighter parallax sizing to avoid overflow when object-fit rounding triggers >100% width */
++.parallax-media{min-width:100%;min-height:100%;max-width:none;max-height:none}
++.parallax-banner{height:50vh;min-height:220px}
++
++/* Small utility: improve contrast for form controls in dark mode */
++@media (prefers-color-scheme: dark){
++  :root{ --bg:#121212; --fg:#FFFFFF }
++  .navbar, .site-header{background:linear-gradient(90deg,#02162b,#00213f)}
++  .flash{background:linear-gradient(90deg, rgba(0,238,255,0.04), rgba(67,255,255,0.02));border-left-color:var(--accent)}
++}
++
++/* Additional small tweaks */
++.nav-link{transition:color .15s ease, background .15s ease}
++.hero{padding:2rem 1rem;max-width:100%;box-shadow:0 4px 18px rgba(2,12,32,0.06)}
++footer.container{padding:1.25rem 1rem;background:transparent;color:rgba(0,0,0,0.6)}
++@media (max-width:800px){
++  .navbar{min-height:56px}
++  .navbar .nav-link{padding:.5rem .4rem}
++  .brand{font-size:1.05rem}
++}
++
++/* Parallax banner styles */
++.parallax-banner{position:relative;overflow:hidden;height:56vh;min-height:280px;display:block}
++.parallax-media{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;will-change:transform}
++.parallax-media[poster], .parallax-media video{object-fit:cover}
++.parallax-media[role="img"]{background-position:center center;background-size:cover;width:100%;height:100%;}
++.parallax-media{transition:transform 260ms cubic-bezier(.2,.9,.2,1), filter 220ms ease}
++.parallax-banner:hover .parallax-media{ filter:brightness(0.92) saturate(1.06) }
++
++/* Interactive inverse-mouse parallax: handled in JS; fallback subtle transform on hover */
++.parallax-banner:hover .parallax-media{ transform:translate(-50%,-50%) scale(1.05) }
++.parallax-overlay{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;height:100%;pointer-events:none}
++.parallax-overlay .hero{background:transparent;padding:2rem 1rem;text-align:center}
++.parallax-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.35));z-index:1}
++
++@media (max-width:800px){
++  .parallax-banner{height:42vh;min-height:200px}
++  .parallax-overlay .hero{padding:1rem}
++}
++
++/* Section layout helper: left-aligned prose and image/cards column */
++.section-grid .prose-left{ text-align:left; color:var(--fg); }
++.section-grid .prose-left p, .section-grid .prose-left ul, .section-grid .prose-left ol, .section-grid .prose-left h3{ margin-bottom:0.9rem; }
++.section-grid .section-cards{ display:flex; flex-direction:column; gap:0.75rem; }
++.section-grid .section-cards .card-preview{ background:var(--card-bg); border:1px solid var(--card-border); }
++.section-grid .section-cards img{ width:100%; height:auto; object-fit:cover; }
++.section-grid .card-preview .card-title{ color:var(--deep); }
++.prose-left img{ max-width:100%; height:auto; display:block; margin:0.5rem 0 }
++
++/* Section stripe: a horizontal blue band with section title and short snippet */
++.section-stripe{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0.9rem 1rem;border-radius:8px;background:linear-gradient(90deg,var(--deep),#003366);color:#fff;margin:1rem 0}
++/* TEMP: force section-stripe to black for debugging */
++.section-stripe { background: #000 !important; }
++.section-stripe .ss-title{font-weight:800;font-size:1.05rem;letter-spacing:0.02em;text-transform:uppercase}
++.section-stripe .ss-excerpt{opacity:0.95;color:rgba(255,255,255,0.95);font-size:0.98rem;max-width:72%;text-align:right}
++@media(max-width:768px){.section-stripe{flex-direction:column;align-items:flex-start}.section-stripe .ss-excerpt{text-align:left;max-width:100%}}
++
++/* Visual header: rounded container with a bright blue 'laser' line on top */
++.page-header-visual{
++  position:relative;
++  padding:1rem 1.25rem;
++  border-radius:14px;
++  background:rgba(255,255,255,0.02);
++  box-shadow:0 6px 20px rgba(2,12,32,0.12);
++  overflow:hidden;
++  /* visual improvements */
++  padding-bottom:1.8rem; /* space under laser */
++  margin-bottom:2rem;   /* separation from next block */
++  z-index:2;
++  -webkit-backdrop-filter: blur(4px);
++  backdrop-filter: blur(4px);
++}
++
++/* Absolute final override targeting the exact header nav-item wrapper for the Contact CTA
++   Ensures: normal = white bg, dark-gray text/icon; hover = black bg, white text/icon. */
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta {
++  background: #ffffff !important;
++  color: #2f3438 !important;
++  border: 1px solid rgba(16,24,32,0.06) !important;
++  box-shadow: none !important;
++  height: 38px !important;
++  padding: 0 .9rem !important;
++  display: inline-flex !important;
++  align-items: center !important;
++  gap: .45rem !important;
++  border-radius: 999px !important;
++  text-decoration: none !important;
++  transition: background-color .12s ease, color .12s ease, transform .08s ease !important;
++}
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta svg,
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta .material-symbols-outlined,
++.theme-light a.contact-cta svg,
++.theme-light a.contact-cta .material-symbols-outlined{
++  color: #2f3438 !important;
++  fill: currentColor !important;
++}
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover,
++.theme-light header.site-header .navbar a.contact-cta:hover,
++.theme-light .navbar .nav-link.contact-cta:hover,
++.theme-light a.contact-cta:hover{
++  background: #000000 !important;
++  color: #ffffff !important;
++  transform: translateY(-1px) !important;
++}
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover svg,
++.theme-light header.site-header .navbar a.contact-cta:hover svg,
++.theme-light .navbar .nav-link.contact-cta:hover svg,
++.theme-light a.contact-cta:hover svg,
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover .material-symbols-outlined,
++.theme-light header.site-header .navbar a.contact-cta:hover .material-symbols-outlined,
++.theme-light .navbar .nav-link.contact-cta:hover .material-symbols-outlined,
++.theme-light a.contact-cta:hover .material-symbols-outlined{
++  color: #ffffff !important;
++  fill: currentColor !important;
++}
++
++/* Disabled state: preserve contrast */
++.contact-cta[disabled], .contact-cta.disabled{ opacity: .65; cursor: not-allowed }
++
++
++/* Tighter parallax sizing to avoid overflow when object-fit rounding triggers >100% width */
++.parallax-media{min-width:100%;min-height:100%;max-width:none;max-height:none}
++.parallax-banner{height:50vh;min-height:220px}
++
++/* Small utility: improve contrast for form controls in dark mode */
++@media (prefers-color-scheme: dark){
++  :root{ --bg:#121212; --fg:#FFFFFF }
++  .navbar, .site-header{background:linear-gradient(90deg,#02162b,#00213f)}
++  .flash{background:linear-gradient(90deg, rgba(0,238,255,0.04), rgba(67,255,255,0.02));border-left-color:var(--accent)}
++}
++
++/* Additional small tweaks */
++.nav-link{transition:color .15s ease, background .15s ease}
++.hero{padding:2rem 1rem;max-width:100%;box-shadow:0 4px 18px rgba(2,12,32,0.06)}
++footer.container{padding:1.25rem 1rem;background:transparent;color:rgba(0,0,0,0.6)}
++@media (max-width:800px){
++  .navbar{min-height:56px}
++  .navbar .nav-link{padding:.5rem .4rem}
++  .brand{font-size:1.05rem}
++}
++
++/* Parallax banner styles */
++.parallax-banner{position:relative;overflow:hidden;height:56vh;min-height:280px;display:block}
++.parallax-media{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;will-change:transform}
++.parallax-media[poster], .parallax-media video{object-fit:cover}
++.parallax-media[role="img"]{background-position:center center;background-size:cover;width:100%;height:100%;}
++.parallax-media{transition:transform 260ms cubic-bezier(.2,.9,.2,1), filter 220ms ease}
++.parallax-banner:hover .parallax-media{ filter:brightness(0.92) saturate(1.06) }
++
++/* Interactive inverse-mouse parallax: handled in JS; fallback subtle transform on hover */
++.parallax-banner:hover .parallax-media{ transform:translate(-50%,-50%) scale(1.05) }
++.parallax-overlay{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;height:100%;pointer-events:none}
++.parallax-overlay .hero{background:transparent;padding:2rem 1rem;text-align:center}
++.parallax-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.35));z-index:1}
++
++@media (max-width:800px){
++  .parallax-banner{height:42vh;min-height:200px}
++  .parallax-overlay .hero{padding:1rem}
++}
++
++/* Section layout helper: left-aligned prose and image/cards column */
++.section-grid .prose-left{ text-align:left; color:var(--fg); }
++.section-grid .prose-left p, .section-grid .prose-left ul, .section-grid .prose-left ol, .section-grid .prose-left h3{ margin-bottom:0.9rem; }
++.section-grid .section-cards{ display:flex; flex-direction:column; gap:0.75rem; }
++.section-grid .section-cards .card-preview{ background:var(--card-bg); border:1px solid var(--card-border); }
++.section-grid .section-cards img{ width:100%; height:auto; object-fit:cover; }
++.section-grid .card-preview .card-title{ color:var(--deep); }
++.prose-left img{ max-width:100%; height:auto; display:block; margin:0.5rem 0 }
++
++/* Section stripe: a horizontal blue band with section title and short snippet */
++.section-stripe{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0.9rem 1rem;border-radius:8px;background:linear-gradient(90deg,var(--deep),#003366);color:#fff;margin:1rem 0}
++/* TEMP: force section-stripe to black for debugging */
++.section-stripe { background: #000 !important; }
++.section-stripe .ss-title{font-weight:800;font-size:1.05rem;letter-spacing:0.02em;text-transform:uppercase}
++.section-stripe .ss-excerpt{opacity:0.95;color:rgba(255,255,255,0.95);font-size:0.98rem;max-width:72%;text-align:right}
++@media(max-width:768px){.section-stripe{flex-direction:column;align-items:flex-start}.section-stripe .ss-excerpt{text-align:left;max-width:100%}}
++
++/* Visual header: rounded container with a bright blue 'laser' line on top */
++.page-header-visual{
++  position:relative;
++  padding:1rem 1.25rem;
++  border-radius:14px;
++  background:rgba(255,255,255,0.02);
++  box-shadow:0 6px 20px rgba(2,12,32,0.12);
++  overflow:hidden;
++  /* visual improvements */
++  padding-bottom:1.8rem; /* space under laser */
++  margin-bottom:2rem;   /* separation from next block */
++  z-index:2;
++  -webkit-backdrop-filter: blur(4px);
++  backdrop-filter: blur(4px);
++}
++
++/* Absolute final override targeting the exact header nav-item wrapper for the Contact CTA
++   Ensures: normal = white bg, dark-gray text/icon; hover = black bg, white text/icon. */
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta {
++  background: #ffffff !important;
++  color: #2f3438 !important;
++  border: 1px solid rgba(16,24,32,0.06) !important;
++  box-shadow: none !important;
++  height: 38px !important;
++  padding: 0 .9rem !important;
++  display: inline-flex !important;
++  align-items: center !important;
++  gap: .45rem !important;
++  border-radius: 999px !important;
++  text-decoration: none !important;
++  transition: background-color .12s ease, color .12s ease, transform .08s ease !important;
++}
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta svg,
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta .material-symbols-outlined,
++.theme-light a.contact-cta svg,
++.theme-light a.contact-cta .material-symbols-outlined{
++  color: #2f3438 !important;
++  fill: currentColor !important;
++}
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover,
++.theme-light header.site-header .navbar a.contact-cta:hover,
++.theme-light .navbar .nav-link.contact-cta:hover,
++.theme-light a.contact-cta:hover{
++  background: #000000 !important;
++  color: #ffffff !important;
++  transform: translateY(-1px) !important;
++}
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover svg,
++.theme-light header.site-header .navbar a.contact-cta:hover svg,
++.theme-light .navbar .nav-link.contact-cta:hover svg,
++.theme-light a.contact-cta:hover svg,
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover .material-symbols-outlined,
++.theme-light header.site-header .navbar a.contact-cta:hover .material-symbols-outlined,
++.theme-light .navbar .nav-link.contact-cta:hover .material-symbols-outlined,
++.theme-light a.contact-cta:hover .material-symbols-outlined{
++  color: #ffffff !important;
++  fill: currentColor !important;
++}
++
++/* Disabled state: preserve contrast */
++.contact-cta[disabled], .contact-cta.disabled{ opacity: .65; cursor: not-allowed }
++
++
++/* Tighter parallax sizing to avoid overflow when object-fit rounding triggers >100% width */
++.parallax-media{min-width:100%;min-height:100%;max-width:none;max-height:none}
++.parallax-banner{height:50vh;min-height:220px}
++
++/* Small utility: improve contrast for form controls in dark mode */
++@media (prefers-color-scheme: dark){
++  :root{ --bg:#121212; --fg:#FFFFFF }
++  .navbar, .site-header{background:linear-gradient(90deg,#02162b,#00213f)}
++  .flash{background:linear-gradient(90deg, rgba(0,238,255,0.04), rgba(67,255,255,0.02));border-left-color:var(--accent)}
++}
++
++/* Additional small tweaks */
++.nav-link{transition:color .15s ease, background .15s ease}
++.hero{padding:2rem 1rem;max-width:100%;box-shadow:0 4px 18px rgba(2,12,32,0.06)}
++footer.container{padding:1.25rem 1rem;background:transparent;color:rgba(0,0,0,0.6)}
++@media (max-width:800px){
++  .navbar{min-height:56px}
++  .navbar .nav-link{padding:.5rem .4rem}
++  .brand{font-size:1.05rem}
++}
++
++/* Parallax banner styles */
++.parallax-banner{position:relative;overflow:hidden;height:56vh;min-height:280px;display:block}
++.parallax-media{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;will-change:transform}
++.parallax-media[poster], .parallax-media video{object-fit:cover}
++.parallax-media[role="img"]{background-position:center center;background-size:cover;width:100%;height:100%;}
++.parallax-media{transition:transform 260ms cubic-bezier(.2,.9,.2,1), filter 220ms ease}
++.parallax-banner:hover .parallax-media{ filter:brightness(0.92) saturate(1.06) }
++
++/* Interactive inverse-mouse parallax: handled in JS; fallback subtle transform on hover */
++.parallax-banner:hover .parallax-media{ transform:translate(-50%,-50%) scale(1.05) }
++.parallax-overlay{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;height:100%;pointer-events:none}
++.parallax-overlay .hero{background:transparent;padding:2rem 1rem;text-align:center}
++.parallax-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.35));z-index:1}
++
++@media (max-width:800px){
++  .parallax-banner{height:42vh;min-height:200px}
++  .parallax-overlay .hero{padding:1rem}
++}
++
++/* Section layout helper: left-aligned prose and image/cards column */
++.section-grid .prose-left{ text-align:left; color:var(--fg); }
++.section-grid .prose-left p, .section-grid .prose-left ul, .section-grid .prose-left ol, .section-grid .prose-left h3{ margin-bottom:0.9rem; }
++.section-grid .section-cards{ display:flex; flex-direction:column; gap:0.75rem; }
++.section-grid .section-cards .card-preview{ background:var(--card-bg); border:1px solid var(--card-border); }
++.section-grid .section-cards img{ width:100%; height:auto; object-fit:cover; }
++.section-grid .card-preview .card-title{ color:var(--deep); }
++.prose-left img{ max-width:100%; height:auto; display:block; margin:0.5rem 0 }
++
++/* Section stripe: a horizontal blue band with section title and short snippet */
++.section-stripe{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0.9rem 1rem;border-radius:8px;background:linear-gradient(90deg,var(--deep),#003366);color:#fff;margin:1rem 0}
++/* TEMP: force section-stripe to black for debugging */
++.section-stripe { background: #000 !important; }
++.section-stripe .ss-title{font-weight:800;font-size:1.05rem;letter-spacing:0.02em;text-transform:uppercase}
++.section-stripe .ss-excerpt{opacity:0.95;color:rgba(255,255,255,0.95);font-size:0.98rem;max-width:72%;text-align:right}
++@media(max-width:768px){.section-stripe{flex-direction:column;align-items:flex-start}.section-stripe .ss-excerpt{text-align:left;max-width:100%}}
++
++/* Visual header: rounded container with a bright blue 'laser' line on top */
++.page-header-visual{
++  position:relative;
++  padding:1rem 1.25rem;
++  border-radius:14px;
++  background:rgba(255,255,255,0.02);
++  box-shadow:0 6px 20px rgba(2,12,32,0.12);
++  overflow:hidden;
++  /* visual improvements */
++  padding-bottom:1.8rem; /* space under laser */
++  margin-bottom:2rem;   /* separation from next block */
++  z-index:2;
++  -webkit-backdrop-filter: blur(4px);
++  backdrop-filter: blur(4px);
++}
++
++/* Absolute final override targeting the exact header nav-item wrapper for the Contact CTA
++   Ensures: normal = white bg, dark-gray text/icon; hover = black bg, white text/icon. */
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta {
++  background: #ffffff !important;
++  color: #2f3438 !important;
++  border: 1px solid rgba(16,24,32,0.06) !important;
++  box-shadow: none !important;
++  height: 38px !important;
++  padding: 0 .9rem !important;
++  display: inline-flex !important;
++  align-items: center !important;
++  gap: .45rem !important;
++  border-radius: 999px !important;
++  text-decoration: none !important;
++  transition: background-color .12s ease, color .12s ease, transform .08s ease !important;
++}
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta svg,
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta .material-symbols-outlined,
++.theme-light a.contact-cta svg,
++.theme-light a.contact-cta .material-symbols-outlined{
++  color: #2f3438 !important;
++  fill: currentColor !important;
++}
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover,
++.theme-light header.site-header .navbar a.contact-cta:hover,
++.theme-light .navbar .nav-link.contact-cta:hover,
++.theme-light a.contact-cta:hover{
++  background: #000000 !important;
++  color: #ffffff !important;
++  transform: translateY(-1px) !important;
++}
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover svg,
++.theme-light header.site-header .navbar a.contact-cta:hover svg,
++.theme-light .navbar .nav-link.contact-cta:hover svg,
++.theme-light a.contact-cta:hover svg,
++.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover .material-symbols-outlined,
++.theme-light header.site-header .navbar a.contact-cta:hover .material-symbols-outlined,
++.theme-light .navbar .nav-link.contact-cta:hover .material-symbols-outlined,
++.theme-light a.contact-cta:hover .material-symbols-outlined{
++  color: #ffffff !important;
++  fill: currentColor !important;
++}
++
++/* Disabled state: preserve contrast */
++.contact-cta[disabled], .contact-cta.disabled{ opacity: .65; cursor: not-allowed }
++
++
++/* Tighter parallax sizing to avoid overflow when object-fit rounding triggers >100% width */
++.parallax-media{min-width:100%;min-height:100%;max-width:none;max-height:none}
++.parallax-banner{height:50vh;min-height:220px}
++
++/* Small utility: improve contrast for form controls in dark mode */
++@media (prefers-color-scheme: dark){
++  :root{ --bg:#121212; --fg:#FFFFFF }
++  .navbar, .site-header{background:linear-gradient(90deg,#02162b,#00213f)}
++  .flash{background:linear-gradient(90deg, rgba(0,238,255,0.04), rgba(67,255,255,0.02));border-left-color:var(--accent)}
++}
++
++/* Additional small tweaks */
++.nav-link{transition:color .15s ease, background .15s ease}
++.hero{padding:2rem 1rem;max-width:100%;box-shadow:0 4px 18px rgba(2,12,32,0.06)}
++footer.container{padding:1.25rem 1rem;background:transparent;color:rgba(0,0,0,0.6)}
++@media (max-width:800px){
++  .navbar{min-height:56px}
++  .navbar .nav-link{padding:.5rem .4rem}
++  .brand{font-size:1.05rem}
++}
++
++/* Parallax banner styles */
++.parallax-banner{position:relative;overflow:hidden;height:56vh;min-height:280px;display:block}
++.parallax-media{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;will-change:transform}
++.parallax-media[poster], .parallax-media video{object-fit:cover}
++.parallax-media[role="img"]{background-position:center center;background-size:cover;width:100%;height:100%;}
++.parallax-media{transition:transform 260ms cubic-bezier(.2,.9,.2,1), filter 220ms ease}
++.parallax-banner:hover .parallax-media{ filter:brightness(0.92) saturate(1.06) }
++
++/* Interactive inverse-mouse parallax: handled in JS; fallback subtle transform on hover */
++.parallax-banner:hover .parallax-media{ transform:translate(-50%,-50%) scale(1.05) }
++.parallax-overlay{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;height:100%;pointer-events:none}
++.parallax-overlay .hero{background:transparent;padding:2rem 1rem;text-align:center}
++.parallax-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.35));z-index:1}
++
++@media (max-width:800px){
++  .parallax-banner{height:42vh;min-height:200px}
++  .parallax-overlay .hero{padding:1rem}
++}
++
++/* Section layout helper: left-aligned prose and image/cards column */
++.section-grid .prose-left{ text-align:left; color:var(--fg); }
++.section-grid .prose-left p, .section-grid .prose-left ul, .section-grid .prose-left ol, .section-grid .prose-left h3{ margin-bottom:0.9rem; }
++.section-grid .section-cards{ display:flex; flex-direction:column; gap:0.75rem; }
++.section-grid .section-cards .card-preview{ background:var(--card-bg); border:1px solid var(--card-border); }
++.section-grid .section-cards img{ width:100%; height:auto; object-fit:cover; }
++.section-grid .card-preview .card-title{ color:var(--deep); }
++.prose-left img{ max-width:100%; height:auto; display:block; margin:0.5rem 0 }
++
++/* Section stripe: a horizontal blue band with section title and short snippet */
++.section-stripe{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0.9rem 1rem;border-radius:8px;background:linear-gradient(90deg,var(--deep),#003366);color:#fff;margin:1rem 0}
++/* TEMP: force section-stripe to black for debugging */
++.section-stripe { background: #000 !important; }
++.section-stripe .ss-title{font-weight:800;font-size:1.05rem;letter-spacing:0.02em;text-transform:uppercase}
++.section-stripe .ss-excerpt{opacity:0.95;color:rgba(255,255,255,0.95);font-size:0.98rem;max-width:72%;text-align:right}
++@media(max-width:768px){.section-stripe{flex-direction:column;align-items:flex-start}.section-stripe .ss-excerpt{text-align:left;max-width:100%}}
++
++/* Visual header: rounded container with a bright blue 'laser' line on top */
++.page-header-visual{
++  position:relative;
++  padding:1rem 1.25rem;
++  border-radius:14px;
++  background:rgba(255,255,255,0.02);
++  box-shadow:0 6px 20px rgba(2,12,32,0.12);
++  overflow:hidden;
++  /* visual improvements */
++  padding-bottom:1.8rem; /* space under laser */
++  margin-bottom:2rem;   /* separation from next block */
++  z-index:2;
++  -webkit-backdrop-filter: blur(4px);
++  backdrop-filter: blur(4px);
++}
++
++/* Force admin sidebar rim to respect border-radius for the bright cyan 'laser' rim */
++.theme-dark .admin-sidebar.card-preview,
++.theme-light .admin-sidebar.card-preview {
++  overflow: hidden !important;
++  border-radius: 12px !important;
++  position: relative !important;
++}
++
++/* Make the pseudo-element that draws the inset rim match the same radius and spacing */
++.theme-dark .admin-sidebar.card-preview::after {
++  content: '';
++  position: absolute !important;
++  left: 6px !important;
++  right: 6px !important;
++  top: 6px !important;
++  bottom: 6px !important;
++  border-radius: 12px !important;
++  pointer-events: none !important;
++  box-shadow: 0 0 0 3px rgba(0,238,255,0.08) inset !important;
++}
++
++.theme-light .admin-sidebar.card-preview::after {
++  content: '';
++  position: absolute !important;
++  left: 6px !important;
++  right: 6px !important;
++  top: 6px !important;
++  bottom: 6px !important;
++  border-radius: 12px !important;
++  pointer-events: none !important;
++  box-shadow: 0 0 0 3px rgba(40,40,40,0.06) inset !important;
++}

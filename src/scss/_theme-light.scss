@@ -1,0 +1,18 @@
+/* Light theme overrides */
+html.theme-light {
+  --bg: #dedede; /* requested light background */
+  --fg: #071127; /* deep charcoal */
+  --card-bg: #ffffff;
+  --card-border: #e6eef8;
+  --header-bg: #dedede;
+  --btn-contrast: #000000;
+  --muted: #2b2b2b;
+}
+
+.theme-light body { background: var(--bg); }
+
+/* Make the logo darker in light theme (reduce brightness) */
+html.theme-light .navbar-brand img {
+  filter: grayscale(100%) brightness(0.55) contrast(0.95);
+  opacity: 0.98;
+}

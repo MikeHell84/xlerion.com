@@ -1,0 +1,3091 @@
+:root{--accent:#0ef;--accent-2:#43ffff;--deep:#004080;--bg:#fff;--fg:#121212;--muted:#2c2c2c;--card-bg:#fff;--card-border:#e9eef6;--header-bg:rgba(0,32,64,.78);--btn-contrast:#000}body,html{font-family:Work Sans,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}.navbar.sticky-top{backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);background:rgba(0,0,0,.4)}.navbar{box-shadow:0 2px 10px rgba(0,0,0,.1);min-height:64px}.navbar .container{align-items:center;display:flex}.navbar-brand{color:var(--bg);font-size:1.25rem;font-weight:800}.navbar .nav-link{color:var(--accent);padding:.6rem .5rem}.navbar .nav-link[title]{cursor:pointer}.navbar .nav-link:focus,.navbar .nav-link:hover{color:var(--accent);text-decoration:none;text-shadow:0 0 8px rgba(0,238,255,.45)}.navbar .nav-link.active,.navbar .nav-link[aria-current=page]{background:linear-gradient(180deg,rgba(0,238,255,.04),rgba(0,238,255,.02));border-radius:14px;box-shadow:inset 0 0 0 2px rgba(0,238,255,.08),0 6px 18px rgba(0,0,0,.06);color:var(--bg)!important;padding-left:.75rem;padding-right:.75rem;text-shadow:none}.navbar .nav-list{display:flex;gap:1rem;justify-content:center}.navbar .nav-item.nav-group-main{align-items:center;display:flex}.navbar .nav-item.nav-group-main>.nav-link{font-weight:400}.navbar-collapse.d-none.d-lg-flex{display:flex!important;width:100%}.navbar-collapse.d-none.d-lg-flex>ul.navbar-nav.me-auto{display:flex;flex:1 1 auto;justify-content:center}.navbar-collapse.d-none.d-lg-flex>ul.navbar-nav.ms-auto{flex:0 0 auto}.navbar .nav-link{display:inline-block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.navbar-toggler{border-color:hsla(0,0%,100%,.18);margin-right:.25rem}.navbar-toggler-icon{filter:invert(1) brightness(1.2) contrast(1.1)}.navbar .dropdown-menu{border-radius:12px;overflow:hidden}.site-header{background:var(--header-bg);background:linear-gradient(90deg,var(--deep),#002a66);background:#000!important;border-radius:0 0 12px 12px;color:var(--bg);position:sticky;top:0;z-index:1050}.site-header .mc-btn,.site-header .nav-control,.site-header .nav-control-tab,.site-header .navbar .nav-link{padding-bottom:.55rem;padding-top:.55rem}.site-header .mc-btn{height:auto}.site-header:after{border-radius:0 0 8px 8px;bottom:6px;box-shadow:inset 0 0 0 3px rgba(40,40,40,.06);content:"";left:6px;pointer-events:none;position:absolute;right:6px;top:6px}.theme-dark .site-header:after{box-shadow:inset 0 0 0 3px rgba(0,238,255,.08)}html.theme-light header.site-header .navbar .dropdown-menu{background:#fff}html.theme-light{--bg:#dedede;--fg:#071127;--card-bg:#fff;--card-border:#e6eef8;--header-bg:#dedede;--btn-contrast:#000;--muted:#2b2b2b}.theme-light body{background:var(--bg)}.theme-dark{--bg:#121212;--fg:#fff;--card-bg:#0f1720;--card-border:hsla(0,0%,100%,.04);--header-bg:rgba(0,12,22,.88);--btn-contrast:#000}.theme-dark body{background:var(--bg);color:var(--fg)}
+/* === Transparent header/navbar cleanup (UIX refinement) === */
+/* Transparent cleanup (excluding the main header bar itself so we can style it) */
+header.site-header .navbar,
+header.site-header .navbar.sticky-top,
+.navbar.sticky-top,
+nav.navbar.sticky-top {
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+/* Remove legacy pseudo inset rim */
+/* Remove legacy inset rim (will add laser border separately) */
+header.site-header:after, .site-header:after { content: none !important; box-shadow: none !important; }
+/* Inner container transparency */
+header.site-header .container-fluid, header.site-header .navbar > .container-fluid, header.site-header .navbar .container-fluid { background: transparent !important; box-shadow: none !important; }
+/* Nav link base style: subtle translucent pill on hover, no solid black backgrounds */
+header.site-header .navbar .nav-link, .navbar .nav-link {
+  background: transparent !important;
+  color: var(--accent) !important;
+  transition: background .18s ease, color .18s ease, box-shadow .18s ease;
+}
+header.site-header .navbar .nav-link:hover, .navbar .nav-link:hover {
+  background: rgba(0,238,255,0.08) !important;
+  box-shadow: 0 0 0 2px rgba(0,238,255,0.15) inset;
+  color: var(--accent-2) !important;
+}
+/* Active state refinement */
+header.site-header .navbar .nav-link.active, .navbar .nav-link.active,
+header.site-header .navbar .nav-link[aria-current="page"], .navbar .nav-link[aria-current="page"] {
+  background: rgba(0,238,255,0.22) !important;
+  box-shadow: 0 0 0 2px rgba(0,238,255,0.38) inset, 0 4px 12px rgba(0,238,255,0.25);
+  color: #000 !important;
+  text-shadow: none !important;
+}
+/* Mobile offcanvas inherits transparency without dark fill */
+.offcanvas.text-bg-dark { background: rgba(0,0,0,0.92) !important; }
+/* === End transparent header cleanup === */
+
+/* === Dark semi-opaque header bar with laser bottom border === */
+body header.site-header {
+  background: rgba(0,0,0,0.88) !important; /* negro semi opaco para permitir blur */
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  border-radius: 0 0 12px 12px;
+  position: sticky;
+  top: 0;
+  z-index: 1040;
+  overflow: visible; /* permitir que el láser se vea por debajo */
+}
+/* Single bottom line (moved from former top rim); remove outside laser underline */
+header.site-header::after {
+  content: '' !important;
+  position: absolute !important;
+  left: 6px !important;
+  right: 6px !important;
+  bottom: 0 !important;
+  height: 2px !important;
+  background: rgba(16,24,32,0.08) !important; /* light subtle line */
+  pointer-events: none !important;
+}
+html.theme-dark header.site-header::after {
+  background: rgba(0,238,255,0.22) !important; /* dark mode subtle cyan */
+}
+/* Light theme: mantener la barra negra con blur para consistencia */
+html.theme-light body header.site-header { background: rgba(0,0,0,0.88) !important; }
+/* Light-mode bottom line: subtle darker line to match light visuals */
+html.theme-light header.site-header::after {
+  background: rgba(16,24,32,0.08) !important;
+  box-shadow: 0 0 6px rgba(16,24,32,0.06) !important;
+}
+
+/* Restore and unify logo size */
+header.site-header .navbar-brand img { height: 40px !important; max-height: 44px !important; }
+@media (min-width: 992px){ header.site-header .navbar-brand img { height: 42px !important; } }
+/* Ensure logo remains crisp on high-DPI */
+header.site-header .navbar-brand img { image-rendering: -webkit-optimize-contrast; }
+/* === End header bar styling === */
+
+/* Active link visual: soft filled pill with laser rim in dark and light */
+.navbar .nav-link.active, .navbar .nav-link[aria-current="page"]{
+  background: linear-gradient(180deg, rgba(0,238,255,0.04), rgba(0,238,255,0.02));
+  border-radius: 14px;
+  padding-left: .75rem; padding-right: .75rem;
+  box-shadow: 0 0 0 2px rgba(0,238,255,0.08) inset, 0 6px 18px rgba(0,0,0,0.06);
+  color: var(--bg) !important;
+  text-shadow: none;
+}
+
+/* stronger rim on hover when active to emulate laser rim */
+.navbar .nav-link.active:hover, .navbar .nav-link[aria-current="page"]:hover{
+  box-shadow: 0 0 14px rgba(0,238,255,0.35), 0 6px 18px rgba(0,0,0,0.06);
+}
+
+/* Center primary group items (Information, Services, Resources, Otros) in desktop navbar */
+.navbar .nav-list{display:flex;justify-content:center;gap:1rem}
+/* Target main groups added via .nav-group-main on top-level LI */
+.navbar .nav-item.nav-group-main{display:flex;align-items:center}
+.navbar .nav-item.nav-group-main > .nav-link{font-weight:400}
+
+/* Ensure 'Otros' group matches the visual weight and font of primary emphasized links
+   Some pages like 'Documentación' are shown bold; force 'Otros' label to follow same font and weight
+   by targeting the rendered LI with data-group="Otros" (set in `views/layout.php`). */
+li.nav-item[data-group="Otros"] > a.nav-link,
+li.nav-item.nav-group[data-group="Otros"] > a.nav-link{
+  font-family: 'Work Sans', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+  font-weight: 600 !important; /* match Documentación/title emphasis */
+  text-transform: none !important; /* keep same casing as other nav items */
+}
+
+/* Make the desktop navbar collapse use full width and center the left nav list so
+  primary groups appear visually centered while right-side controls remain right-aligned. */
+.navbar-collapse.d-none.d-lg-flex{display:flex !important;width:100%}
+.navbar-collapse.d-none.d-lg-flex > ul.navbar-nav.me-auto{flex:1 1 auto;display:flex;justify-content:center}
+.navbar-collapse.d-none.d-lg-flex > ul.navbar-nav.ms-auto{flex:0 0 auto}
+
+/* Ensure floating controls remain aligned to the right while menu is centered */
+.menu-controls-floating{right:1rem}
+.site-header, header.site-header {
+  background: rgba(0,0,0,0.65) !important;
+  background-image: none !important;
+  color: var(--bg) !important;
+  border: none !important;
+  position:relative;
+  border-radius:12px;
+}
+
+/* removed legacy inset rim and temporary global header background to avoid conflicts */
+.navbar .nav-link{ white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display:inline-block; }
+.navbar-toggler{border-color:rgba(255,255,255,0.18);margin-right:0.25rem}
+/* make the hamburger icon clearly visible on dark bg */
+.navbar-toggler-icon{filter:invert(1) brightness(1.2) contrast(1.1)}
+/* filter is not supported in older IE; no-op fallback retained */
+
+/* Centralized navbar background to avoid inline styles */
+.navbar.sticky-top{ background: rgba(0,0,0,0.6); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+
+/* Nav icons placed before label */
+.nav-icon{display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;margin-right:0.6rem;opacity:0.95;color:inherit}
+.nav-icon img{width:20px;height:20px;display:inline-block}
+.material-symbols-outlined.nav-icon{font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0; font-size:20px; line-height:1}
+
+/* navbar control buttons (search, theme) */
+.nav-control{border:1px solid rgba(255,255,255,0.06);padding:0.4rem 0.6rem;border-radius:8px}
+.nav-control:hover, .nav-control:focus{background:rgba(255,255,255,0.03);color:var(--accent);transform:translateY(-2px)}
+.nav-control[aria-pressed="true"]{background:linear-gradient(90deg, rgba(67,255,255,0.06), rgba(0,238,255,0.03));color:var(--accent-2);box-shadow:0 6px 14px rgba(2,12,32,0.06)}
+.nav-control:focus-visible{box-shadow:0 0 0 4px rgba(0,238,255,0.06);outline:none}
+
+/* Right-side vertical controls (desktop-only): tab-like buttons stacked vertically */
+.nav-vertical-controls{list-style:none;margin:0;padding:0;gap:0.5rem;align-items:center}
+.nav-vertical-controls .nav-item{display:flex}
+.nav-control-tab{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:8px;background:rgba(255,255,255,0.02);color:var(--bg);border:1px solid rgba(255,255,255,0.04);margin:0.25rem;cursor:pointer;text-decoration:none}
+.nav-control-tab span{font-size:20px}
+.nav-control-tab:hover, .nav-control-tab:focus{background:rgba(255,255,255,0.06);color:var(--accent);transform:none}
+.nav-vertical-controls{margin-left:0.8rem}
+
+@media (max-width:991px){
+  .nav-vertical-controls{display:none !important}
+}
+
+/* Tab bar below navbar for controls (desktop only) */
+.nav-tabs-bar{background:transparent;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+.tabs-list{display:flex;gap:0.5rem;align-items:flex-end;margin:0;padding:0 0.8rem 0 1rem;list-style:none}
+.tab-item{display:inline-flex;align-items:center;gap:0.6rem;padding:0.5rem 0.9rem;border-radius:8px 8px 0 0;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));color:var(--bg);border:1px solid rgba(255,255,255,0.04);border-bottom:2px solid transparent;text-decoration:none}
+.tab-item .tab-label{font-weight:600}
+.tab-item:hover, .tab-item:focus{background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));color:var(--accent)}
+.tab-item.active{background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));border-bottom-color:var(--accent)}
+
+@media (max-width:991px){
+  .nav-tabs-bar{display:none}
+}
+
+/* Floating controls container (desktop only) */
+.menu-controls-floating{position:relative;z-index:2200;pointer-events:auto}
+.menu-controls-floating .mc-stack{position:absolute;right:1rem;top:calc(100% - 6px);display:flex;flex-direction:column;gap:0.5rem;align-items:flex-end}
+.mc-btn{width:48px;height:48px;border-radius:8px;background:rgba(0,0,0,0.08);border:1px solid rgba(255,255,255,0.06);display:inline-flex;align-items:center;justify-content:center;color:var(--bg);text-decoration:none;box-shadow:0 6px 18px rgba(2,12,32,0.18)}
+.mc-btn span{font-size:20px}
+.mc-btn:hover,.mc-btn:focus{background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));color:var(--accent);transform:none}
+
+/* stronger visible backgrounds for controls */
+.mc-btn{background:var(--bg); color:var(--fg); border:1px solid rgba(0,0,0,0.06);}
+.mc-btn span{color:var(--deep)}
+.mc-btn:focus{outline:3px solid rgba(0,238,255,0.18); outline-offset:2px}
+.mc-btn:hover{transform:translateY(-2px); box-shadow:0 10px 22px rgba(2,12,32,0.22)}
+
+/* Ensure header buttons are vertically centered by adding symmetric padding in header context */
+.site-header .mc-btn, .site-header .nav-control, .site-header .nav-control-tab, .site-header .navbar .nav-link{padding-top:0.55rem;padding-bottom:0.55rem}
+.site-header .mc-btn{height:auto} /* let padding define height for better centering */
+
+/* Admin header: center any controls inside the admin header area vertically */
+.admin-header{align-items:center !important}
+.admin-header .mc-btn, .admin-header .nav-control, .admin-header .nav-control-tab, .admin-header .navbar .nav-link{padding-top:0.45rem;padding-bottom:0.45rem}
+
+/* ---------- Admin area improvements (UI/UX tidy) ---------- */
+/* Layout: sidebar + main column with comfortable padding and consistent card spacing */
+.admin-dashboard{display:flex;gap:1rem;align-items:flex-start;padding:1rem;box-sizing:border-box}
+.admin-sidebar{flex:0 0 220px;min-width:200px;padding:1rem;background:var(--card-bg);border-radius:10px;border:1px solid var(--card-border)}
+.admin-main{flex:1;min-width:0;padding:1rem}
+
+/* Sidebar nav: vertical, clear active state and hover affordance */
+.admin-sidebar nav{display:flex;flex-direction:column;gap:0.35rem}
+.admin-sidebar .nav-link{display:flex;align-items:center;padding:.6rem .75rem;border-radius:8px;color:var(--fg);text-decoration:none;border-left:4px solid transparent}
+.admin-sidebar .nav-link .nav-icon{margin-right:.5rem}
+.admin-sidebar .nav-link{padding-left:1.1rem}
+.admin-sidebar .nav-link .icon{width:18px;height:18px;display:inline-block;flex:0 0 22px;color:var(--accent) !important}
+.admin-sidebar .nav-link .nav-label{flex:1;text-align:center;display:inline-block}
+.admin-sidebar .nav-link .nav-icon{display:inline-flex;align-items:center;justify-content:center;margin-right:8px}
+.admin-sidebar .nav-link svg{display:block}
+.admin-sidebar .nav-link:hover{background:rgba(2,12,32,0.02);color:var(--deep)}
+.admin-sidebar .nav-link.active{background:linear-gradient(90deg, rgba(0,238,255,0.04), rgba(67,255,255,0.02));border-left-color:var(--accent);font-weight:700}
+/* Uppercase labels for admin nav */
+.admin-sidebar .nav-link{ text-transform:uppercase; letter-spacing:0.03em }
+
+/* Header: align title and actions, reduced vertical rhythm */
+.admin-header{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1rem}
+.admin-header .section-title-lg{margin:0}
+.admin-header p.text-muted{margin:0;color:var(--muted);font-weight:300}
+
+/* Card previews inside admin should have balanced padding */
+.admin-main .card-preview{padding:1rem;border-radius:10px}
+
+/* Forms: consistent spacing and full width on small screens */
+.admin-main .mb-3{margin-bottom:1rem}
+.admin-main label{font-weight:600;margin-bottom:.35rem;display:block}
+.admin-main .form-control,.admin-main .form-select{padding:.5rem .6rem;border-radius:8px;border:1px solid var(--card-border);background:var(--card-bg);box-shadow:none}
+.admin-main .form-control:focus{outline:none;box-shadow:0 6px 18px rgba(2,12,32,0.06)}
+
+/* Buttons inside admin: ensure contrast and consistent sizes */
+.admin-main .btn{border-radius:8px;padding:.5rem .9rem}
+.admin-main .btn-sm{padding:.35rem .6rem;border-radius:6px}
+.admin-main .btn-outline-light{color:var(--deep);background:transparent;border:1px solid rgba(2,12,32,0.06)}
+.admin-main .btn-primary{background:var(--deep);color:#fff;border:none}
+
+/* Resource selector visuals */
+.resource-thumb{width:52px;height:52px;object-fit:cover;border-radius:8px;border:1px solid var(--card-border);margin-right:.75rem}
+.resource-item{display:flex;align-items:center;gap:.6rem;padding:.5rem;border-radius:8px}
+.resource-item .form-check-input{flex:0 0 auto}
+.resource-item:hover{background:rgba(2,12,32,0.02);transform:translateY(-2px)}
+.resource-item .drag-handle{cursor:grab;padding-left:.5rem;opacity:0.75}
+
+/* Make list-group items comfortable */
+.list-group-item{padding:.8rem 1rem;border-radius:8px}
+.list-group-item .btn{min-width:86px}
+
+/* Responsive: stack sidebar above main on narrow screens */
+@media (max-width: 991px){
+  .admin-dashboard{flex-direction:column;padding:.75rem}
+  .admin-sidebar{flex:0 0 auto;width:100%;order:1}
+  .admin-main{order:2;padding-top:.75rem}
+}
+
+/* Mobile centering: ensure admin content is centered on small screens */
+@media (max-width: 991px) {
+  .admin-dashboard {
+    align-items: center !important; /* center children horizontally */
+    padding-left: .75rem !important;
+    padding-right: .75rem !important;
+  }
+
+  .admin-sidebar.card-preview,
+  .admin-main,
+  .admin-dashboard .admin-stats,
+  .admin-dashboard .admin-pages,
+  .admin-dashboard .card-preview {
+    width: 100% !important;
+    max-width: 920px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Prevent rows from adding negative margins that shift content */
+  .admin-main .row, .admin-dashboard .row { margin-left: 0 !important; margin-right: 0 !important; }
+
+  /* Keep internal panels full width but centered */
+  .admin-main .card-preview { width: 100% !important; }
+}
+
+/* Small tweak to help resource filter input stand out */
+#resourcesFilter{padding:.45rem .6rem;border-radius:8px;border:1px solid var(--card-border);background:transparent}
+
+/* Make admin action groups inline and visually balanced */
+.admin-header .actions{display:flex;gap:.5rem;align-items:center}
+
+/* === Admin button normalization: make buttons aligned and consistently rounded === */
+/* Targets: sidebar nav links, admin main buttons and small controls used across admin panels */
+.admin-sidebar .nav-link,
+.admin-main .btn,
+.admin-main .btn-sm,
+.admin-main .btn-outline-light,
+.admin-main .mc-btn,
+.admin-main .nav-control,
+.admin-main .nav-control-tab {
+  display: inline-flex !important;          /* align icon + label horizontally */
+  align-items: center !important;           /* center icon vertically */
+  gap: .5rem !important;                    /* spacing between icon and label */
+  padding-top: .55rem !important;           /* consistent vertical padding */
+  padding-bottom: .55rem !important;
+  padding-left: .9rem !important;           /* consistent horizontal padding */
+  padding-right: .9rem !important;
+  height: auto !important;                  /* let padding define height */
+  min-height: 44px !important;              /* ensure touch targets are large enough */
+  border-radius: 12px !important;           /* unified rounded corners */
+  border: none !important;                  /* rely on background/border-color rules elsewhere */
+  box-sizing: border-box !important;
+}
+
+/* Ensure small buttons stay visually smaller but keep rounded corners */
+.admin-main .btn-sm { min-height: 36px !important; padding-top: .45rem !important; padding-bottom: .45rem !important; border-radius: 10px !important; }
+
+/* Make icons inside these controls consistent size and centered */
+.admin-sidebar .nav-link .icon,
+.admin-main .btn .material-symbols-outlined,
+.admin-main .mc-btn span,
+.admin-main .nav-control .material-symbols-outlined {
+  width: 20px !important;
+  height: 20px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex: 0 0 22px !important;
+}
+
+/* Fix alignment where some sidebar nav-labels used center alignment; left-align for readability */
+.admin-sidebar .nav-link .nav-label{ text-align: left !important; display: inline-block !important; }
+
+/* Make active/hover states respect the new rounded shape */
+.admin-sidebar .nav-link:hover, .admin-sidebar .nav-link.active { border-radius: 12px !important; }
+
+
+/* Slightly reduce card-preview hover lift inside admin to be subtle */
+.admin-main .card-preview:hover{transform:none;box-shadow:none}
+
+/* Force admin sidebar rim to respect border-radius for the bright cyan 'laser' rim */
+.theme-dark .admin-sidebar.card-preview,
+.theme-light .admin-sidebar.card-preview {
+  overflow: hidden !important;
+  -webkit-border-radius: 12px !important;
+  border-radius: 12px !important;
+  position: relative !important;
+}
+
+/* Make the pseudo-element that draws the inset rim match the same radius and spacing */
+.theme-dark .admin-sidebar.card-preview::after {
+  content: '';
+  position: absolute !important;
+  left: 6px !important;
+  right: 6px !important;
+  top: 6px !important;
+  bottom: 6px !important;
+  border-radius: 12px !important;
+  pointer-events: none !important;
+  box-shadow: 0 0 0 3px rgba(0,238,255,0.08) inset !important;
+}
+
+.theme-light .admin-sidebar.card-preview::after {
+  content: '';
+  position: absolute !important;
+  left: 6px !important;
+  right: 6px !important;
+  top: 6px !important;
+  bottom: 6px !important;
+  border-radius: 12px !important;
+  pointer-events: none !important;
+  box-shadow: 0 0 0 3px rgba(40,40,40,0.06) inset !important;
+}
+
+/* Light theme: add top padding so buttons/icons don't touch the top edge and force icons black */
+html.theme-light .admin-sidebar.card-preview {
+  padding-top: 1.4rem !important; /* increase top spacing as requested */
+}
+
+html.theme-dark .admin-sidebar.card-preview {
+  padding-top: 1.4rem !important; /* match light theme spacing */
+}
+
+/* ===== Unified button / nav item shape & alignment (override) ===== */
+/* Ensure all header/offcanvas/admin buttons share the same rounded look and inline alignment */
+html.theme-light a.contact-cta,
+html.theme-dark a.contact-cta,
+html.theme-light header.site-header .navbar .nav-link,
+html.theme-dark header.site-header .navbar .nav-link,
+.offcanvas .nav-link,
+.offcanvas .dropdown-item,
+.navbar .nav-link,
+.dropdown-item,
+.mc-btn,
+.admin-main .btn,
+.admin-main .btn-sm,
+.admin-sidebar .nav-link,
+.admin-sidebar .btn,
+.btn.contact-cta {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: .5rem !important;
+  padding: .45rem .85rem !important;
+  min-height: 40px !important;
+  line-height: 1 !important;
+  border-radius: 12px !important;
+  -webkit-border-radius: 12px !important;
+  text-decoration: none !important;
+}
+
+.mc-btn .material-symbols-outlined,
+.admin-main .btn .material-symbols-outlined,
+.admin-sidebar .nav-link .material-symbols-outlined,
+header.site-header .navbar .nav-link .material-symbols-outlined,
+a.contact-cta .material-symbols-outlined,
+.offcanvas .nav-link .material-symbols-outlined {
+  font-size: 20px !important;
+  width: 20px !important;
+  height: 20px !important;
+  display: inline-block !important;
+  line-height: 1 !important;
+}
+
+/* Make sure dropdown items that act like buttons get rounded corners */
+.dropdown-menu .dropdown-item {
+  border-radius: 10px !important;
+  margin: .15rem 0 !important;
+}
+
+/* Small screens: keep full-width blocks but preserve radius */
+@media (max-width: 991px) {
+  .offcanvas .nav-link,
+  .admin-sidebar .nav-link,
+  .mc-btn,
+  a.contact-cta {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+}
+
+/* ===== end unified overrides ===== */
+
+html.theme-light .admin-sidebar .nav-icon,
+html.theme-light .admin-sidebar .nav-link .icon,
+html.theme-light .admin-sidebar .nav-link svg {
+  color: #000 !important;
+  fill: currentColor !important;
+  opacity: 1 !important;
+}
+
+
+/* Replace accidental deep/teal-blue in admin panel with a brighter blue in dark mode only.
+   The project previously used several "deep" blues; user reported #013f7d appearing
+   in the admin "Resumen" area in dark mode. Ensure admin icons/labels/hover states
+   use a bright blue for contrast only when theme-dark is active. */
+html.theme-dark .admin-dashboard .admin-sidebar .nav-link:hover,
+html.theme-dark .admin-dashboard .admin-sidebar .nav-link.active,
+html.theme-dark .admin-dashboard .admin-sidebar .nav-link .icon,
+html.theme-dark .admin-dashboard .admin-sidebar .nav-link svg,
+html.theme-dark .admin-dashboard .admin-main .card-title,
+html.theme-dark .admin-dashboard .card-text,
+html.theme-dark .admin-dashboard .admin-header p,
+html.theme-dark .admin-dashboard .menu-list .menu-item .text-muted,
+html.theme-dark .admin-dashboard .list-group-item .small,
+html.theme-dark .admin-dashboard .admin-pages .card-preview h3.h6 {
+  color: var(--accent) !important; /* use project accent (bright cyan) in dark mode */
+  /* prefer '--accent' so the site-wide theme remains consistent */
+  fill: currentColor !important;
+}
+
+
+/* User request: in dark mode make the attached icons and small label text bright cyan/blue
+   Targets: material symbol icons, inline spans used for labels and small control icons. */
+html.theme-dark .material-symbols-outlined,
+html.theme-dark span.material-symbols-outlined,
+html.theme-dark .nav-link .material-symbols-outlined,
+html.theme-dark .mc-btn span,
+html.theme-dark .nav-control span,
+html.theme-dark #site-controls .sc-icon,
+html.theme-dark #site-controls .sc-label,
+html.theme-dark .nav-icon,
+html.theme-dark .social-link svg,
+html.theme-dark .navbar .nav-link .nav-icon,
+html.theme-dark .offcanvas .nav-link .material-symbols-outlined {
+  color: var(--accent-2) !important; /* bright cyan/blue */
+  fill: currentColor !important;
+  opacity: 1 !important;
+  text-shadow: none !important; /* keep crisp glyphs */
+}
+
+/* Ensure these icons keep high contrast even in active/pressed states */
+html.theme-dark .material-symbols-outlined:focus,
+html.theme-dark span.material-symbols-outlined:focus,
+html.theme-dark .mc-btn[aria-pressed="true"] .material-symbols-outlined,
+html.theme-dark .nav-control[aria-pressed="true"] span {
+  color: var(--accent-2) !important;
+  fill: currentColor !important;
+}
+
+/* Additional targets requested: ensure inline spans and section titles are bright cyan in dark mode */
+html.theme-dark span,
+html.theme-dark .doc-section-body span,
+html.theme-dark .doc-section-title h3,
+html.theme-dark h3.doc-section-title {
+  color: var(--accent-2) !important;
+}
+
+/* Scoped uppercase for doc section titles when page enables the property (class applied to page container) */
+.subtitle-upper h3.doc-section-title,
+.subtitle-upper .doc-section-title {
+  text-transform: uppercase !important;
+  letter-spacing: 0.02em !important;
+}
+
+
+
+/* >>> Local runtime overrides applied by tooling (logo darkness + site-controls tweak) */
+html.theme-light .navbar-brand img{ filter: grayscale(100%) brightness(.55) contrast(.95) !important; opacity:.98 !important }
+#site-controls{ z-index:1200 !important }
+body.hide-site-controls #site-controls{ display:none !important }
+
+/* End overrides */
+
+/* Ensure body copy and h4 are white in dark theme for legibility */
+.theme-dark p,
+.theme-dark .doc-section-body p,
+.theme-dark .doc-content p,
+.theme-dark .doc-section-body li,
+.theme-dark .doc-content li {
+  color: #ffffff !important;
+}
+
+.theme-dark h4,
+.theme-dark .doc-section-body h4,
+.theme-dark .doc-content h4 {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+
+/* Mirror dark-mode dropdown styling for light-mode but use white surface instead of dark slate
+   This keeps the same inset rim, shadow depth and item hover behavior while switching the surface color. */
+.theme-light .dropdown-menu.mirrored-from-dark,
+.theme-light header.site-header .navbar .dropdown-menu.mirrored-from-dark,
+.theme-light .navbar .dropdown-menu.mirrored-from-dark,
+.theme-light .dropdown.mirrored-from-dark > .dropdown-menu {
+  /* white surface instead of #0b1220 */
+  background: #ffffff !important;
+  color: #0b1220 !important; /* dark text suitable for white background */
+  border: 1px solid rgba(16,24,32,0.06) !important; /* thin border to hold shape */
+  box-shadow: 0 10px 30px rgba(2,12,32,0.08) !important; /* preserve depth */
+}
+.theme-light .dropdown.mirrored-from-dark .dropdown-header {
+  color: rgba(16,24,32,0.64) !important;
+}
+.theme-light .dropdown.mirrored-from-dark .dropdown-item {
+  color: #0b1220 !important;
+}
+.theme-light .dropdown.mirrored-from-dark .dropdown-item:hover,
+.theme-light .dropdown.mirrored-from-dark .dropdown-item:focus {
+  background: rgba(2,12,32,0.04) !important; /* subtle hover on white */
+  color: #002233 !important;
+}
+
+/* Apply the inset rim similar to dark mode but with subtle gray tone for light mode */
+.theme-light .dropdown.mirrored-from-dark::after,
+.theme-light .dropdown.mirrored-from-dark > .dropdown-menu::after,
+.theme-light .navbar .dropdown.mirrored-from-dark > .dropdown-menu::after {
+  content: '';
+  position: absolute !important;
+  left: 6px !important;
+  right: 6px !important;
+  top: 6px !important;
+  bottom: auto !important;
+  height: 1px !important;
+  background: rgba(16,24,32,0.12) !important;
+  pointer-events: none !important;
+}
+
+/* Utility: if markup can't add .mirrored-from-dark, apply to all dropdowns under header in light theme as fallback */
+.theme-light header.site-header .navbar .dropdown-menu,
+.theme-light header.site-header .navbar .dropdown {
+  background: #ffffff !important;
+  color: #0b1720 !important;
+  border: 1px solid rgba(16,24,32,0.06) !important;
+  box-shadow: 0 10px 30px rgba(2,12,32,0.08) !important;
+}
+
+
+/* Final high-specificity overrides to force white panels in the main nav dropdowns for light theme
+   and to convert any internal light-gray panels inside the dropdown to pure white. Placed at EOF
+   to outwin other stylesheets and inline styles. */
+:root {}
+
+.theme-light header.site-header .navbar .dropdown-menu,
+.theme-light header.site-header .navbar .dropdown,
+.theme-light .navbar .dropdown-menu,
+.theme-light .navbar .dropdown,
+.theme-light .dropdown-menu,
+.theme-light .navbar .dropdown .dropdown-menu,
+.theme-light header.site-header .navbar .nav-item .dropdown-menu {
+  background-color: #ffffff !important;
+  color: #0f1724 !important;
+  border: none !important;
+  box-shadow: 0 10px 30px rgba(2,12,32,0.06) !important;
+}
+
+/* Some dropdowns place inner panels inside a .dropdown-panel or .dropdown-inner element; ensure those are white */
+.theme-light .dropdown-menu .dropdown-panel,
+.theme-light .dropdown-menu .dropdown-inner,
+.theme-light .dropdown-menu .card-body,
+.theme-light .dropdown-menu .card-preview,
+.theme-light .dropdown-menu .card-body * {
+  background: #ffffff !important;
+  color: #0f1724 !important;
+}
+
+/* If Bootstrap or other styles insert .bg-light/.bg-gray classes inside the dropdown, neutralize them */
+.theme-light .dropdown-menu .bg-light,
+.theme-light .dropdown-menu .bg-gray,
+.theme-light .dropdown-menu .bg-white {
+  background: #ffffff !important;
+  color: #0f1724 !important;
+}
+
+/* Ensure the thin inner line remains visible on top of the white menu */
+.theme-light header.site-header .navbar .dropdown-menu::after,
+.theme-light .navbar .dropdown-menu::after,
+.theme-light .dropdown-menu::after {
+  left: 6px !important;
+  right: 6px !important;
+  top: 6px !important;
+  height: 1px !important;
+  background: rgba(16,24,32,0.12) !important;
+  content: '' !important;
+  position: absolute !important;
+  pointer-events: none !important;
+}
+
+/* Also ensure any panels that were given a light-gray border or background inside navs are reset */
+.theme-light header.site-header nav .card-preview,
+.theme-light header.site-header nav .card-body,
+.theme-light header.site-header nav .panel,
+.theme-light header.site-header nav .panel-body,
+.theme-light header.site-header nav .nav-panel {
+  background: #ffffff !important;
+  border-color: rgba(16,24,32,0.06) !important;
+  color: #0f1724 !important;
+}
+
+
+  /* Hero content on home */
+  .hero-content{padding:2.2rem 1rem; color: #fff}
+  .hero-content .lead{font-size:1.125rem;opacity:0.95;margin-bottom:1rem}
+  .hero-body{max-width:900px;margin:0 auto}
+
+  /* Banner title improvements for home only: larger, uppercase, tighter line-height for emphasis */
+  .home-banner .parallax-overlay .hero h1{
+    font-size:clamp(2rem, 4vw, 3.4rem); /* responsive scaling */
+    line-height:1.02;
+    letter-spacing:0.02em;
+    font-weight:800;
+    text-transform:uppercase;
+    margin:0 0 0.5rem 0;
+    color: inherit;
+    text-shadow: 0 6px 24px rgba(2,12,32,0.45);
+  }
+
+  /* Reusable large section title used across the site and for the login banner */
+  .section-title-lg{
+    font-size:clamp(2rem, 3.6vw, 3rem) !important;
+    line-height:1.04 !important;
+    letter-spacing:0.03em !important;
+    font-weight:800 !important;
+    text-transform:uppercase !important;
+    margin:0 0 0.6rem 0 !important;
+    color:inherit !important;
+    text-shadow: 0 6px 20px rgba(2,12,32,0.32);
+  }
+  /* subtitle slightly larger for readability */
+  .home-banner .parallax-overlay .hero p#hero-sub{font-size:1.05rem;opacity:0.95;margin-bottom:0.75rem}
+
+  /* make the parallax banner taller on large screens for dramatic effect (home only) */
+  @media(min-width:1200px){
+    .home-banner{height:78vh}
+    .home-banner .parallax-overlay .hero h1{font-size:clamp(2.4rem, 3.2vw, 4rem)}
+  }
+  /* slightly reduce for small screens but keep uppercase and emphasis */
+  @media(max-width:600px){
+    .home-banner{height:48vh}
+    .home-banner .parallax-overlay .hero h1{font-size:1.6rem;line-height:1.08}
+    .home-banner .parallax-overlay .hero{padding-left:1rem;padding-right:1rem}
+  }
+
+/* Stronger overlay and stacking to improve contrast and readability for documentation */
+.parallax-banner::after,
+.home-banner::after {
+  /* increase darkness slightly for documentation and other content pages */
+  background: linear-gradient(180deg, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.78) 100%) !important;
+  z-index:1 !important;
+  pointer-events:none;
+}
+
+/* Ensure hero content sits above overlay */
+.parallax-overlay .hero,
+.parallax-overlay .hero * { position:relative; z-index:2 }
+
+/* ====== CONTROLS OVERRIDES - force right-side vertical centered stack and tab visuals ====== */
+/* Placed at EOF to override any competing declarations in the long monolithic stylesheet. */
+.menu-controls-floating{position:fixed !important;right:1rem !important;top:0 !important;height:100vh !important;display:flex !important;justify-content:center !important;align-items:flex-end !important;flex-direction:column !important;gap:.6rem !important;z-index:2500 !important;pointer-events:auto !important}
+.menu-controls-floating .mc-stack{display:flex !important;flex-direction:column !important;row-gap:.5rem !important;column-gap:.5rem !important;align-items:flex-end !important;position:relative !important;top:auto !important;right:auto !important}
+.mc-btn{--size:44px;width:var(--size) !important;height:var(--size) !important;border-radius:12px !important;background:hsla(0,0%,100%,.06) !important;color:var(--fg) !important;box-shadow:0 6px 18px rgba(2,12,32,.18) !important;border:1px solid hsla(0,0%,100%,.04) !important;display:inline-flex !important;align-items:center !important;justify-content:center !important;transition:all .18s ease !important}
+.mc-btn:hover{transform:translateX(-4px) !important}
+.mc-btn[aria-pressed="true"],.mc-btn.is-active{width:auto !important;min-width:64px !important;padding:0 .8rem !important;border-radius:12px 0 0 12px !important;background:linear-gradient(90deg,var(--accent),var(--accent-2)) !important;color:var(--btn-contrast) !important;transform:translateX(-8px) !important;box-shadow:0 10px 30px rgba(2,12,32,.28) !important;border:none !important}
+.mc-btn[aria-pressed="true"] .material-symbols-outlined,.mc-btn.is-active .material-symbols-outlined{font-weight:600 !important}
+
+@media (max-width:720px){.menu-controls-floating{position:fixed !important;right:1rem !important;top:1rem !important;height:auto !important;justify-content:flex-start !important;flex-direction:row !important}.menu-controls-floating .mc-stack{flex-direction:row !important;gap:.5rem !important}.mc-btn{width:40px !important;height:40px !important}}
+
+/* End controls overrides */
+
+/* Tweak subtitle and hero CTA for better contrast */
+.parallax-overlay .hero #hero-sub { color: rgba(255,255,255,0.98); font-weight:700; letter-spacing:0.03em }
+.parallax-overlay .hero .hero-cta a.btn { box-shadow: 0 10px 24px rgba(2,12,32,0.18); border-radius:10px }
+
+/* Slightly reduce visual weight of hero title on very large screens */
+@media(min-width:1400px){
+  .parallax-overlay .hero h1.hero-content, .home-banner .parallax-overlay .hero h1 { font-size: clamp(1.8rem, 2.8vw, 3.2rem); }
+}
+
+  /* Darken the overlay on home to improve contrast against bright video frames */
+  /* Increased opacity to ensure legibility on bright frames while still showing motion */
+  .home-banner::after{ content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,0.48), rgba(0,0,0,0.68)); z-index:1 }
+  .btn-primary{background:var(--accent);border-color:var(--accent);color:var(--btn-contrast)}
+  .btn-secondary{background:var(--card-bg);border-color:var(--card-border);color:var(--deep)}
+  .btn-outline-light{color:var(--bg);border:1px solid rgba(255,255,255,0.18)}
+
+  /* Cards preview styles */
+  .card-preview{transition:transform .18s ease, box-shadow .18s ease;background:var(--card-bg);border:1px solid var(--card-border)}
+  .card-preview:hover{transform:translateY(-6px);box-shadow:0 12px 30px rgba(2,12,32,0.08)}
+  .card-preview .card-title{font-weight:700;color:var(--deep)}
+  .card-preview .card-text{color:var(--muted)}
+  .card-preview .btn-link{font-weight:600;color:var(--deep)}
+
+  /* Modal theming */
+  .modal-content{background:linear-gradient(180deg,rgba(255,255,255,0.98),#fff)}
+  /* -------------------- Documentación: estilos específicos -------------------- */
+  /* Scope selectors to the CMS-rendered documentation pages: main page uses .parallax-banner + .section-grid and .prose-left */
+  .section-grid[aria-labelledby^="page-header"],
+  .parallax-banner + .container .section-grid,
+  .prose-left {
+    --doc-max-width: 820px;
+  }
+#page-header-documentacion.page-header-visual,
+.section-grid.container .page-header-visual {
+  padding-top: 1.6rem !important; /* dejar espacio desde el banner para evitar la línea azul encima */
+}
+
+/* Si el header tiene id específico generado por CMS, soportar la variante */
+#page-header-documentacion.page-header-visual,
+#page-header-documentacion.page-header-visual .lead {
+  padding-top: 1rem;
+}
+
+/* Hacer el excerpt un poco más sobrio para la frase empresarial */
+.section-grid.container .page-header-visual .lead {
+  margin-bottom: 0.75rem;
+  color: var(--fg-muted, #6b7280);
+  font-weight: 500;
+}
+
+/* Modo claro: asegurar fondo blanco y texto oscuro en la sección Documentación para buen contraste */
+.theme-light .section-grid.container {
+  background-color: #ffffff !important;
+  color: #111827 !important; /* texto principal oscuro */
+}
+.theme-light #page-header-documentacion.page-header-visual,
+.theme-light #page-header-documentacion.page-header-visual .lead {
+  background-color: transparent !important;
+  color: #1f2937 !important;
+  padding-top: 1.6rem !important;
+}
+
+/* Asegurar que los enlaces y botones sean visibles en modo claro dentro de la sección */
+.theme-light .section-grid.container a,
+.theme-light .section-grid.container .btn {
+  color: #0f172a;
+}
+
+
+
+  /* Layout: left content + right sidebar on wide screens */
+  .section-grid .section-text { padding-right:1.25rem }
+  .section-grid .section-cards { padding-left:1.25rem }
+  @media (min-width: 992px) {
+    .section-grid .section-text { flex: 0 0 60%; max-width: 60%; }
+    .section-grid .section-cards { flex: 0 0 40%; max-width: 40%; }
+    .section-cards { position:sticky; top:88px; align-self:start }
+  }
+
+  /* Prose: readable measure, improved leading and link contrast */
+  .prose-left { max-width: var(--doc-max-width); margin:0; color:var(--fg); font-weight:300 }
+  .prose-left h2, .prose-left h3 { color:var(--muted); font-weight:700; margin-top:1.25rem; margin-bottom:.5rem }
+  .prose-left p { margin-bottom:1rem; font-size:1rem; line-height:1.65 }
+  .prose-left a { color:var(--deep); text-decoration:underline; text-decoration-color:rgba(0,64,128,0.06) }
+
+  /* Callouts for notes, tips and warnings used in docs */
+  .callout { border-left:4px solid var(--accent); background:linear-gradient(90deg, rgba(0,238,255,0.02), rgba(67,255,255,0.01)); padding:0.9rem 1rem; border-radius:8px; margin:0.9rem 0 }
+  .callout.note { border-left-color:var(--accent); }
+  .callout.warn { border-left-color:#FFB84D; background:linear-gradient(90deg, rgba(255,184,77,0.03), rgba(255,239,220,0.01)); }
+
+  /* Code blocks and inline code */
+  .prose-left pre { background:#0f1724; color:#e6eef6; padding:1rem; border-radius:8px; overflow:auto; font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', 'Courier New', monospace; font-size:.95rem }
+  .prose-left code { background:rgba(0,0,0,0.06); padding:0.15rem 0.32rem; border-radius:4px; font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', monospace }
+
+  /* Tables inside docs */
+  .prose-left table { width:100%; border-collapse:collapse; margin:1rem 0; font-size:.95rem }
+  .prose-left th, .prose-left td { border:1px solid rgba(0,0,0,0.06); padding:.6rem .75rem; text-align:left }
+  .prose-left thead th { background:rgba(0,0,0,0.04); font-weight:700 }
+
+  /* Card previews in the sidebar: elevated, consistent */
+  .section-cards .card-preview { border-radius:12px; overflow:hidden; border:1px solid rgba(2,12,32,0.04); box-shadow:0 8px 20px rgba(2,12,32,0.06); background:var(--card-bg) }
+  .section-cards .card-preview img { display:block; width:100%; height:180px; object-fit:cover }
+  /* Round card-body panels for consistent appearance */
+  .card-body{ border-radius:10px !important; }
+  .section-cards .card-body{ padding:1rem }
+  .section-cards .card-title{ font-weight:700; color:var(--deep); margin-bottom:.25rem }
+
+  /* Documentation: resource button tweaks
+     - add top spacing so buttons don't touch the paragraph above
+     - ensure icon aligns and inherits color
+     - force white text on dark button in light theme where needed
+  */
+  /* Resource button: use brand gradient, accessible contrast and consistent hover
+     - default: gradient background (cyan -> cyan2) with dark text for contrast
+     - light theme: dark slate solid bg with light text to stand out in white cards
+     - dark theme: dark panel bg with cyan label (accent) and subtle glow on focus
+  */
+  .section-cards .card-body .doc-resource-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:0.5rem;
+    margin-top:0.6rem; /* separate from card-text above */
+    padding:0.5rem 0.9rem;
+    border-radius:10px;
+    background: linear-gradient(90deg,var(--accent),var(--accent-2));
+    color:#001018 !important; /* near-black text for best contrast on bright gradient */
+    text-decoration:none;
+    border: none;
+    font-weight:800;
+    box-shadow: 0 10px 24px rgba(2,12,32,0.08);
+    transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+  }
+
+  .section-cards .card-body .doc-resource-btn .icon-inline{
+    display:inline-block; width:18px; height:18px; vertical-align:middle; fill:currentColor; color:inherit;
+  }
+
+  .section-cards .card-body .doc-resource-btn:hover,
+  .section-cards .card-body .doc-resource-btn:focus{
+    transform: translateY(-2px);
+    box-shadow: 0 16px 36px rgba(2,12,32,0.12);
+    filter:brightness(0.98);
+  }
+
+  /* Light theme: present as solid dark slate button with white text for clarity inside white cards */
+  .theme-light .section-cards .card-body .doc-resource-btn{
+    background: #111827 !important; /* dark slate */
+    color: #ffffff !important;
+    box-shadow: 0 8px 20px rgba(2,12,32,0.06) !important;
+  }
+  .theme-light .section-cards .card-body .doc-resource-btn:hover,
+  .theme-light .section-cards .card-body .doc-resource-btn:focus{
+    background: #000000 !important;
+    color: #ffffff !important;
+  }
+
+  /* Dark theme: darker button surface with cyan text to match site accents */
+  .theme-dark .section-cards .card-body .doc-resource-btn{
+    background: rgba(0,0,0,0.6) !important;
+    color: var(--accent) !important;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.6) !important;
+    border: 1px solid rgba(0,238,255,0.06) !important;
+  }
+  .theme-dark .section-cards .card-body .doc-resource-btn:focus-visible{
+    outline:3px solid rgba(0,238,255,0.12);
+    outline-offset:2px;
+  }
+
+  /* Make CTA in sidebar prominent but harmonious with header style */
+  .soluciones-cta{ background:linear-gradient(90deg,var(--accent),var(--accent-2)); color:#001; padding:1rem; border-radius:10px; box-shadow:0 8px 18px rgba(2,12,32,0.08); }
+  .soluciones-cta .btn{ background:#001; color:var(--accent); font-weight:700 }
+
+  /* Improve visual separation of header phrase and content */
+  .page-header-visual .visual-phrase { font-size:1.05rem; color:var(--muted); margin-bottom:0.5rem; font-weight:600 }
+
+  /* Small helper: make anchors with .btn-link inside docs more visible */
+  .prose-left .btn-link{ color:var(--deep); font-weight:700 }
+
+  /* Tweak card previews inside main grid for better hierarchy */
+  .card-preview.dark { background: linear-gradient(180deg, rgba(3,16,30,0.04), rgba(255,255,255,0.01)); }
+
+  /* Subtle divider for long docs (used between major sections) */
+  .prose-left hr { border:none; height:1px; background:linear-gradient(90deg, rgba(0,0,0,0.06), rgba(0,0,0,0.02)); margin:1.3rem 0 }
+
+  /* Mobile adjustments: stack and increase paddings */
+  @media (max-width:991px){
+    .section-grid .section-text, .section-grid .section-cards { max-width:100%; flex:1 1 100%; padding:0 }
+    .section-cards { position:static; margin-top:1rem }
+    .prose-left pre { font-size:.88rem }
+  }
+
+  /* Decorative accent for in-page anchors and table-of-contents links */
+  .prose-left .anchor { display:inline-block; width:8px; height:8px; background:var(--accent); border-radius:50%; margin-right:.5rem }
+
+  /* Ensure the hero subtitle uses uppercase and is legible */
+  .parallax-overlay .hero #hero-sub { text-transform:uppercase; letter-spacing:0.02em; color:rgba(255,255,255,0.95); font-weight:500 }
+
+  /* Accessibility: increase focus ring contrast for links inside docs */
+  .prose-left a:focus-visible { outline:3px solid rgba(0,238,255,0.16); outline-offset:2px; }
+
+  .modal-title{color:var(--deep)}
+
+  /* Dark card variant */
+  .card-preview.dark{background:#000;color:#fff;border:1px solid rgba(255,255,255,0.06)}
+  .card-preview.dark .card-title, .card-preview.dark .card-text{color:rgba(255,255,255,0.95)}
+  .card-preview.dark .card-img-top{height:160px;object-fit:cover}
+  .card-preview.dark .btn-link{text-decoration:none;color:var(--accent-2)}
+  .card-preview.dark .btn-outline-light{border-color:rgba(255,255,255,0.16)}
+
+@media (min-width:1600px){
+  .container{max-width:1400px}
+  .parallax-overlay .hero{max-width:1200px}
+}
+
+/* --- Compatibility fallbacks --- */
+/*
+  Purpose: include safe, low-risk fallbacks for older engines (IE10/11, older Safari)
+  without changing visual layout in modern browsers. These helpers target a few
+  properties highlighted in the audit: text-size-adjust, flex-direction/grow/order,
+  text-align:match-parent and user-select prefixed variants.
+*/
+
+/* Text-size adjust: unprefixed for modern browsers plus -webkit/-ms as safe fallbacks */
+html, body {
+  -webkit-text-size-adjust: 100%; /* older iOS Safari */
+  -ms-text-size-adjust: 100%;     /* IE Mobile */
+  text-size-adjust: 100%;         /* modern browsers */
+}
+
+/* User-select fallback: include -ms- for IE10/11 and -webkit for older Safari/WebKit */
+.nav-link, .btn, .material-symbols-outlined, .social-link {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Flexbox fallbacks for older IE10/11: map common flex properties to -ms- equivalents.
+   These are intentionally conservative helpers for cases where we use flex shorthand. */
+.d-flex { display: -ms-flexbox; display: flex; }
+.flex-row { -ms-flex-direction: row; flex-direction: row; }
+.flex-column { -ms-flex-direction: column; flex-direction: column; }
+.flex-wrap { -ms-flex-wrap: wrap; flex-wrap: wrap; }
+.flex-grow-1 { -ms-flex-positive: 1; flex-grow: 1; }
+.flex-shrink-0 { -ms-flex-negative: 0; flex-shrink: 0; }
+
+/* Order fallback for older IE */
+.order-0 { -ms-flex-order: 0; order: 0; }
+.order-1 { -ms-flex-order: 1; order: 1; }
+.order-2 { -ms-flex-order: 2; order: 2; }
+
+/* match-parent fallback for text-align: keep -webkit-match-parent where supported
+   but include plain match-parent for engines that implemented the unprefixed value
+   (Safari 15.4+, modern browsers). This duplicate is safe in all engines. */
+.nav-link { text-align: -webkit-match-parent; text-align: match-parent; }
+
+/* Improve base type rhythm and smoothing */
+html { font-size: 16px; }
+body { line-height: 1.45; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+@media (max-width:800px){
+  .main-nav{display:none}
+  .nav-toggle{display:inline-block}
+  .main-nav.open{display:block;background:linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.02));padding:0.5rem}
+  .main-nav .nav-list{flex-direction:column}
+}
+
+/* Prevent any accidental horizontal scrolling on small viewports (e.g., iPhone 11/12/13 Pro 414x896) */
+html, body { overflow-x: hidden; }
+
+/* Layout: keep footer at bottom */
+html, body { height:100%; }
+body{display:flex;flex-direction:column}
+main{flex:1 0 auto}
+
+/* Footer styling */
+.site-footer{background:#000;color:rgba(255,255,255,0.92);border-top:0;padding-top:1rem;padding-bottom:0.6rem;position:relative}
+.site-footer::before{content:'';position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent-2));box-shadow:0 0 12px rgba(67,255,255,0.18);}
+.site-footer a{color:var(--accent-2)}
+.site-footer .form-control{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.04);color:#fff}
+.site-footer .btn-primary{background:var(--accent);border-color:var(--accent);color:var(--btn-contrast)}
+.site-footer h5{color:#fff;margin-bottom:0.5rem}
+/* stronger rule: any element in footer with margin-bottom .mb-3 that is heading-like should use dark gray in light theme and remain readable in dark theme */
+.site-footer .mb-3 h1,
+.site-footer .mb-3 h2,
+.site-footer .mb-3 h3,
+.site-footer .mb-3 h4,
+.site-footer .mb-3 h5,
+.site-footer .mb-3 p,
+.site-footer .mb-3 .nav-link{
+  color: #2f3438 !important; /* dark gray for good contrast on light backgrounds */
+}
+
+.mb-3{ color: #2f3438 !important }
+/* Force hero descriptive paragraph to white when shown over dark banner */
+.hero-content .mb-3, .home-banner .parallax-overlay .hero .mb-3, .parallax-overlay .hero .mb-3 { color: #fff !important; opacity:0.95 !important }
+/* Theme-specific overrides to keep contrast */
+.parallax-banner .parallax-overlay .mb-3,
+.parallax-banner .parallax-overlay .mb-3 *{ color: inherit !important }
+.theme-light .site-footer h5,
+.theme-light .site-footer .mb-3 h5{ color: #2f3438 !important; font-weight:700 }
+.theme-light .site-footer, .theme-light .site-footer p, .theme-light .site-footer .nav-link{ color: #071127 !important }
+.theme-dark .site-footer h5,
+.theme-dark .site-footer .mb-3 h5{ color: #fff !important; font-weight:700 }
+.theme-dark .site-footer p,
+.theme-dark .site-footer .nav-link{ color: rgba(255,255,255,0.9) !important }
+
+/* copyright styling */
+.site-footer .copyright{color:#ffffff;font-weight:600;padding-top:0.4rem;padding-bottom:0.2rem}
+.site-footer .copyright.brand-blue{color:var(--deep)}
+
+/* compact column spacing */
+.site-footer .row > [class*='col-']{padding-top:0.45rem;padding-bottom:0.45rem}
+
+/* Social icons in footer */
+.social-icons{display:flex;gap:0.6rem;align-items:center;margin-top:0.4rem}
+.social-link{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:8px;background:rgba(255,255,255,0.03);color:rgba(255,255,255,0.92);text-decoration:none;transition:background .12s ease, transform .08s ease}
+.social-link:hover, .social-link:focus{background:rgba(255,255,255,0.06);transform:translateY(-2px)}
+.social-link svg{width:20px;height:20px;display:block}
+
+/* Floating site control toolbar */
+/* Site controls: desktop expandable toolbar */
+#site-controls{position:fixed;right:1.25rem;bottom:1.25rem;z-index:2000}
+#site-controls .sc-list{list-style:none;margin:0;padding:0;display:flex;gap:0.5rem}
+#site-controls .sc-item{position:relative}
+#site-controls .sc-btn{display:flex;align-items:center;gap:0.6rem;background:rgba(255,255,255,0.06);color:var(--bg);border:1px solid rgba(255,255,255,0.04);padding:0.5rem 0.6rem;border-radius:10px;-webkit-backdrop-filter: blur(6px);backdrop-filter: blur(6px);cursor:pointer}
+#site-controls .sc-btn .sc-icon{font-family: 'Material Icons Outlined', sans-serif; font-variation-settings: 'FILL' 0, 'wght' 400; font-size:18px}
+#site-controls .sc-btn .sc-label{display:inline-block;font-size:0.9rem;color:rgba(255,255,255,0.92)}
+
+/* Desktop: labels visible and expand on hover for clarity */
+@media(min-width:992px){
+  #site-controls .sc-btn{padding:0.6rem 0.9rem}
+  #site-controls .sc-item{transition:transform .12s ease}
+  #site-controls .sc-item:hover{transform:translateY(-4px)}
+}
+
+/* Mobile: compact buttons, only icons */
+@media(max-width:991px){
+  #site-controls{right:0.75rem;bottom:0.75rem}
+  #site-controls .sc-list{flex-direction:column}
+  #site-controls .sc-btn{padding:0.45rem;gap:0.35rem;border-radius:8px}
+  #site-controls .sc-label{display:none}
+}
+
+/* theme helper: dark mode class toggled on :root for quick theme switch */
+.theme-dark{--bg:#121212;--fg:#ffffff; --card-bg:#0f1720; --card-border:rgba(255,255,255,0.04); --header-bg:rgba(0,12,22,0.88); --btn-contrast:#000}
+.theme-dark body, .theme-dark main, .theme-dark .container, .theme-dark .admin-main, .theme-dark .card-preview, .theme-dark .list-group-item {
+  color: #ffffff !important;
+}
+.theme-dark .card-body,
+.theme-dark .card-preview .card-body,
+.theme-dark .card-preview,
+.theme-dark .list-group-item,
+.theme-dark .admin-sidebar.card-preview,
+.theme-dark .contact-card,
+.theme-dark .feature-card{
+  background: var(--card-bg) !important;
+  color: #e8eef6 !important;
+  border-color: var(--card-border) !important;
+}
+.theme-dark a, .theme-dark a:link, .theme-dark a:visited { color: var(--accent-2) !important; }
+.theme-dark .small, .theme-dark .text-muted { color: rgba(255,255,255,0.75) !important; }
+.theme-dark input, .theme-dark textarea, .theme-dark select { background: #0b1220; color: #fff; border:1px solid rgba(255,255,255,0.06); }
+.theme-dark .card-preview { background: var(--card-bg); border-color: var(--card-border); }
+.theme-dark .btn-outline-light { color: #fff; border-color: rgba(255,255,255,0.12); }
+.theme-dark .site-footer { background:#0b0b0b; }
+
+/* Editor contrast improvements in dark mode */
+.theme-dark .editor{
+  background: #071018 !important;
+  color: #fff !important;
+  caret-color: var(--accent) !important;
+  border-color: rgba(255,255,255,0.06) !important;
+}
+.theme-dark .editor p, .theme-dark .editor div, .theme-dark .editor span{ color: #fff !important }
+/* Ensure buttons and button-like links are readable in dark mode */
+/* Buttons: black background + bright cyan text in dark mode */
+.theme-dark .btn, .theme-dark .btn-sm, .theme-dark .btn-outline-light, .theme-dark .nav-link, .theme-dark .mc-btn, .theme-dark .btn-primary, .theme-dark .btn-danger {
+  background: #000 !important;
+  color: var(--accent) !important;
+  border-color: rgba(255,255,255,0.06) !important;
+}
+.theme-dark .btn-outline-light { background: #000 !important; border-color: rgba(255,255,255,0.08) !important; }
+.theme-dark .mc-btn { background: #000 !important; border-color: rgba(255,255,255,0.06) !important; }
+.theme-dark .btn-link{ color: var(--accent) !important }
+.theme-dark .btn:hover, .theme-dark .btn:focus{ background:#070707 !important; color: var(--accent-2) !important }
+.theme-dark .btn .material-symbols-outlined, .theme-dark .mc-btn span { color: var(--accent) !important }
+
+/* Override: selected/active/pressed state in dark theme should use dark gray + white text (company blue replaced) */
+.theme-dark .btn.active,
+.theme-dark .btn[aria-pressed="true"],
+.theme-dark .btn:active,
+.theme-dark .nav-link.active,
+.theme-dark .nav-link[aria-current="page"],
+.theme-dark .mc-btn[aria-pressed="true"],
+.theme-dark .mc-btn.active,
+.theme-dark .dropdown-item.active,
+.theme-dark .dropdown-item[aria-pressed="true"],
+.theme-dark .nav-control[aria-pressed="true"],
+.theme-dark .nav-control.active {
+  background: #2b2b2b !important; /* dark gray */
+  color: #ffffff !important;      /* white text */
+  border-color: rgba(255,255,255,0.06) !important;
+  box-shadow: none !important;
+}
+
+/* Ensure icons inside active controls are white */
+.theme-dark .btn.active .material-symbols-outlined,
+.theme-dark .mc-btn[aria-pressed="true"] span,
+.theme-dark .nav-control[aria-pressed="true"] span,
+.theme-dark .dropdown-item.active .material-symbols-outlined {
+  color: #ffffff !important;
+  fill: currentColor !important;
+}
+
+/* Admin-area specific fixes: make all admin buttons and small buttons readable in dark mode */
+.theme-dark .admin-main .btn, .theme-dark .admin-main .btn-sm, .theme-dark .admin-main .btn-outline-light, .theme-dark .admin-main .btn-danger, .theme-dark .admin-main .btn-primary {
+  background:#000 !important; color: var(--accent) !important; border-color: rgba(255,255,255,0.06) !important;
+}
+.theme-dark .admin-main .btn-outline-light { border-color: rgba(255,255,255,0.12) !important; background:#000 !important }
+.theme-dark .admin-main .btn-danger { background:#000 !important; color: var(--accent) !important; border-color: rgba(255,255,255,0.06) !important }
+.theme-dark .admin-main .btn .material-symbols-outlined, .theme-dark .admin-main .mc-btn span { color: var(--accent) !important }
+
+/* Make admin form labels and helper text readable in dark mode */
+.theme-dark .admin-main label,
+.theme-dark .admin-main .form-text,
+.theme-dark .admin-main .form-check-label,
+.theme-dark .admin-main .section-title-lg,
+.theme-dark .admin-main .card-preview,
+.theme-dark .admin-main .mb-3 { color: rgba(255,255,255,0.92) !important; }
+
+.theme-dark .admin-main input.form-control,
+.theme-dark .admin-main textarea.form-control,
+.theme-dark .admin-main select.form-control { background:#071018 !important; color: #fff !important; border-color: rgba(255,255,255,0.06) !important }
+
+/* ensure body background/text respect variables */
+body{background:var(--bg);color:var(--fg);transition:background-color 240ms ease,color 240ms ease}
+
+/* Light theme explicit overrides: brighter backgrounds and stronger contrast */
+.theme-light{
+  /* Light theme palette: background set to pure white for the whole site.
+     If you prefer a subtle light gray instead, replace --bg value with #f6f8fa or #f3f4f6. */
+  --bg: #dedede; /* light gray background requested */
+  --fg: #071127; /* deep charcoal for high contrast */
+  --card-bg: #ffffff;
+  --card-border: #e6eef8;
+  --header-bg: #dedede; /* header surface in light theme: match page background */
+  --btn-contrast: #000000;
+  --muted: #2b2b2b;
+}
+
+/* Explicit light-theme overrides for components that are otherwise forced to dark via !important */
+.theme-light .site-header, .theme-light header.site-header {
+  background: var(--header-bg) !important;
+  color: var(--fg) !important;
+  box-shadow: 0 2px 8px rgba(2,12,32,0.06);
+}
+.theme-light .navbar .nav-link{ color: var(--fg); }
+.theme-light .navbar .nav-link:hover{ color: var(--deep); text-shadow: none; background: rgba(0,0,0,0.02); }
+.theme-light .navbar-toggler-icon{ filter: none }
+
+/* Improve readability of navbar items in light theme: darker text and semi-bold */
+.theme-light .navbar .nav-link{
+  color: #374151 !important; /* dark gray */
+  font-weight: 400 !important; /* normal weight for nav labels */
+}
+
+/* Extra specific rule to override any other color on nav link text in light theme */
+.theme-light header.site-header .navbar .nav-link,
+.theme-light .site-header .navbar .nav-link,
+.theme-light .navbar.navbar-expand-lg .nav-link {
+  color: #374151 !important;
+}
+
+/* Style the Contact button in the main nav: light gray background and dark text */
+.theme-light .navbar .nav-link.contact,
+.theme-light .navbar .nav-link[aria-label="contact"]{
+  background: #374151 !important; /* dark slate */
+  color: #ffffff !important; /* white text/icon */
+  border-radius: 8px;
+  padding: 0.45rem 0.9rem;
+  box-shadow: none;
+  border: 1px solid rgba(0,0,0,0.08) !important;
+}
+
+/* Contact button hover: black bg and cyan text/icon */
+.theme-light .navbar .nav-link.contact:hover,
+.theme-light .navbar .nav-link[aria-label="contact"]:hover{
+  background: #000000 !important;
+  color: var(--accent) !important;
+}
+
+/* Ensure icons inside the contact nav link follow the color rules (e.g., material icons or svg) */
+.theme-light .navbar .nav-link.contact .material-symbols-outlined,
+.theme-light .navbar .nav-link.contact svg,
+.theme-light .navbar .nav-link[aria-label="contact"] .material-symbols-outlined,
+.theme-light .navbar .nav-link[aria-label="contact"] svg {
+  color: inherit !important;
+  fill: currentColor !important;
+}
+
+/* Very specific override for the header contact CTA that appears as .contact-cta (used in layout.php) */
+.theme-light .navbar .nav-link.contact-cta,
+.theme-light .navbar .nav-link.contact-cta .material-symbols-outlined,
+.theme-light .navbar .nav-link.contact-cta svg,
+.theme-light .navbar .nav-link[aria-label="Contacto"],
+.theme-light .navbar .nav-link[aria-label="Contacto"] .material-symbols-outlined,
+.theme-light .navbar .nav-link[aria-label="Contacto"] svg {
+  /* Modernized contact CTA: compact, pill-shaped, clear contrast, and icon inherits color */
+  background: var(--deep);
+  color: var(--bg);
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  height: 38px; /* compact height */
+  padding: 0 .9rem;
+  font-size: .95rem;
+  line-height: 1;
+  border-radius: 999px; /* pill */
+  text-decoration: none;
+  box-shadow: 0 1px 6px rgba(2, 6, 23, 0.08);
+  transition: transform .12s ease, box-shadow .12s ease, background-color .12s ease, color .12s ease;
+  white-space: nowrap;
+
+.contact-cta:focus {
+  outline: 2px solid rgba(0, 168, 255, 0.18);
+  outline-offset: 2px;
+}
+.contact-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(2, 6, 23, 0.12);
+}
+}
+
+.theme-light .navbar .nav-link.contact-cta:hover,
+.theme-light .navbar .nav-link[aria-label="Contacto"]:hover {
+  background: #000000 !important;
+  color: var(--accent) !important; /* cyan on hover */
+}
+
+/* Ensure the focus/hover states remain visible in light theme for these controls */
+.theme-light .nav-control:hover, .theme-light .nav-control-tab:hover, .theme-light .mc-btn:hover{
+  background: #4b5563 !important;
+}
+
+/* Floating controls tuned for light theme */
+.theme-light .mc-btn{ background: var(--bg); color: var(--fg); border:1px solid rgba(10,20,30,0.06); box-shadow:0 8px 20px rgba(2,12,32,0.06); }
+.theme-light .mc-btn span{ color: var(--deep); }
+
+.theme-light .card-preview{ background:var(--card-bg); border:1px solid var(--card-border); color:var(--fg) }
+.theme-light .card-preview .card-text{ color:var(--muted) }
+.theme-light .modal-content{ background: linear-gradient(180deg,#ffffff,#fbfdff) }
+
+.theme-light .site-footer{ background: #f8fafc; color: #071127 }
+.theme-light .site-footer::before{ box-shadow:none; background: linear-gradient(90deg,var(--accent),var(--accent-2)); }
+
+/* Make footer headings bold in light theme and preserve dark color */
+.theme-light .site-footer h5{ color: #071127 !important; font-weight:700 }
+.theme-dark .site-footer h5{ color: #fff }
+
+/* Footer headings darker on light theme */
+.theme-light .site-footer h5{ color: #071127 !important; }
+.theme-light .site-footer .copyright{ color: #071127 !important }
+
+/* Footer links subtler but readable */
+.theme-light .site-footer a{ color: #2f3438 }
+
+/* Ensure Material Symbols and other icons switch to dark gray in light theme */
+.theme-light .material-symbols-outlined, .theme-light .nav-icon, .theme-light .mc-btn span { color: #2f3438 !important; }
+.theme-light .nav-link, .theme-light .nav-link .nav-icon { color: #2f3438 !important; }
+.theme-light .navbar .nav-link.active, .theme-light .nav-link[aria-current="page"]{ background: rgba(0,0,0,0.03); color: #2f3438; box-shadow:none }
+.theme-light .social-link{ background: rgba(10,12,16,0.02); color:#2f3438 }
+.theme-light .social-link svg{ fill: #2f3438 }
+
+/* Ensure elements accidentally marked white in the light theme become readable */
+.theme-light .text-white, .theme-light .text-white *{ color: var(--fg) !important; }
+.theme-light .text-muted, .theme-light .small, .theme-light .card-text, .theme-light .contact-item{ color: var(--muted) !important; }
+
+/* Buttons and outline variants on light theme should use darker labels */
+.theme-light .btn, .theme-light .mc-btn, .theme-light .nav-control, .theme-light .nav-control-tab{ color: var(--fg) !important; background: var(--bg) !important }
+.theme-light .btn-outline-light{ color: var(--fg) !important; border-color: rgba(10,20,30,0.06) !important }
+
+/* Specific fix: feature card descriptions in soluciones were too light on the light theme */
+.soluciones-features .feature-card p{ color: var(--muted) !important; }
+.theme-light .soluciones-features .feature-card p{ color: #374151 !important; /* cool dark gray for good contrast */ }
+
+/* Also ensure soluciones hero lead is dark on light theme */
+.theme-light .soluciones-hero .lead{ color: var(--fg) !important; opacity:0.95 }
+
+
+/* Buttons that used the cyan accent can be toned down on light theme to dark text with subtle accent borders */
+.theme-light .btn-primary{ background: #e8fbfc; color: #04314a; border-color: rgba(0,238,255,0.12) }
+.theme-light .btn-outline-light{ color: #2f3438; border-color: rgba(10,20,30,0.06) }
+
+/* Make sure hero text remains visible on light background */
+.theme-light .hero-content, .theme-light .hero-content .lead{ color: var(--fg) }
+
+/* Links and brand logo adjustments for light theme */
+.theme-light a{ color: #6b6f75; /* neutral light gray for links */ }
+.theme-light a:hover, .theme-light a:focus{ color: #475058; text-decoration:underline }
+
+/* Tint the brand/logo to a muted gray on light theme to avoid clashing with background */
+.theme-light .navbar-brand img{ filter: grayscale(100%) brightness(0.9) contrast(0.9); opacity:0.95 }
+
+/* Ensure nav link icons and labels use the muted gray rather than brand cyan */
+.theme-light .nav-icon{ color: #6b6f75 !important }
+
+/* Strong override for contact CTA appearance in light theme: white bg, dark-gray text/icon;
+   on hover -> black bg, white text/icon. Targets header nav-link and any .contact-cta anchors. */
+.theme-light header.site-header .navbar .nav-link.contact-cta,
+.theme-light header.site-header .navbar a.contact-cta,
+.theme-light .navbar .nav-link.contact-cta,
+.theme-light a.contact-cta{
+  background: #ffffff !important;
+  color: #2f3438 !important;
+  border: 1px solid rgba(16,24,32,0.06) !important;
+  box-shadow: none !important;
+  height: 38px !important;
+  padding: 0 .9rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: .45rem !important;
+  border-radius: 999px !important;
+  text-decoration: none !important;
+  transition: background-color .12s ease, color .12s ease, transform .08s ease !important;
+}
+.theme-light header.site-header .navbar .nav-link.contact-cta svg,
+.theme-light header.site-header .navbar .nav-link.contact-cta .material-symbols-outlined,
+.theme-light a.contact-cta svg,
+.theme-light a.contact-cta .material-symbols-outlined{
+  color: #2f3438 !important;
+  fill: currentColor !important;
+}
+.theme-light header.site-header .navbar .nav-link.contact-cta:hover,
+.theme-light header.site-header .navbar a.contact-cta:hover,
+.theme-light .navbar .nav-link.contact-cta:hover,
+.theme-light a.contact-cta:hover{
+  background: #000000 !important;
+  color: #ffffff !important;
+  transform: translateY(-1px) !important;
+}
+.theme-light header.site-header .navbar .nav-link.contact-cta:hover svg,
+.theme-light header.site-header .navbar a.contact-cta:hover svg,
+.theme-light .navbar .nav-link.contact-cta:hover svg,
+.theme-light a.contact-cta:hover svg,
+.theme-light header.site-header .navbar .nav-link.contact-cta:hover .material-symbols-outlined,
+.theme-light header.site-header .navbar a.contact-cta:hover .material-symbols-outlined,
+.theme-light .navbar .nav-link.contact-cta:hover .material-symbols-outlined,
+.theme-light a.contact-cta:hover .material-symbols-outlined{
+  color: #ffffff !important;
+  fill: currentColor !important;
+}
+
+/* Disabled state: preserve contrast */
+.contact-cta[disabled], .contact-cta.disabled{ opacity: .65; cursor: not-allowed }
+
+
+/* Tighter parallax sizing to avoid overflow when object-fit rounding triggers >100% width */
+.parallax-media{min-width:100%;min-height:100%;max-width:none;max-height:none}
+.parallax-banner{height:50vh;min-height:220px}
+
+/* Small utility: improve contrast for form controls in dark mode */
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#121212; --fg:#FFFFFF }
+  .navbar, .site-header{background:linear-gradient(90deg,#02162b,#00213f)}
+  .flash{background:linear-gradient(90deg, rgba(0,238,255,0.04), rgba(67,255,255,0.02));border-left-color:var(--accent)}
+}
+
+/* Additional small tweaks */
+.nav-link{transition:color .15s ease, background .15s ease}
+.hero{padding:2rem 1rem;max-width:100%;box-shadow:0 4px 18px rgba(2,12,32,0.06)}
+footer.container{padding:1.25rem 1rem;background:transparent;color:rgba(0,0,0,0.6)}
+@media (max-width:800px){
+  .navbar{min-height:56px}
+  .navbar .nav-link{padding:.5rem .4rem}
+  .brand{font-size:1.05rem}
+}
+
+/* Mobile friendly offcanvas and controls */
+@media (max-width:720px){
+  /* Make the offcanvas menu tappable: full-width links with larger hit area */
+  .offcanvas .nav-link{
+    display:block !important;
+    width:100% !important;
+    padding:.9rem 1rem !important;
+    border-radius:8px !important;
+    margin-bottom:.35rem !important;
+    font-size:1.02rem !important;
+  }
+
+  /* Ensure offcanvas body scrolls independently and doesn't push page */
+  .offcanvas-body{overflow:auto !important; -webkit-overflow-scrolling:touch !important;}
+
+  /* Improve visibility and touch target of the toggler */
+  .navbar-toggler{padding:.5rem .6rem; margin-right:.25rem}
+  .navbar-toggler-icon{width:28px;height:22px;display:inline-block}
+
+  /* Floating menu controls collapse to a compact top-right row on small screens */
+  .menu-controls-floating{position:fixed !important; right:1rem !important; top:1rem !important; height:auto !important; justify-content:flex-start !important; flex-direction:row !important}
+  .menu-controls-floating .mc-stack{flex-direction:row !important; gap:.5rem !important}
+  .mc-btn{width:40px !important; height:40px !important; padding:0 !important}
+
+  /* Make nav collapse visible as offcanvas: hide desktop nav area on small screens */
+  .navbar-collapse.d-none.d-lg-flex{display:none !important}
+
+  /* Ensure branding and logo fit and don't overflow */
+  .navbar-brand img{height:32px;max-height:36px}
+}
+
+/* Mobile-specific mc-stack inside offcanvas: spacing and visual alignment */
+@media (max-width:720px){
+  .offcanvas .mc-stack{display:flex;gap:.6rem;padding:.5rem 1rem}
+  .offcanvas .mc-stack .mc-btn{width:44px;height:44px;border-radius:10px}
+  /* Hide desktop floating controls (already d-none d-lg-flex in markup) as a safety */
+  .menu-controls-floating{display:none !important}
+}
+
+/* Small polish: ensure offcanvas close button contrasts in both themes */
+.offcanvas .btn-close{filter:invert(1) brightness(1.2)}
+
+/* Parallax banner styles */
+.parallax-banner{position:relative;overflow:hidden;height:56vh;min-height:280px;display:block}
+.parallax-media{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;will-change:transform}
+.parallax-media[poster], .parallax-media video{object-fit:cover}
+.parallax-media[role="img"]{background-position:center center;background-size:cover;width:100%;height:100%;}
+.parallax-media{transition:transform 260ms cubic-bezier(.2,.9,.2,1), filter 220ms ease}
+.parallax-banner:hover .parallax-media{ filter:brightness(0.92) saturate(1.06) }
+
+/* Interactive inverse-mouse parallax: handled in JS; fallback subtle transform on hover */
+.parallax-banner:hover .parallax-media{ transform:translate(-50%,-50%) scale(1.05) }
+.parallax-overlay{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;height:100%;pointer-events:none}
+
+/* ===== Custom: dark-mode overrides for specific active nav buttons ===== */
+/* Make the header Contact CTA (compact variant) show white background + black text when active in dark theme */
+html.theme-dark a.nav-link.d-flex.align-items-center.gap-2.contact-cta[aria-pressed="true"],
+html.theme-dark a.nav-link.d-flex.align-items-center.gap-2.contact-cta.is-active,
+html.theme-dark a.nav-link.d-flex.align-items-center.gap-2.contact-cta.active {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border-color: rgba(0,0,0,0.06) !important;
+  box-shadow: none !important;
+}
+html.theme-dark a.nav-link.d-flex.align-items-center.gap-2.contact-cta .material-symbols-outlined,
+html.theme-dark a.nav-link.d-flex.align-items-center.gap-2.contact-cta svg {
+  color: #000000 !important;
+  fill: currentColor !important;
+}
+
+/* Dropdown toggle active: show as white pill with black text in dark mode */
+html.theme-dark a.nav-link.dropdown-toggle.active,
+html.theme-dark a.nav-link.dropdown-toggle[aria-pressed="true"],
+html.theme-dark a.nav-link.dropdown-toggle.is-active {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border-radius: 12px !important;
+  box-shadow: none !important;
+}
+html.theme-dark a.nav-link.dropdown-toggle.active .material-symbols-outlined,
+html.theme-dark a.nav-link.dropdown-toggle.active svg {
+  color: #000000 !important;
+  fill: currentColor !important;
+}
+
+/* Also cover other contact CTA variants and aria-label versions used in templates */
+html.theme-dark a.contact-cta[aria-pressed="true"],
+html.theme-dark a.contact-cta.is-active,
+html.theme-dark a.contact-cta.active,
+html.theme-dark a.nav-link.contact-cta[aria-pressed="true"],
+html.theme-dark a.nav-link.contact-cta.is-active,
+html.theme-dark a.nav-link.contact-cta.active,
+html.theme-dark a[aria-label="Contacto"][aria-pressed="true"],
+html.theme-dark a[aria-label="Contacto"].is-active,
+html.theme-dark a[aria-label="Contacto"].active,
+html.theme-dark header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta[aria-pressed="true"],
+html.theme-dark header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta.active {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border-color: rgba(0,0,0,0.06) !important;
+  box-shadow: none !important;
+}
+html.theme-dark a.contact-cta .material-symbols-outlined,
+html.theme-dark a.contact-cta svg,
+html.theme-dark a.nav-link.contact-cta .material-symbols-outlined,
+html.theme-dark a.nav-link.contact-cta svg {
+  color: #000000 !important;
+  fill: currentColor !important;
+}
+
+/* Default dark-mode appearance for the Contact CTA and related nav-link variants */
+html.theme-dark a.contact-cta,
+html.theme-dark a.nav-link.contact-cta,
+html.theme-dark a.nav-link.d-flex.align-items-center.gap-2.contact-cta,
+html.theme-dark header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta {
+  background: #000000 !important; /* default black */
+  color: #ffffff !important; /* white text */
+  border: 1px solid rgba(255,255,255,0.04) !important;
+  border-radius: 12px !important;
+  transition: box-shadow .14s ease, border-color .14s ease, transform .08s ease, background .12s ease, color .12s ease !important;
+}
+
+/* Hover: bright cyan rim/glow on hover */
+html.theme-dark a.contact-cta:hover,
+html.theme-dark a.nav-link.contact-cta:hover,
+html.theme-dark a.nav-link.d-flex.align-items-center.gap-2.contact-cta:hover {
+  box-shadow: 0 0 18px rgba(0,238,255,0.45), 0 6px 20px rgba(0,0,0,0.5) !important;
+  border-color: rgba(0,238,255,0.45) !important;
+  transform: translateY(-1px) !important;
+  color: #ffffff !important;
+}
+
+/* Keep active state as white bg + black text (already present) but ensure higher specificity */
+html.theme-dark a.contact-cta.active,
+html.theme-dark a.contact-cta[aria-pressed="true"],
+html.theme-dark a.nav-link.contact-cta.active,
+html.theme-dark a.nav-link.contact-cta[aria-pressed="true"],
+html.theme-dark a.nav-link.d-flex.align-items-center.gap-2.contact-cta.active,
+html.theme-dark a.nav-link.d-flex.align-items-center.gap-2.contact-cta[aria-pressed="true"] {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border-color: rgba(0,0,0,0.06) !important;
+  box-shadow: none !important;
+}
+
+/* Dropdown toggle defaults + hover glow to match contact CTA behavior */
+html.theme-dark a.nav-link.dropdown-toggle { background: #000000 !important; color: #ffffff !important; border-radius:12px !important; border:1px solid rgba(255,255,255,0.04) !important }
+html.theme-dark a.nav-link.dropdown-toggle:hover { box-shadow: 0 0 18px rgba(0,238,255,0.45); border-color: rgba(0,238,255,0.45) !important; }
+
+/* Highly specific target for the exact Contact CTA used in header templates */
+html.theme-dark header.site-header nav .nav-item.d-none.d-lg-flex.align-items-center > a.nav-link.d-flex.align-items-center.gap-2.contact-cta {
+  background: #000000 !important; /* default black */
+  color: #ffffff !important; /* white text/icon */
+  border: 1px solid rgba(255,255,255,0.04) !important;
+  border-radius: 12px !important;
+}
+html.theme-dark header.site-header nav .nav-item.d-none.d-lg-flex.align-items-center > a.nav-link.d-flex.align-items-center.gap-2.contact-cta .material-symbols-outlined,
+html.theme-dark header.site-header nav .nav-item.d-none.d-lg-flex.align-items-center > a.nav-link.d-flex.align-items-center.gap-2.contact-cta svg {
+  color: #ffffff !important;
+  background: transparent !important;
+  box-shadow: none !important; /* ensure icon itself doesn't get glow */
+}
+html.theme-dark header.site-header nav .nav-item.d-none.d-lg-flex.align-items-center > a.nav-link.d-flex.align-items-center.gap-2.contact-cta:hover {
+  box-shadow: 0 0 22px rgba(0,238,255,0.5) !important;
+  border-color: rgba(0,238,255,0.5) !important;
+  transform: translateY(-1px) !important;
+}
+/* keep icon color on hover but no shadow */
+html.theme-dark header.site-header nav .nav-item.d-none.d-lg-flex.align-items-center > a.nav-link.d-flex.align-items-center.gap-2.contact-cta:hover .material-symbols-outlined,
+html.theme-dark header.site-header nav .nav-item.d-none.d-lg-flex.align-items-center > a.nav-link.d-flex.align-items-center.gap-2.contact-cta:hover svg {
+  color: #ffffff !important;
+  box-shadow: none !important;
+}
+html.theme-dark header.site-header nav .nav-item.d-none.d-lg-flex.align-items-center > a.nav-link.d-flex.align-items-center.gap-2.contact-cta.active,
+html.theme-dark header.site-header nav .nav-item.d-none.d-lg-flex.align-items-center > a.nav-link.d-flex.align-items-center.gap-2.contact-cta[aria-pressed="true"] {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border-color: rgba(0,0,0,0.06) !important;
+  box-shadow: none !important;
+}
+
+/* Ensure the icon never gets a shadow or outline from other rules; only the anchor shows glow */
+.material-symbols-outlined {
+  box-shadow: none !important;
+  outline: none !important;
+  background: transparent !important;
+}
+.material-symbols-outlined:focus,
+.material-symbols-outlined:hover,
+.material-symbols-outlined:active {
+  box-shadow: none !important;
+  outline: none !important;
+  filter: none !important;
+}
+
+
+.parallax-overlay .hero{background:transparent;padding:2rem 1rem;text-align:center}
+.parallax-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.35));z-index:1}
+
+@media (max-width:800px){
+  .parallax-banner{height:42vh;min-height:200px}
+  .parallax-overlay .hero{padding:1rem}
+}
+
+/* Section layout helper: left-aligned prose and image/cards column */
+.section-grid .prose-left{ text-align:left; color:var(--fg); }
+.section-grid .prose-left p, .section-grid .prose-left ul, .section-grid .prose-left ol, .section-grid .prose-left h3{ margin-bottom:0.9rem; }
+.section-grid .section-cards{ display:flex; flex-direction:column; gap:0.75rem; }
+.section-grid .section-cards .card-preview{ background:var(--card-bg); border:1px solid var(--card-border); }
+.section-grid .section-cards img{ width:100%; height:auto; object-fit:cover; }
+.section-grid .card-preview .card-title{ color:var(--deep); }
+.prose-left img{ max-width:100%; height:auto; display:block; margin:0.5rem 0 }
+
+/* Section stripe: a horizontal blue band with section title and short snippet */
+.section-stripe{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0.9rem 1rem;border-radius:8px;background:linear-gradient(90deg,var(--deep),#003366);color:#fff;margin:1rem 0}
+/* TEMP: force section-stripe to black for debugging */
+.section-stripe { background: #000 !important; }
+.section-stripe .ss-title{font-weight:800;font-size:1.05rem;letter-spacing:0.02em;text-transform:uppercase}
+.section-stripe .ss-excerpt{opacity:0.95;color:rgba(255,255,255,0.95);font-size:0.98rem;max-width:72%;text-align:right}
+@media(max-width:768px){.section-stripe{flex-direction:column;align-items:flex-start}.section-stripe .ss-excerpt{text-align:left;max-width:100%}}
+
+/* Visual header: rounded container with a bright blue 'laser' line on top */
+.page-header-visual{
+  position:relative;
+  padding:1rem 1.25rem;
+  border-radius:14px;
+  background:rgba(255,255,255,0.02);
+  box-shadow:0 6px 20px rgba(2,12,32,0.12);
+  overflow:hidden;
+  /* visual improvements */
+  padding-bottom:1.8rem; /* space under laser */
+  margin-bottom:2rem;   /* separation from next block */
+  z-index:2;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+/* ===== Nav group: remove square wrapper or apply rounded corners =====
+   Targets the top-level nav-group items like
+   <li class="nav-item dropdown nav-group nav-group-main">...
+   - Remove any solid rectangular background/box-shadow
+   - Give a soft border-radius to the trigger and dropdown panel
+   - Works for both light and dark themes via high-specificity selectors
+*/
+/* Ensure the li wrapper doesn't produce a filled rectangle */
+html.theme-light header.site-header .navbar .nav-item.nav-group-main,
+html.theme-light .navbar .nav-item.nav-group-main,
+html.theme-light .navbar li.nav-item.nav-group,
+.theme-dark .navbar .nav-item.nav-group-main,
+.theme-dark header.site-header .navbar .nav-item.nav-group-main {
+  background: transparent !important;
+  padding: 0 !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  border-radius: 12px !important; /* keep a soft corner if any background appears */
+  overflow: visible !important;
+}
+
+/* Round the trigger link so it doesn't look like a sharp rectangle */
+.navbar .nav-item.nav-group-main > .nav-link,
+.navbar .nav-item.nav-group-main > a.nav-link,
+html.theme-light .navbar .nav-item.nav-group-main > .nav-link,
+html.theme-light .navbar .nav-item.nav-group-main > a.nav-link {
+  border-radius: 10px !important;
+  padding-left: .6rem !important;
+  padding-right: .6rem !important;
+}
+
+/* Ensure dropdown panel has rounded corners too (override any square panels) */
+.navbar .dropdown-menu,
+html.theme-light .navbar .dropdown-menu,
+.theme-dark .navbar .dropdown-menu {
+  border-radius: 12px !important;
+  overflow: hidden !important;
+}
+
+/* Optional: if you prefer to completely remove any visible box, uncomment this rule */
+/* .navbar .nav-item.nav-group-main, .navbar .dropdown-menu { background: transparent !important; box-shadow: none !important; } */
+
+/* Absolute final override targeting the exact header nav-item wrapper for the Contact CTA
+   Ensures: normal = white bg, dark-gray text/icon; hover = black bg, white text/icon. */
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta {
+  background: #ffffff !important;
+  color: #2f3438 !important;
+  border: 1px solid rgba(16,24,32,0.06) !important;
+  box-shadow: none !important;
+  height: 38px !important;
+  padding: 0 .9rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: .45rem !important;
+  border-radius: 999px !important;
+  text-decoration: none !important;
+  transition: background-color .12s ease, color .12s ease, transform .08s ease !important;
+}
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta svg,
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta .material-symbols-outlined,
+.theme-light a.contact-cta svg,
+.theme-light a.contact-cta .material-symbols-outlined{
+  color: #2f3438 !important;
+  fill: currentColor !important;
+}
+
+/* Normalize the specific header nav-link to match primary nav buttons in dark and light themes */
+html.theme-dark header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.nav-link {
+  background: #000000 !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255,255,255,0.04) !important;
+  border-radius: 12px !important;
+  transition: box-shadow .14s ease, border-color .14s ease, transform .08s ease !important;
+}
+/* Match general navbar nav-link hover: color + subtle cyan text-shadow, keep anchor background transparent on hover */
+html.theme-dark header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.nav-link:hover {
+  color: var(--accent) !important;
+  text-shadow: 0 0 8px rgba(0,238,255,0.45) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+/* Prevent icon glyphs from receiving the text-shadow glow; apply glow only to the textual label when present */
+html.theme-dark header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.nav-link:hover .material-symbols-outlined,
+html.theme-dark header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.nav-link:hover svg {
+  text-shadow: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+/* If the nav-link contains a textual label in a span (e.g. .d-none.d-sm-inline), keep the cyan glow on that label only */
+html.theme-dark header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.nav-link:hover span.d-none.d-sm-inline {
+  text-shadow: 0 0 8px rgba(0,238,255,0.45) !important;
+}
+html.theme-dark header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.nav-link.active,
+html.theme-dark header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.nav-link[aria-pressed="true"] {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border-color: rgba(0,0,0,0.06) !important;
+  box-shadow: none !important;
+}
+
+/* Ensure same feel in light theme: subtle filled pill and hover lift */
+html.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.nav-link {
+  background: transparent !important;
+  color: #374151 !important;
+  border-radius: 999px !important;
+  padding: .45rem .85rem !important;
+}
+html.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.nav-link:hover {
+  color: var(--deep) !important;
+  background: rgba(0,0,0,0.04) !important;
+  text-shadow: none !important;
+  transform: translateY(-1px) !important;
+}
+/* Light theme: ensure icons don't pick up any unintended shadow while preserving label emphasis */
+html.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.nav-link:hover .material-symbols-outlined,
+html.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.nav-link:hover svg {
+  text-shadow: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+html.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.nav-link:hover span.d-none.d-sm-inline {
+  text-shadow: none !important; /* keep light theme label crisp, no cyan glow on light */
+}
+html.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.nav-link.active,
+html.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.nav-link[aria-pressed="true"] {
+  background: linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.03)) !important;
+  color: #111827 !important;
+}
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover,
+.theme-light header.site-header .navbar a.contact-cta:hover,
+.theme-light .navbar .nav-link.contact-cta:hover,
+.theme-light a.contact-cta:hover{
+  background: #000000 !important;
+  color: #ffffff !important;
+  transform: translateY(-1px) !important;
+}
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover svg,
+.theme-light header.site-header .navbar a.contact-cta:hover svg,
+.theme-light .navbar .nav-link.contact-cta:hover svg,
+.theme-light a.contact-cta:hover svg,
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover .material-symbols-outlined,
+.theme-light header.site-header .navbar a.contact-cta:hover .material-symbols-outlined,
+.theme-light .navbar .nav-link.contact-cta:hover .material-symbols-outlined,
+.theme-light a.contact-cta:hover .material-symbols-outlined{
+  color: #ffffff !important;
+  fill: currentColor !important;
+}
+
+/* Disabled state: preserve contrast */
+.contact-cta[disabled], .contact-cta.disabled{ opacity: .65; cursor: not-allowed }
+
+/* -------- Dark mode: ensure dropdowns (submenus like 'Otros') use dark background -------- */
+/* Some dropdowns were rendering white in dark mode; force a dark surface for readability. */
+.theme-dark .dropdown-menu {
+  background: #0b1220 !important; /* dark slate */
+  color: #e8eef6 !important;
+  border: 1px solid rgba(255,255,255,0.06) !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6) !important;
+}
+
+/* ================= FINAL CONSOLIDATED LIGHT THEME MENU STYLE (copy dark, adapt to white) ================= */
+/* Goal: replicate dark-mode menu aesthetics in light mode but with white surfaces and dark-gray text/icons.
+   Includes: nav links, active state, dropdowns, contact CTA and control buttons all rounded. */
+html.theme-light header.site-header,
+html.theme-light .site-header {
+  background: #ffffff !important;
+  color: #1f2937 !important;
+  box-shadow: 0 4px 16px rgba(2,12,32,0.06) !important;
+}
+/* Ensure header remains pure white even if --header-bg is set to a different value
+   (we set --header-bg to #dedede for page background but prefer header white). */
+html.theme-light .site-header { background: #ffffff !important; }
+
+/* If header includes data-theme-bg="site-dedede", apply #dedede in light theme */
+html.theme-light .site-header[data-theme-bg="site-dedede"] {
+  background: #dedede !important;
+}
+
+/* Option A: Force light theme background to #dedede (global light theme) */
+html.theme-light {
+  --bg: #dedede;
+}
+
+/* Ensure page background uses the variable in case other rules override it */
+html.theme-light body {
+  background: var(--bg) !important;
+}
+
+/* Light-theme text normalization
+   Replace explicit white/bright text with a dark gray for better contrast in light mode.
+   This targets selectors that previously forced white text (found in the CSS search). */
+html.theme-light .hero-content,
+html.theme-light .hero-content .mb-3,
+html.theme-light .home-banner .parallax-overlay .hero .mb-3,
+html.theme-light .parallax-overlay .hero .mb-3,
+html.theme-light .site-footer .form-control,
+html.theme-light .site-footer h5,
+html.theme-light .site-footer .copyright,
+html.theme-light .section-stripe,
+html.theme-light .card-preview.dark,
+html.theme-light .card-preview.dark *,
+html.theme-light .page-header-visual,
+html.theme-light .page-header-visual * {
+  color: var(--muted) !important;
+}
+
+/* Additional catch-all for elements that accidentally have white text in light mode */
+html.theme-light .text-white, html.theme-light .has-white-text {
+  color: var(--muted) !important;
+}
+
+/* Light theme: headings/subtitles use dark gray and body text is slightly heavier for legibility */
+html.theme-light h1,
+html.theme-light h2,
+html.theme-light h3,
+html.theme-light h4,
+html.theme-light h5,
+html.theme-light h6,
+html.theme-light .section-title-lg,
+html.theme-light .page-header-visual .visual-phrase,
+html.theme-light .prose-left h2,
+html.theme-light .prose-left h3,
+html.theme-light .section-stripe .ss-title,
+html.theme-light .card-title,
+html.theme-light .page-header-visual .lead {
+  color: var(--muted) !important;
+  font-weight: 700 !important;
+}
+
+/* Design request: make section titles white in light theme when layout expects white headings */
+html.theme-light .section-title,
+html.theme-light .section-heading,
+html.theme-light .page-header-visual .visual-phrase.white-title,
+html.theme-light .section-title-lg.white,
+html.theme-light .prose-left h2.white,
+html.theme-light h2.section,
+html.theme-light h3.section,
+html.theme-light h4.section,
+html.theme-light h5.section,
+html.theme-light h6.section {
+  color: #ffffff !important;
+}
+
+/* Parallax/banner headings: force white over images in light theme */
+html.theme-light .parallax-overlay .hero h1,
+html.theme-light .parallax-overlay .hero h2,
+html.theme-light .home-banner .parallax-overlay .hero h1,
+html.theme-light .home-banner .parallax-overlay .hero h2,
+html.theme-light .page-header-visual h1,
+html.theme-light .page-header-visual h2,
+html.theme-light .parallax-overlay .hero .lead,
+html.theme-light .home-banner .parallax-overlay .hero .lead,
+html.theme-light .page-header-visual .visual-phrase {
+  color: #ffffff !important;
+}
+
+/* Ensure hero content retains text-shadow for legibility on varying image frames */
+html.theme-light .parallax-overlay .hero h1,
+html.theme-light .home-banner .parallax-overlay .hero h1 {
+  text-shadow: 0 6px 18px rgba(0,0,0,0.35) !important;
+}
+
+/* Increase generic content text weight for readability in light mode */
+html.theme-light body,
+html.theme-light .prose-left,
+html.theme-light .prose-left p,
+html.theme-light .section-grid .prose-left p,
+html.theme-light .section-grid .prose-left ul,
+html.theme-light .section-grid .prose-left ol {
+  color: var(--fg) !important;
+  font-weight: 400 !important; /* from 200/300 to 400 */
+}
+
+/* Ensure documentation section body is readable in light theme */
+html.theme-light .doc-section-body,
+html.theme-light .doc-section-body p,
+html.theme-light .doc-section-body ul,
+html.theme-light .doc-section-body ol,
+html.theme-light .doc-section-body li {
+  color: var(--muted) !important; /* dark gray */
+  font-weight: 500 !important;    /* slightly heavier for legibility */
+  line-height: 1.65 !important;
+}
+
+/* Light-theme: make blockquotes and contact-card text dark and legible */
+html.theme-light blockquote,
+html.theme-light blockquote.contact-card,
+html.theme-light .contact-card,
+html.theme-light blockquote.contact-card footer.small,
+html.theme-light .contact-card footer.small,
+html.theme-light blockquote p,
+html.theme-light .contact-card p,
+html.theme-light .contact-card li {
+  color: var(--muted) !important;
+  font-weight: 500 !important;
+}
+
+/* Ensure quoted text uses adequate contrast in light mode */
+html.theme-light blockquote, html.theme-light q, html.theme-light cite {
+  font-weight: 500 !important;
+  color: var(--muted) !important;
+}
+
+/* Apply same readable styles to generic paragraphs, list items and buttons in light mode */
+html.theme-light p,
+html.theme-light li,
+html.theme-light .btn,
+html.theme-light a.btn,
+html.theme-light .card-text,
+html.theme-light .blog-card .card-text {
+  color: var(--muted) !important;
+  font-weight: 500 !important;
+}
+
+/* Remove black debug backgrounds in light theme */
+html.theme-light header, html.theme-light .section-stripe { background: #ffffff !important; }
+html.theme-light .section-stripe { box-shadow: 0 2px 10px rgba(2,12,32,0.06); border:1px solid rgba(0,0,0,0.06); }
+html.theme-light .section-stripe .ss-title, html.theme-light .section-stripe .ss-excerpt { color:#1f2937 !important; }
+
+/* Nav links: pill shape, dark gray text, subtle hover */
+html.theme-light .navbar .nav-link {
+  color: #374151 !important;
+  background: transparent !important;
+  border-radius: 999px !important;
+  padding: .55rem .95rem !important;
+  font-weight: 500 !important;
+  line-height:1 !important;
+}
+html.theme-light .navbar .nav-link:hover,
+html.theme-light .navbar .nav-link:focus {
+  background: rgba(0,0,0,0.04) !important;
+  color: #1f2937 !important;
+  text-shadow:none !important;
+}
+
+/* Active nav link: subtle filled pill + laser rim glow replicate dark mode feel */
+html.theme-light .navbar .nav-link.active,
+html.theme-light .navbar .nav-link[aria-current="page"] {
+  background: linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.03)) !important;
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.06) inset, 0 8px 20px rgba(2,12,32,0.08) !important;
+  color: #111827 !important;
+}
+html.theme-light .navbar .nav-link.active:hover,
+html.theme-light .navbar .nav-link[aria-current="page"]:hover {
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.08) inset, 0 12px 28px rgba(2,12,32,0.12) !important;
+}
+
+/* Icons inherit link color and remain dark gray */
+html.theme-light .navbar .nav-link .nav-icon,
+html.theme-light .navbar .nav-link .material-symbols-outlined { color: #374151 !important; }
+html.theme-light .navbar .nav-link.active .nav-icon,
+html.theme-light .navbar .nav-link[aria-current="page"] .nav-icon { color: #111827 !important; }
+
+/* Dropdown menus: white surface, rounded, inner line, dark text/icons */
+html.theme-light .navbar .dropdown-menu {
+  background: #ffffff !important;
+  color: #1f2937 !important;
+  border: 1px solid rgba(16,24,32,0.06) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 12px 30px rgba(2,12,32,0.08) !important;
+  padding: .35rem .4rem !important;
+  position: absolute !important; /* float like dark mode */
+  top: 100% !important; /* directly under trigger link */
+  left: 0 !important;
+  z-index: 1300 !important;
+  margin-top: 4px !important; /* small gap */
+  transform: translateY(0) !important;
+  min-width: 240px; /* keep reasonable width */
+}
+html.theme-light .navbar .dropdown-menu::after {
+  content:''; position:absolute; left:8px; right:8px; top:8px; height:1px;
+  background: rgba(16,24,32,0.14); pointer-events:none; border-radius:2px;
+}
+html.theme-light .navbar .dropdown-item {
+  color: #1f2937 !important; border-radius: 10px !important; padding:.45rem .75rem !important;
+}
+html.theme-light .navbar .dropdown-item:hover,
+html.theme-light .navbar .dropdown-item:focus {
+  background: rgba(0,0,0,0.06) !important; color:#0f1724 !important;
+}
+html.theme-light .navbar .dropdown-header { color:#6b7280 !important; font-weight:600 !important; }
+
+/* Contact CTA: already specified, ensure consistent pill radius & icon color */
+html.theme-light .navbar .nav-link.contact-cta,
+html.theme-light header.site-header .navbar .nav-link.contact-cta,
+html.theme-light a.contact-cta {
+  border-radius: 999px !important;
+  font-weight:600 !important;
+  color:#374151 !important;
+}
+html.theme-light .navbar .nav-link.contact-cta .material-symbols-outlined, html.theme-light a.contact-cta .material-symbols-outlined { color:#374151 !important; }
+/* === Light Theme Menu Shape & Contact Icon Clean Overrides (Added) === */
+html.theme-light header.site-header .navbar .nav-link,
+html.theme-light header.site-header .navbar .nav-link.dropdown-toggle,
+html.theme-light .navbar .nav-link,
+html.theme-light .navbar .nav-link.dropdown-toggle {
+  -webkit-border-radius: 999px !important;
+  -moz-border-radius: 999px !important;
+  border-radius: 999px !important;
+}
+html.theme-light header.site-header .navbar .nav-item > .nav-link.dropdown-toggle::after,
+html.theme-light .navbar .nav-item > .nav-link.dropdown-toggle::after { margin-left: 0.35rem; }
+/* Contact CTA icon should not have colored background in light mode */
+html.theme-light .navbar .nav-link.contact-cta .material-symbols-outlined,
+html.theme-light header.site-header .navbar .nav-link.contact-cta .material-symbols-outlined,
+html.theme-light a.contact-cta .material-symbols-outlined {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+}
+/* Ensure the Contact CTA itself keeps pill shape */
+html.theme-light .navbar .nav-link.contact-cta,
+html.theme-light header.site-header .navbar .nav-link.contact-cta,
+html.theme-light a.contact-cta {
+  border-radius: 999px !important;
+}
+/* Wrapper cleanup: elimina cualquier caja cuadrada alrededor de los botones en modo claro */
+html.theme-light header.site-header .navbar .nav-item,
+html.theme-light .navbar .nav-item.nav-group-main,
+html.theme-light .navbar li.nav-item.nav-group {
+  background: transparent !important;
+  padding: 0 !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+/* Refine wrapper display so square block footprint disappears */
+html.theme-light .navbar .nav-item,
+html.theme-light header.site-header .navbar .nav-item {
+  background-color: transparent !important;
+  background-image: none !important;
+  display: inline-block !important;
+  margin: 0 .1rem !important;
+  min-width: auto !important;
+}
+html.theme-light .navbar .nav-item > .nav-link,
+html.theme-light header.site-header .navbar .nav-item > .nav-link {
+  display: inline-flex !important;
+  margin: 0 !important;
+}
+
+/* Control buttons (search/theme/admin): rounded squares/pills and light styling */
+html.theme-light .mc-btn, html.theme-light .nav-control, html.theme-light .nav-control-tab {
+  border-radius:12px !important;
+  background:#ffffff !important;
+  color:#374151 !important;
+  border:1px solid rgba(16,24,32,0.06) !important;
+  box-shadow:0 8px 20px rgba(2,12,32,0.06) !important;
+}
+html.theme-light .mc-btn span, html.theme-light .nav-control span, html.theme-light .nav-control-tab span { color:#374151 !important; }
+html.theme-light .mc-btn:hover, html.theme-light .nav-control:hover, html.theme-light .nav-control-tab:hover {
+  background: rgba(0,0,0,0.05) !important; color:#1f2937 !important; transform:translateY(-2px) !important;
+}
+
+/* Footer links color unchanged; ensure no forced black from debug */
+html.theme-light .site-footer { background:#f8fafc !important; }
+
+/* Remove any legacy box-shadow or black backgrounds forced earlier */
+html.theme-light .navbar.sticky-top { background: rgba(255,255,255,0.90) !important; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+
+/* Ensure transitions remain smooth */
+html.theme-light .navbar .nav-link, html.theme-light .navbar .dropdown-item { transition: background-color .14s ease, color .14s ease, box-shadow .18s ease; }
+
+/* ========================================================================================================= */
+.theme-dark .dropdown-header {
+  color: rgba(255,255,255,0.72) !important;
+}
+.theme-dark .dropdown-item {
+  color: #e8eef6 !important;
+}
+.theme-dark .dropdown-item:hover,
+.theme-dark .dropdown-item:focus {
+  background: rgba(0,238,255,0.04) !important;
+  color: var(--accent-2) !important;
+}
+
+/* -------- Light mode: dropdown panels (e.g., 'Otros') should be white with a thin inner dark-gray line -------- */
+.theme-light .dropdown-menu {
+  background: #ffffff !important; /* white panel */
+  color: #0f1724 !important; /* dark text */
+  border: none !important; /* use inner line instead of outer heavy border */
+  box-shadow: 0 6px 18px rgba(2,12,32,0.06) !important;
+  /* subtle inner line for separation */
+  position: relative;
+}
+.theme-light .dropdown-menu::after {
+  /* thin inner line at the top edge to read as inner separator */
+  content: '';
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  top: 6px;
+  height: 1px;
+  background: rgba(16,24,32,0.12) !important; /* slightly stronger dark-gray thin line */
+  pointer-events: none;
+}
+.theme-light .dropdown-item { color: #0f1724 !important; }
+.theme-light .dropdown-header { color: #6b7280 !important; }
+.theme-light .dropdown-item:hover, .theme-light .dropdown-item:focus { background: rgba(0,0,0,0.06) !important; color: #0f1724 !important; }
+
+/* Strong overrides to ensure the dropdown panel is pure white and inner-line is visible even when other rules exist */
+.theme-light header.site-header .navbar .dropdown-menu,
+.theme-light .navbar .dropdown-menu,
+.theme-light .dropdown-menu.show {
+  background: #ffffff !important;
+  border: none !important;
+  box-shadow: 0 8px 26px rgba(2,12,32,0.08) !important;
+}
+.theme-light header.site-header .navbar .dropdown-menu::after,
+.theme-light .navbar .dropdown-menu::after {
+  left: 6px !important;
+  right: 6px !important;
+  top: 6px !important;
+  height: 1px !important;
+  background: rgba(16,24,32,0.12) !important;
+}
+
+/* -------- Light mode: Contact CTA exact behavior (default white + gray icon/text; hover -> dark-gray background + white icon/text) -------- */
+/* Use a highly specific selector to override previous variants that produced 3 colours */
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta,
+.theme-light header.site-header .navbar a.contact-cta,
+.theme-light .navbar .nav-link.contact-cta,
+.theme-light a.contact-cta {
+  background: #ffffff !important; /* white surface */
+  color: #6b6f75 !important; /* medium gray icon/text */
+  border: 1px solid rgba(16,24,32,0.06) !important; /* thin outer line */
+  box-shadow: none !important;
+  height: 40px !important;
+  padding: 0 .9rem !important;
+  font-weight: 600 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: .5rem !important;
+  border-radius: 999px !important;
+  transition: background-color .12s ease, color .12s ease, transform .08s ease !important;
+}
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta .material-symbols-outlined,
+.theme-light header.site-header .navbar a.contact-cta .material-symbols-outlined,
+.theme-light .navbar .nav-link.contact-cta .material-symbols-outlined,
+.theme-light a.contact-cta .material-symbols-outlined,
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta svg,
+.theme-light header.site-header .navbar a.contact-cta svg,
+.theme-light .navbar .nav-link.contact-cta svg,
+.theme-light a.contact-cta svg {
+  color: #6b6f75 !important; /* icon matches text color */
+  fill: currentColor !important;
+}
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover,
+.theme-light header.site-header .navbar a.contact-cta:hover,
+.theme-light .navbar .nav-link.contact-cta:hover,
+.theme-light a.contact-cta:hover {
+  background: #374151 !important; /* dark gray */
+  color: #ffffff !important; /* text + icon white */
+  transform: translateY(-1px) !important;
+}
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover .material-symbols-outlined,
+.theme-light header.site-header .navbar a.contact-cta:hover .material-symbols-outlined,
+.theme-light .navbar .nav-link.contact-cta:hover .material-symbols-outlined,
+.theme-light a.contact-cta:hover .material-symbols-outlined,
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover svg,
+.theme-light header.site-header .navbar a.contact-cta:hover svg,
+.theme-light .navbar .nav-link.contact-cta:hover svg,
+.theme-light a.contact-cta:hover svg {
+  color: #ffffff !important;
+  fill: currentColor !important;
+}
+
+/* Remove any leftover background-image or gradient interfering with white surface */
+.theme-light .navbar .nav-link.contact-cta, .theme-light a.contact-cta { background-image: none !important; }
+
+/* -------- Light mode: unify Contact CTA behavior to match dark-mode behavior but inverted colors -------- */
+.theme-light .navbar .nav-link.contact-cta,
+.theme-light header.site-header .navbar .nav-link.contact-cta,
+.theme-light .navbar a.contact-cta {
+  background: #ffffff !important; /* white surface */
+  color: #6b6f75 !important; /* medium gray icon/text */
+  border: 1px solid rgba(16,24,32,0.06) !important; /* thin outer line */
+  box-shadow: 0 6px 18px rgba(2,12,32,0.04) !important; /* subtle depth */
+  height: 40px !important;
+  padding: 0 .9rem !important;
+  font-weight: 600 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: .5rem !important;
+  border-radius: 999px !important;
+  transition: transform .12s ease, box-shadow .12s ease, background-color .12s ease, color .12s ease !important;
+}
+.theme-light .navbar .nav-link.contact-cta .material-symbols-outlined,
+.theme-light header.site-header .navbar .nav-link.contact-cta .material-symbols-outlined { color: inherit !important; }
+.theme-light .navbar .nav-link.contact-cta:hover,
+.theme-light header.site-header .navbar .nav-link.contact-cta:hover,
+.theme-light .navbar a.contact-cta:hover {
+  background: #374151 !important; /* dark gray on hover */
+  color: #ffffff !important; /* text + icon white */
+  transform: translateY(-2px) !important;
+  box-shadow: 0 12px 28px rgba(2,12,32,0.12) !important;
+}
+.theme-light .navbar .nav-link.contact-cta:focus-visible,
+.theme-light header.site-header .navbar .nav-link.contact-cta:focus-visible {
+  outline: 3px solid rgba(0,168,255,0.12) !important;
+  outline-offset: 3px !important;
+}
+
+
+/* Tighter parallax sizing to avoid overflow when object-fit rounding triggers >100% width */
+.parallax-media{min-width:100%;min-height:100%;max-width:none;max-height:none}
+.parallax-banner{height:50vh;min-height:220px}
+
+/* Dark-theme: ensure contact CTA uses dark-gray background + white text (company blue removed) */
+.theme-dark .navbar .nav-link.contact-cta,
+.theme-dark header.site-header .navbar .nav-link.contact-cta,
+.theme-dark a.contact-cta,
+.theme-dark .contact-cta {
+  background: #2b2b2b !important; /* dark gray */
+  color: #ffffff !important;      /* white text */
+  border-color: rgba(255,255,255,0.06) !important;
+  box-shadow: none !important;
+}
+.theme-dark .navbar .nav-link.contact-cta .material-symbols-outlined,
+.theme-dark a.contact-cta .material-symbols-outlined,
+.theme-dark .contact-cta .material-symbols-outlined {
+  color: #ffffff !important;
+  fill: currentColor !important;
+}
+.theme-dark .navbar .nav-link.contact-cta:hover,
+.theme-dark a.contact-cta:hover,
+.theme-dark .contact-cta:hover {
+  background: #1f1f1f !important;
+  color: #ffffff !important;
+}
+.theme-dark .navbar .nav-link.contact-cta.active,
+.theme-dark .navbar .nav-link.contact-cta[aria-pressed="true"],
+.theme-dark a.contact-cta.active,
+.theme-dark a.contact-cta[aria-pressed="true"],
+.theme-dark .contact-cta.active,
+.theme-dark .contact-cta[aria-pressed="true"] {
+  background: #2b2b2b !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+}
+
+/* Small utility: improve contrast for form controls in dark mode */
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#121212; --fg:#FFFFFF }
+  .navbar, .site-header{background:linear-gradient(90deg,#02162b,#00213f)}
+  .flash{background:linear-gradient(90deg, rgba(0,238,255,0.04), rgba(67,255,255,0.02));border-left-color:var(--accent)}
+}
+
+/* Additional small tweaks */
+.nav-link{transition:color .15s ease, background .15s ease}
+.hero{padding:2rem 1rem;max-width:100%;box-shadow:0 4px 18px rgba(2,12,32,0.06)}
+footer.container{padding:1.25rem 1rem;background:transparent;color:rgba(0,0,0,0.6)}
+@media (max-width:800px){
+  .navbar{min-height:56px}
+  .navbar .nav-link{padding:.5rem .4rem}
+  .brand{font-size:1.05rem}
+}
+
+/* Parallax banner styles */
+.parallax-banner{position:relative;overflow:hidden;height:56vh;min-height:280px;display:block}
+.parallax-media{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;will-change:transform}
+.parallax-media[poster], .parallax-media video{object-fit:cover}
+.parallax-media[role="img"]{background-position:center center;background-size:cover;width:100%;height:100%;}
+.parallax-media{transition:transform 260ms cubic-bezier(.2,.9,.2,1), filter 220ms ease}
+.parallax-banner:hover .parallax-media{ filter:brightness(0.92) saturate(1.06) }
+
+/* Interactive inverse-mouse parallax: handled in JS; fallback subtle transform on hover */
+.parallax-banner:hover .parallax-media{ transform:translate(-50%,-50%) scale(1.05) }
+.parallax-overlay{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;height:100%;pointer-events:none}
+.parallax-overlay .hero{background:transparent;padding:2rem 1rem;text-align:center}
+.parallax-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.35));z-index:1}
+
+@media (max-width:800px){
+  .parallax-banner{height:42vh;min-height:200px}
+  .parallax-overlay .hero{padding:1rem}
+}
+
+/* Section layout helper: left-aligned prose and image/cards column */
+.section-grid .prose-left{ text-align:left; color:var(--fg); }
+.section-grid .prose-left p, .section-grid .prose-left ul, .section-grid .prose-left ol, .section-grid .prose-left h3{ margin-bottom:0.9rem; }
+.section-grid .section-cards{ display:flex; flex-direction:column; gap:0.75rem; }
+.section-grid .section-cards .card-preview{ background:var(--card-bg); border:1px solid var(--card-border); }
+.section-grid .section-cards img{ width:100%; height:auto; object-fit:cover; }
+.section-grid .card-preview .card-title{ color:var(--deep); }
+.prose-left img{ max-width:100%; height:auto; display:block; margin:0.5rem 0 }
+
+/* Section stripe: a horizontal blue band with section title and short snippet */
+.section-stripe{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0.9rem 1rem;border-radius:8px;background:linear-gradient(90deg,var(--deep),#003366);color:#fff;margin:1rem 0}
+/* TEMP: force section-stripe to black for debugging */
+.section-stripe { background: #000 !important; }
+.section-stripe .ss-title{font-weight:800;font-size:1.05rem;letter-spacing:0.02em;text-transform:uppercase}
+.section-stripe .ss-excerpt{opacity:0.95;color:rgba(255,255,255,0.95);font-size:0.98rem;max-width:72%;text-align:right}
+@media(max-width:768px){.section-stripe{flex-direction:column;align-items:flex-start}.section-stripe .ss-excerpt{text-align:left;max-width:100%}}
+
+/* Visual header: rounded container with a bright blue 'laser' line on top */
+.page-header-visual{
+  position:relative;
+  padding:1rem 1.25rem;
+  border-radius:14px;
+  background:rgba(255,255,255,0.02);
+  box-shadow:0 6px 20px rgba(2,12,32,0.12);
+  overflow:hidden;
+  /* visual improvements */
+  padding-bottom:1.8rem; /* space under laser */
+  margin-bottom:2rem;   /* separation from next block */
+  z-index:2;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+/* Absolute final override targeting the exact header nav-item wrapper for the Contact CTA
+   Ensures: normal = white bg, dark-gray text/icon; hover = black bg, white text/icon. */
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta {
+  background: #ffffff !important;
+  color: #2f3438 !important;
+  border: 1px solid rgba(16,24,32,0.06) !important;
+  box-shadow: none !important;
+  height: 38px !important;
+  padding: 0 .9rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: .45rem !important;
+  border-radius: 999px !important;
+  text-decoration: none !important;
+  transition: background-color .12s ease, color .12s ease, transform .08s ease !important;
+}
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta svg,
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta .material-symbols-outlined,
+.theme-light a.contact-cta svg,
+.theme-light a.contact-cta .material-symbols-outlined{
+  color: #2f3438 !important;
+  fill: currentColor !important;
+}
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover,
+.theme-light header.site-header .navbar a.contact-cta:hover,
+.theme-light .navbar .nav-link.contact-cta:hover,
+.theme-light a.contact-cta:hover{
+  background: #000000 !important;
+  color: #ffffff !important;
+  transform: translateY(-1px) !important;
+}
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover svg,
+.theme-light header.site-header .navbar a.contact-cta:hover svg,
+.theme-light .navbar .nav-link.contact-cta:hover svg,
+.theme-light a.contact-cta:hover svg,
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover .material-symbols-outlined,
+.theme-light header.site-header .navbar a.contact-cta:hover .material-symbols-outlined,
+.theme-light .navbar .nav-link.contact-cta:hover .material-symbols-outlined,
+.theme-light a.contact-cta:hover .material-symbols-outlined{
+  color: #ffffff !important;
+  fill: currentColor !important;
+}
+
+/* Disabled state: preserve contrast */
+.contact-cta[disabled], .contact-cta.disabled{ opacity: .65; cursor: not-allowed }
+
+
+/* Tighter parallax sizing to avoid overflow when object-fit rounding triggers >100% width */
+.parallax-media{min-width:100%;min-height:100%;max-width:none;max-height:none}
+.parallax-banner{height:50vh;min-height:220px}
+
+/* Small utility: improve contrast for form controls in dark mode */
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#121212; --fg:#FFFFFF }
+  .navbar, .site-header{background:linear-gradient(90deg,#02162b,#00213f)}
+  .flash{background:linear-gradient(90deg, rgba(0,238,255,0.04), rgba(67,255,255,0.02));border-left-color:var(--accent)}
+}
+
+/* Additional small tweaks */
+.nav-link{transition:color .15s ease, background .15s ease}
+.hero{padding:2rem 1rem;max-width:100%;box-shadow:0 4px 18px rgba(2,12,32,0.06)}
+footer.container{padding:1.25rem 1rem;background:transparent;color:rgba(0,0,0,0.6)}
+@media (max-width:800px){
+  .navbar{min-height:56px}
+  .navbar .nav-link{padding:.5rem .4rem}
+  .brand{font-size:1.05rem}
+}
+
+/* Parallax banner styles */
+.parallax-banner{position:relative;overflow:hidden;height:56vh;min-height:280px;display:block}
+.parallax-media{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;will-change:transform}
+.parallax-media[poster], .parallax-media video{object-fit:cover}
+.parallax-media[role="img"]{background-position:center center;background-size:cover;width:100%;height:100%;}
+.parallax-media{transition:transform 260ms cubic-bezier(.2,.9,.2,1), filter 220ms ease}
+.parallax-banner:hover .parallax-media{ filter:brightness(0.92) saturate(1.06) }
+
+/* Interactive inverse-mouse parallax: handled in JS; fallback subtle transform on hover */
+.parallax-banner:hover .parallax-media{ transform:translate(-50%,-50%) scale(1.05) }
+.parallax-overlay{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;height:100%;pointer-events:none}
+.parallax-overlay .hero{background:transparent;padding:2rem 1rem;text-align:center}
+.parallax-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.35));z-index:1}
+
+@media (max-width:800px){
+  .parallax-banner{height:42vh;min-height:200px}
+  .parallax-overlay .hero{padding:1rem}
+}
+
+/* Section layout helper: left-aligned prose and image/cards column */
+.section-grid .prose-left{ text-align:left; color:var(--fg); }
+.section-grid .prose-left p, .section-grid .prose-left ul, .section-grid .prose-left ol, .section-grid .prose-left h3{ margin-bottom:0.9rem; }
+.section-grid .section-cards{ display:flex; flex-direction:column; gap:0.75rem; }
+.section-grid .section-cards .card-preview{ background:var(--card-bg); border:1px solid var(--card-border); }
+.section-grid .section-cards img{ width:100%; height:auto; object-fit:cover; }
+.section-grid .card-preview .card-title{ color:var(--deep); }
+.prose-left img{ max-width:100%; height:auto; display:block; margin:0.5rem 0 }
+
+/* Section stripe: a horizontal blue band with section title and short snippet */
+.section-stripe{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0.9rem 1rem;border-radius:8px;background:linear-gradient(90deg,var(--deep),#003366);color:#fff;margin:1rem 0}
+/* TEMP: force section-stripe to black for debugging */
+.section-stripe { background: #000 !important; }
+.section-stripe .ss-title{font-weight:800;font-size:1.05rem;letter-spacing:0.02em;text-transform:uppercase}
+.section-stripe .ss-excerpt{opacity:0.95;color:rgba(255,255,255,0.95);font-size:0.98rem;max-width:72%;text-align:right}
+@media(max-width:768px){.section-stripe{flex-direction:column;align-items:flex-start}.section-stripe .ss-excerpt{text-align:left;max-width:100%}}
+
+/* Visual header: rounded container with a bright blue 'laser' line on top */
+.page-header-visual{
+  position:relative;
+  padding:1rem 1.25rem;
+  border-radius:14px;
+  background:rgba(255,255,255,0.02);
+  box-shadow:0 6px 20px rgba(2,12,32,0.12);
+  overflow:hidden;
+  /* visual improvements */
+  padding-bottom:1.8rem; /* space under laser */
+  margin-bottom:2rem;   /* separation from next block */
+  z-index:2;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+/* Absolute final override targeting the exact header nav-item wrapper for the Contact CTA
+   Ensures: normal = white bg, dark-gray text/icon; hover = black bg, white text/icon. */
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta {
+  background: #ffffff !important;
+  color: #2f3438 !important;
+  border: 1px solid rgba(16,24,32,0.06) !important;
+  box-shadow: none !important;
+  height: 38px !important;
+  padding: 0 .9rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: .45rem !important;
+  border-radius: 999px !important;
+  text-decoration: none !important;
+  transition: background-color .12s ease, color .12s ease, transform .08s ease !important;
+}
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta svg,
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta .material-symbols-outlined,
+.theme-light a.contact-cta svg,
+.theme-light a.contact-cta .material-symbols-outlined{
+  color: #2f3438 !important;
+  fill: currentColor !important;
+}
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover,
+.theme-light header.site-header .navbar a.contact-cta:hover,
+.theme-light .navbar .nav-link.contact-cta:hover,
+.theme-light a.contact-cta:hover{
+  background: #000000 !important;
+  color: #ffffff !important;
+  transform: translateY(-1px) !important;
+}
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover svg,
+.theme-light header.site-header .navbar a.contact-cta:hover svg,
+.theme-light .navbar .nav-link.contact-cta:hover svg,
+.theme-light a.contact-cta:hover svg,
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover .material-symbols-outlined,
+.theme-light header.site-header .navbar a.contact-cta:hover .material-symbols-outlined,
+.theme-light .navbar .nav-link.contact-cta:hover .material-symbols-outlined,
+.theme-light a.contact-cta:hover .material-symbols-outlined{
+  color: #ffffff !important;
+  fill: currentColor !important;
+}
+
+/* Disabled state: preserve contrast */
+.contact-cta[disabled], .contact-cta.disabled{ opacity: .65; cursor: not-allowed }
+
+
+/* Tighter parallax sizing to avoid overflow when object-fit rounding triggers >100% width */
+.parallax-media{min-width:100%;min-height:100%;max-width:none;max-height:none}
+.parallax-banner{height:50vh;min-height:220px}
+
+/* Small utility: improve contrast for form controls in dark mode */
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#121212; --fg:#FFFFFF }
+  .navbar, .site-header{background:linear-gradient(90deg,#02162b,#00213f)}
+  .flash{background:linear-gradient(90deg, rgba(0,238,255,0.04), rgba(67,255,255,0.02));border-left-color:var(--accent)}
+}
+
+/* Additional small tweaks */
+.nav-link{transition:color .15s ease, background .15s ease}
+.hero{padding:2rem 1rem;max-width:100%;box-shadow:0 4px 18px rgba(2,12,32,0.06)}
+footer.container{padding:1.25rem 1rem;background:transparent;color:rgba(0,0,0,0.6)}
+@media (max-width:800px){
+  .navbar{min-height:56px}
+  .navbar .nav-link{padding:.5rem .4rem}
+  .brand{font-size:1.05rem}
+}
+
+/* Parallax banner styles */
+.parallax-banner{position:relative;overflow:hidden;height:56vh;min-height:280px;display:block}
+.parallax-media{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;will-change:transform}
+.parallax-media[poster], .parallax-media video{object-fit:cover}
+.parallax-media[role="img"]{background-position:center center;background-size:cover;width:100%;height:100%;}
+.parallax-media{transition:transform 260ms cubic-bezier(.2,.9,.2,1), filter 220ms ease}
+.parallax-banner:hover .parallax-media{ filter:brightness(0.92) saturate(1.06) }
+
+/* Interactive inverse-mouse parallax: handled in JS; fallback subtle transform on hover */
+.parallax-banner:hover .parallax-media{ transform:translate(-50%,-50%) scale(1.05) }
+.parallax-overlay{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;height:100%;pointer-events:none}
+.parallax-overlay .hero{background:transparent;padding:2rem 1rem;text-align:center}
+.parallax-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.35));z-index:1}
+
+@media (max-width:800px){
+  .parallax-banner{height:42vh;min-height:200px}
+  .parallax-overlay .hero{padding:1rem}
+}
+
+/* Section layout helper: left-aligned prose and image/cards column */
+.section-grid .prose-left{ text-align:left; color:var(--fg); }
+.section-grid .prose-left p, .section-grid .prose-left ul, .section-grid .prose-left ol, .section-grid .prose-left h3{ margin-bottom:0.9rem; }
+.section-grid .section-cards{ display:flex; flex-direction:column; gap:0.75rem; }
+.section-grid .section-cards .card-preview{ background:var(--card-bg); border:1px solid var(--card-border); }
+.section-grid .section-cards img{ width:100%; height:auto; object-fit:cover; }
+.section-grid .card-preview .card-title{ color:var(--deep); }
+.prose-left img{ max-width:100%; height:auto; display:block; margin:0.5rem 0 }
+
+/* Section stripe: a horizontal blue band with section title and short snippet */
+.section-stripe{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0.9rem 1rem;border-radius:8px;background:linear-gradient(90deg,var(--deep),#003366);color:#fff;margin:1rem 0}
+/* TEMP: force section-stripe to black for debugging */
+.section-stripe { background: #000 !important; }
+.section-stripe .ss-title{font-weight:800;font-size:1.05rem;letter-spacing:0.02em;text-transform:uppercase}
+.section-stripe .ss-excerpt{opacity:0.95;color:rgba(255,255,255,0.95);font-size:0.98rem;max-width:72%;text-align:right}
+@media(max-width:768px){.section-stripe{flex-direction:column;align-items:flex-start}.section-stripe .ss-excerpt{text-align:left;max-width:100%}}
+
+/* Visual header: rounded container with a bright blue 'laser' line on top */
+.page-header-visual{
+  position:relative;
+  padding:1rem 1.25rem;
+  border-radius:14px;
+  background:rgba(255,255,255,0.02);
+  box-shadow:0 6px 20px rgba(2,12,32,0.12);
+  overflow:hidden;
+  /* visual improvements */
+  padding-bottom:1.8rem; /* space under laser */
+  margin-bottom:2rem;   /* separation from next block */
+  z-index:2;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+/* Absolute final override targeting the exact header nav-item wrapper for the Contact CTA
+   Ensures: normal = white bg, dark-gray text/icon; hover = black bg, white text/icon. */
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta {
+  background: #ffffff !important;
+  color: #2f3438 !important;
+  border: 1px solid rgba(16,24,32,0.06) !important;
+  box-shadow: none !important;
+  height: 38px !important;
+  padding: 0 .9rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: .45rem !important;
+  border-radius: 999px !important;
+  text-decoration: none !important;
+  transition: background-color .12s ease, color .12s ease, transform .08s ease !important;
+}
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta svg,
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta .material-symbols-outlined,
+.theme-light a.contact-cta svg,
+.theme-light a.contact-cta .material-symbols-outlined{
+  color: #2f3438 !important;
+  fill: currentColor !important;
+}
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover,
+.theme-light header.site-header .navbar a.contact-cta:hover,
+.theme-light .navbar .nav-link.contact-cta:hover,
+.theme-light a.contact-cta:hover{
+  background: #000000 !important;
+  color: #ffffff !important;
+  transform: translateY(-1px) !important;
+}
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover svg,
+.theme-light header.site-header .navbar a.contact-cta:hover svg,
+.theme-light .navbar .nav-link.contact-cta:hover svg,
+.theme-light a.contact-cta:hover svg,
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover .material-symbols-outlined,
+.theme-light header.site-header .navbar a.contact-cta:hover .material-symbols-outlined,
+.theme-light .navbar .nav-link.contact-cta:hover .material-symbols-outlined,
+.theme-light a.contact-cta:hover .material-symbols-outlined{
+  color: #ffffff !important;
+  fill: currentColor !important;
+}
+
+/* Disabled state: preserve contrast */
+.contact-cta[disabled], .contact-cta.disabled{ opacity: .65; cursor: not-allowed }
+
+
+/* Tighter parallax sizing to avoid overflow when object-fit rounding triggers >100% width */
+.parallax-media{min-width:100%;min-height:100%;max-width:none;max-height:none}
+.parallax-banner{height:50vh;min-height:220px}
+
+/* Small utility: improve contrast for form controls in dark mode */
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#121212; --fg:#FFFFFF }
+  .navbar, .site-header{background:linear-gradient(90deg,#02162b,#00213f)}
+  .flash{background:linear-gradient(90deg, rgba(0,238,255,0.04), rgba(67,255,255,0.02));border-left-color:var(--accent)}
+}
+
+/* Additional small tweaks */
+.nav-link{transition:color .15s ease, background .15s ease}
+.hero{padding:2rem 1rem;max-width:100%;box-shadow:0 4px 18px rgba(2,12,32,0.06)}
+footer.container{padding:1.25rem 1rem;background:transparent;color:rgba(0,0,0,0.6)}
+@media (max-width:800px){
+  .navbar{min-height:56px}
+  .navbar .nav-link{padding:.5rem .4rem}
+  .brand{font-size:1.05rem}
+}
+
+/* Parallax banner styles */
+.parallax-banner{position:relative;overflow:hidden;height:56vh;min-height:280px;display:block}
+.parallax-media{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;will-change:transform}
+.parallax-media[poster], .parallax-media video{object-fit:cover}
+.parallax-media[role="img"]{background-position:center center;background-size:cover;width:100%;height:100%;}
+.parallax-media{transition:transform 260ms cubic-bezier(.2,.9,.2,1), filter 220ms ease}
+.parallax-banner:hover .parallax-media{ filter:brightness(0.92) saturate(1.06) }
+
+/* Interactive inverse-mouse parallax: handled in JS; fallback subtle transform on hover */
+.parallax-banner:hover .parallax-media{ transform:translate(-50%,-50%) scale(1.05) }
+.parallax-overlay{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;height:100%;pointer-events:none}
+.parallax-overlay .hero{background:transparent;padding:2rem 1rem;text-align:center}
+.parallax-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.35));z-index:1}
+
+@media (max-width:800px){
+  .parallax-banner{height:42vh;min-height:200px}
+  .parallax-overlay .hero{padding:1rem}
+}
+
+/* Section layout helper: left-aligned prose and image/cards column */
+.section-grid .prose-left{ text-align:left; color:var(--fg); }
+.section-grid .prose-left p, .section-grid .prose-left ul, .section-grid .prose-left ol, .section-grid .prose-left h3{ margin-bottom:0.9rem; }
+.section-grid .section-cards{ display:flex; flex-direction:column; gap:0.75rem; }
+.section-grid .section-cards .card-preview{ background:var(--card-bg); border:1px solid var(--card-border); }
+.section-grid .section-cards img{ width:100%; height:auto; object-fit:cover; }
+.section-grid .card-preview .card-title{ color:var(--deep); }
+.prose-left img{ max-width:100%; height:auto; display:block; margin:0.5rem 0 }
+
+/* Section stripe: a horizontal blue band with section title and short snippet */
+.section-stripe{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0.9rem 1rem;border-radius:8px;background:linear-gradient(90deg,var(--deep),#003366);color:#fff;margin:1rem 0}
+/* TEMP: force section-stripe to black for debugging */
+.section-stripe { background: #000 !important; }
+.section-stripe .ss-title{font-weight:800;font-size:1.05rem;letter-spacing:0.02em;text-transform:uppercase}
+.section-stripe .ss-excerpt{opacity:0.95;color:rgba(255,255,255,0.95);font-size:0.98rem;max-width:72%;text-align:right}
+@media(max-width:768px){.section-stripe{flex-direction:column;align-items:flex-start}.section-stripe .ss-excerpt{text-align:left;max-width:100%}}
+
+/* Visual header: rounded container with a bright blue 'laser' line on top */
+.page-header-visual{
+  position:relative;
+  padding:1rem 1.25rem;
+  border-radius:14px;
+  background:rgba(255,255,255,0.02);
+  box-shadow:0 6px 20px rgba(2,12,32,0.12);
+  overflow:hidden;
+  /* visual improvements */
+  padding-bottom:1.8rem; /* space under laser */
+  margin-bottom:2rem;   /* separation from next block */
+  z-index:2;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+/* Absolute final override targeting the exact header nav-item wrapper for the Contact CTA
+   Ensures: normal = white bg, dark-gray text/icon; hover = black bg, white text/icon. */
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta {
+  background: #ffffff !important;
+  color: #2f3438 !important;
+  border: 1px solid rgba(16,24,32,0.06) !important;
+  box-shadow: none !important;
+  height: 38px !important;
+  padding: 0 .9rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: .45rem !important;
+  border-radius: 999px !important;
+  text-decoration: none !important;
+  transition: background-color .12s ease, color .12s ease, transform .08s ease !important;
+}
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta svg,
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta .material-symbols-outlined,
+.theme-light a.contact-cta svg,
+.theme-light a.contact-cta .material-symbols-outlined{
+  color: #2f3438 !important;
+  fill: currentColor !important;
+}
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover,
+.theme-light header.site-header .navbar a.contact-cta:hover,
+.theme-light .navbar .nav-link.contact-cta:hover,
+.theme-light a.contact-cta:hover{
+  background: #000000 !important;
+  color: #ffffff !important;
+  transform: translateY(-1px) !important;
+}
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover svg,
+.theme-light header.site-header .navbar a.contact-cta:hover svg,
+.theme-light .navbar .nav-link.contact-cta:hover svg,
+.theme-light a.contact-cta:hover svg,
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover .material-symbols-outlined,
+.theme-light header.site-header .navbar a.contact-cta:hover .material-symbols-outlined,
+.theme-light .navbar .nav-link.contact-cta:hover .material-symbols-outlined,
+.theme-light a.contact-cta:hover .material-symbols-outlined{
+  color: #ffffff !important;
+  fill: currentColor !important;
+}
+
+/* Disabled state: preserve contrast */
+.contact-cta[disabled], .contact-cta.disabled{ opacity: .65; cursor: not-allowed }
+
+
+/* Tighter parallax sizing to avoid overflow when object-fit rounding triggers >100% width */
+.parallax-media{min-width:100%;min-height:100%;max-width:none;max-height:none}
+.parallax-banner{height:50vh;min-height:220px}
+
+/* Small utility: improve contrast for form controls in dark mode */
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#121212; --fg:#FFFFFF }
+  .navbar, .site-header{background:linear-gradient(90deg,#02162b,#00213f)}
+  .flash{background:linear-gradient(90deg, rgba(0,238,255,0.04), rgba(67,255,255,0.02));border-left-color:var(--accent)}
+}
+
+/* Additional small tweaks */
+.nav-link{transition:color .15s ease, background .15s ease}
+.hero{padding:2rem 1rem;max-width:100%;box-shadow:0 4px 18px rgba(2,12,32,0.06)}
+footer.container{padding:1.25rem 1rem;background:transparent;color:rgba(0,0,0,0.6)}
+@media (max-width:800px){
+  .navbar{min-height:56px}
+  .navbar .nav-link{padding:.5rem .4rem}
+  .brand{font-size:1.05rem}
+}
+
+/* Parallax banner styles */
+.parallax-banner{position:relative;overflow:hidden;height:56vh;min-height:280px;display:block}
+.parallax-media{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;will-change:transform}
+.parallax-media[poster], .parallax-media video{object-fit:cover}
+.parallax-media[role="img"]{background-position:center center;background-size:cover;width:100%;height:100%;}
+.parallax-media{transition:transform 260ms cubic-bezier(.2,.9,.2,1), filter 220ms ease}
+.parallax-banner:hover .parallax-media{ filter:brightness(0.92) saturate(1.06) }
+
+/* Interactive inverse-mouse parallax: handled in JS; fallback subtle transform on hover */
+.parallax-banner:hover .parallax-media{ transform:translate(-50%,-50%) scale(1.05) }
+.parallax-overlay{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;height:100%;pointer-events:none}
+.parallax-overlay .hero{background:transparent;padding:2rem 1rem;text-align:center}
+.parallax-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.35));z-index:1}
+
+@media (max-width:800px){
+  .parallax-banner{height:42vh;min-height:200px}
+  .parallax-overlay .hero{padding:1rem}
+}
+
+/* Section layout helper: left-aligned prose and image/cards column */
+.section-grid .prose-left{ text-align:left; color:var(--fg); }
+.section-grid .prose-left p, .section-grid .prose-left ul, .section-grid .prose-left ol, .section-grid .prose-left h3{ margin-bottom:0.9rem; }
+.section-grid .section-cards{ display:flex; flex-direction:column; gap:0.75rem; }
+.section-grid .section-cards .card-preview{ background:var(--card-bg); border:1px solid var(--card-border); }
+.section-grid .section-cards img{ width:100%; height:auto; object-fit:cover; }
+.section-grid .card-preview .card-title{ color:var(--deep); }
+.prose-left img{ max-width:100%; height:auto; display:block; margin:0.5rem 0 }
+
+/* Section stripe: a horizontal blue band with section title and short snippet */
+.section-stripe{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0.9rem 1rem;border-radius:8px;background:linear-gradient(90deg,var(--deep),#003366);color:#fff;margin:1rem 0}
+/* TEMP: force section-stripe to black for debugging */
+.section-stripe { background: #000 !important; }
+.section-stripe .ss-title{font-weight:800;font-size:1.05rem;letter-spacing:0.02em;text-transform:uppercase}
+.section-stripe .ss-excerpt{opacity:0.95;color:rgba(255,255,255,0.95);font-size:0.98rem;max-width:72%;text-align:right}
+@media(max-width:768px){.section-stripe{flex-direction:column;align-items:flex-start}.section-stripe .ss-excerpt{text-align:left;max-width:100%}}
+
+/* Visual header: rounded container with a bright blue 'laser' line on top */
+.page-header-visual{
+  position:relative;
+  padding:1rem 1.25rem;
+  border-radius:14px;
+  background:rgba(255,255,255,0.02);
+  box-shadow:0 6px 20px rgba(2,12,32,0.12);
+  overflow:hidden;
+  /* visual improvements */
+  padding-bottom:1.8rem; /* space under laser */
+  margin-bottom:2rem;   /* separation from next block */
+  z-index:2;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+/* Absolute final override targeting the exact header nav-item wrapper for the Contact CTA
+   Ensures: normal = white bg, dark-gray text/icon; hover = black bg, white text/icon. */
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta {
+  background: #ffffff !important;
+  color: #2f3438 !important;
+  border: 1px solid rgba(16,24,32,0.06) !important;
+  box-shadow: none !important;
+  height: 38px !important;
+  padding: 0 .9rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: .45rem !important;
+  border-radius: 999px !important;
+  text-decoration: none !important;
+  transition: background-color .12s ease, color .12s ease, transform .08s ease !important;
+}
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta svg,
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta .material-symbols-outlined,
+.theme-light a.contact-cta svg,
+.theme-light a.contact-cta .material-symbols-outlined{
+  color: #2f3438 !important;
+  fill: currentColor !important;
+}
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover,
+.theme-light header.site-header .navbar a.contact-cta:hover,
+.theme-light .navbar .nav-link.contact-cta:hover,
+.theme-light a.contact-cta:hover{
+  background: #000000 !important;
+  color: #ffffff !important;
+  transform: translateY(-1px) !important;
+}
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover svg,
+.theme-light header.site-header .navbar a.contact-cta:hover svg,
+.theme-light .navbar .nav-link.contact-cta:hover svg,
+.theme-light a.contact-cta:hover svg,
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover .material-symbols-outlined,
+.theme-light header.site-header .navbar a.contact-cta:hover .material-symbols-outlined,
+.theme-light .navbar .nav-link.contact-cta:hover .material-symbols-outlined,
+.theme-light a.contact-cta:hover .material-symbols-outlined{
+  color: #ffffff !important;
+  fill: currentColor !important;
+}
+
+/* Disabled state: preserve contrast */
+.contact-cta[disabled], .contact-cta.disabled{ opacity: .65; cursor: not-allowed }
+
+
+/* Tighter parallax sizing to avoid overflow when object-fit rounding triggers >100% width */
+.parallax-media{min-width:100%;min-height:100%;max-width:none;max-height:none}
+.parallax-banner{height:50vh;min-height:220px}
+
+/* Small utility: improve contrast for form controls in dark mode */
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#121212; --fg:#FFFFFF }
+  .navbar, .site-header{background:linear-gradient(90deg,#02162b,#00213f)}
+  .flash{background:linear-gradient(90deg, rgba(0,238,255,0.04), rgba(67,255,255,0.02));border-left-color:var(--accent)}
+}
+
+/* Additional small tweaks */
+.nav-link{transition:color .15s ease, background .15s ease}
+.hero{padding:2rem 1rem;max-width:100%;box-shadow:0 4px 18px rgba(2,12,32,0.06)}
+footer.container{padding:1.25rem 1rem;background:transparent;color:rgba(0,0,0,0.6)}
+@media (max-width:800px){
+  .navbar{min-height:56px}
+  .navbar .nav-link{padding:.5rem .4rem}
+  .brand{font-size:1.05rem}
+}
+
+/* Parallax banner styles */
+.parallax-banner{position:relative;overflow:hidden;height:56vh;min-height:280px;display:block}
+.parallax-media{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;will-change:transform}
+.parallax-media[poster], .parallax-media video{object-fit:cover}
+.parallax-media[role="img"]{background-position:center center;background-size:cover;width:100%;height:100%;}
+.parallax-media{transition:transform 260ms cubic-bezier(.2,.9,.2,1), filter 220ms ease}
+.parallax-banner:hover .parallax-media{ filter:brightness(0.92) saturate(1.06) }
+
+/* Interactive inverse-mouse parallax: handled in JS; fallback subtle transform on hover */
+.parallax-banner:hover .parallax-media{ transform:translate(-50%,-50%) scale(1.05) }
+.parallax-overlay{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;height:100%;pointer-events:none}
+.parallax-overlay .hero{background:transparent;padding:2rem 1rem;text-align:center}
+.parallax-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.35));z-index:1}
+
+@media (max-width:800px){
+  .parallax-banner{height:42vh;min-height:200px}
+  .parallax-overlay .hero{padding:1rem}
+}
+
+/* Section layout helper: left-aligned prose and image/cards column */
+.section-grid .prose-left{ text-align:left; color:var(--fg); }
+.section-grid .prose-left p, .section-grid .prose-left ul, .section-grid .prose-left ol, .section-grid .prose-left h3{ margin-bottom:0.9rem; }
+.section-grid .section-cards{ display:flex; flex-direction:column; gap:0.75rem; }
+.section-grid .section-cards .card-preview{ background:var(--card-bg); border:1px solid var(--card-border); }
+.section-grid .section-cards img{ width:100%; height:auto; object-fit:cover; }
+.section-grid .card-preview .card-title{ color:var(--deep); }
+.prose-left img{ max-width:100%; height:auto; display:block; margin:0.5rem 0 }
+
+/* Section stripe: a horizontal blue band with section title and short snippet */
+.section-stripe{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0.9rem 1rem;border-radius:8px;background:linear-gradient(90deg,var(--deep),#003366);color:#fff;margin:1rem 0}
+/* TEMP: force section-stripe to black for debugging */
+.section-stripe { background: #000 !important; }
+.section-stripe .ss-title{font-weight:800;font-size:1.05rem;letter-spacing:0.02em;text-transform:uppercase}
+.section-stripe .ss-excerpt{opacity:0.95;color:rgba(255,255,255,0.95);font-size:0.98rem;max-width:72%;text-align:right}
+@media(max-width:768px){.section-stripe{flex-direction:column;align-items:flex-start}.section-stripe .ss-excerpt{text-align:left;max-width:100%}}
+
+/* Visual header: rounded container with a bright blue 'laser' line on top */
+.page-header-visual{
+  position:relative;
+  padding:1rem 1.25rem;
+  border-radius:14px;
+  background:rgba(255,255,255,0.02);
+  box-shadow:0 6px 20px rgba(2,12,32,0.12);
+  overflow:hidden;
+  /* visual improvements */
+  padding-bottom:1.8rem; /* space under laser */
+  margin-bottom:2rem;   /* separation from next block */
+  z-index:2;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+/* Absolute final override targeting the exact header nav-item wrapper for the Contact CTA
+   Ensures: normal = white bg, dark-gray text/icon; hover = black bg, white text/icon. */
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta {
+  background: #ffffff !important;
+  color: #2f3438 !important;
+  border: 1px solid rgba(16,24,32,0.06) !important;
+  box-shadow: none !important;
+  height: 38px !important;
+  padding: 0 .9rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: .45rem !important;
+  border-radius: 999px !important;
+  text-decoration: none !important;
+  transition: background-color .12s ease, color .12s ease, transform .08s ease !important;
+}
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta svg,
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta .material-symbols-outlined,
+.theme-light a.contact-cta svg,
+.theme-light a.contact-cta .material-symbols-outlined{
+  color: #2f3438 !important;
+  fill: currentColor !important;
+}
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover,
+.theme-light header.site-header .navbar a.contact-cta:hover,
+.theme-light .navbar .nav-link.contact-cta:hover,
+.theme-light a.contact-cta:hover{
+  background: #000000 !important;
+  color: #ffffff !important;
+  transform: translateY(-1px) !important;
+}
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover svg,
+.theme-light header.site-header .navbar a.contact-cta:hover svg,
+.theme-light .navbar .nav-link.contact-cta:hover svg,
+.theme-light a.contact-cta:hover svg,
+.theme-light header.site-header .navbar .nav-item.d-none.d-lg-flex.align-items-center > a.contact-cta:hover .material-symbols-outlined,
+.theme-light header.site-header .navbar a.contact-cta:hover .material-symbols-outlined,
+.theme-light .navbar .nav-link.contact-cta:hover .material-symbols-outlined,
+.theme-light a.contact-cta:hover .material-symbols-outlined{
+  color: #ffffff !important;
+  fill: currentColor !important;
+}
+
+/* Disabled state: preserve contrast */
+.contact-cta[disabled], .contact-cta.disabled{ opacity: .65; cursor: not-allowed }
+
+
+/* Tighter parallax sizing to avoid overflow when object-fit rounding triggers >100% width */
+.parallax-media{min-width:100%;min-height:100%;max-width:none;max-height:none}
+.parallax-banner{height:50vh;min-height:220px}
+
+/* Small utility: improve contrast for form controls in dark mode */
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#121212; --fg:#FFFFFF }
+  .navbar, .site-header{background:linear-gradient(90deg,#02162b,#00213f)}
+  .flash{background:linear-gradient(90deg, rgba(0,238,255,0.04), rgba(67,255,255,0.02));border-left-color:var(--accent)}
+}
+
+/* Additional small tweaks */
+.nav-link{transition:color .15s ease, background .15s ease}
+.hero{padding:2rem 1rem;max-width:100%;box-shadow:0 4px 18px rgba(2,12,32,0.06)}
+footer.container{padding:1.25rem 1rem;background:transparent;color:rgba(0,0,0,0.6)}
+@media (max-width:800px){
+  .navbar{min-height:56px}
+  .navbar .nav-link{padding:.5rem .4rem}
+  .brand{font-size:1.05rem}
+}
+
+/* Parallax banner styles */
+.parallax-banner{position:relative;overflow:hidden;height:56vh;min-height:280px;display:block}
+.parallax-media{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;will-change:transform}
+.parallax-media[poster], .parallax-media video{object-fit:cover}
+.parallax-media[role="img"]{background-position:center center;background-size:cover;width:100%;height:100%;}
+.parallax-media{transition:transform 260ms cubic-bezier(.2,.9,.2,1), filter 220ms ease}
+.parallax-banner:hover .parallax-media{ filter:brightness(0.92) saturate(1.06) }
+
+/* Interactive inverse-mouse parallax: handled in JS; fallback subtle transform on hover */
+.parallax-banner:hover .parallax-media{ transform:translate(-50%,-50%) scale(1.05) }
+.parallax-overlay{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;height:100%;pointer-events:none}
+.parallax-overlay .hero{background:transparent;padding:2rem 1rem;text-align:center}
+.parallax-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.35));z-index:1}
+
+@media (max-width:800px){
+  .parallax-banner{height:42vh;min-height:200px}
+  .parallax-overlay .hero{padding:1rem}
+}
+
+/* Section layout helper: left-aligned prose and image/cards column */
+.section-grid .prose-left{ text-align:left; color:var(--fg); }
+.section-grid .prose-left p, .section-grid .prose-left ul, .section-grid .prose-left ol, .section-grid .prose-left h3{ margin-bottom:0.9rem; }
+.section-grid .section-cards{ display:flex; flex-direction:column; gap:0.75rem; }
+.section-grid .section-cards .card-preview{ background:var(--card-bg); border:1px solid var(--card-border); }
+.section-grid .section-cards img{ width:100%; height:auto; object-fit:cover; }
+.section-grid .card-preview .card-title{ color:var(--deep); }
+@media(max-width:768px){.section-stripe{flex-direction:column;align-items:flex-start}.section-stripe .ss-excerpt{text-align:left;max-width:100%}}
+
+/* Visual header: rounded container with a bright blue 'laser' line on top */
+.page-header-visual{em;padding:0.9rem 1rem;border-radius:8px;background:linear-gradient(90deg,var(--deep),#003366);color:#fff;margin:1rem 0}
+  position:relative;
+  padding:1rem 1.25rem;
+  border-radius:14px;
+  background:rgba(255,255,255,0.02);.section-stripe .ss-excerpt{opacity:0.95;color:rgba(255,255,255,0.95);font-size:0.98rem;max-width:72%;text-align:right}
+  box-shadow:0 6px 20px rgba(2,12,32,0.12);section-stripe{flex-direction:column;align-items:flex-start}.section-stripe .ss-excerpt{text-align:left;max-width:100%}}
+  overflow:hidden;
+  /* visual improvements */h a bright blue 'laser' line on top */
+  padding-bottom:1.8rem; /* space under laser */page-header-visual{
+  margin-bottom:2rem;   /* separation from next block */  position:relative;
+  z-index:2;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+/* Override: disable legacy top rim pseudo-element on .site-header */
+.site-header:after{ content: none !important; box-shadow: none !important; top: auto !important; }
+  margin-bottom:2rem;   /* separation from next block */
+  z-index:2;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+/* Force admin sidebar rim to respect border-radius for the bright cyan 'laser' rim */
+.theme-dark .admin-sidebar.card-preview,
+.theme-light .admin-sidebar.card-preview {
+  overflow: hidden !important;
+  border-radius: 12px !important;
+  position: relative !important;
+}
+
+/* Make the pseudo-element that draws the inset rim match the same radius and spacing */
+.theme-dark .admin-sidebar.card-preview::after {
+  content: '';
+  position: absolute !important;
+  left: 6px !important;
+  right: 6px !important;
+  top: 6px !important;
+  bottom: 6px !important;
+  border-radius: 12px !important;
+  pointer-events: none !important;
+  box-shadow: 0 0 0 3px rgba(0,238,255,0.08) inset !important;
+}
+
+.theme-light .admin-sidebar.card-preview::after {
+  content: '';
+  position: absolute !important;
+  left: 6px !important;
+  right: 6px !important;
+  top: 6px !important;
+  bottom: 6px !important;
+  border-radius: 12px !important;
+  pointer-events: none !important;
+  box-shadow: 0 0 0 3px rgba(40,40,40,0.06) inset !important;
+}

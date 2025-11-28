@@ -1,0 +1,20 @@
+<?php
+$cj = tempnam(sys_get_temp_dir(), 'cj');
+$ch = curl_init('http://127.0.0.1:8080/admin/login.php');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+curl_setopt($ch, CURLOPT_COOKIEJAR, $cj);
+curl_setopt($ch, CURLOPT_COOKIEFILE, $cj);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, ['email'=>'admin@xlerion.com','password'=>'ChangeMe123!']);
+$r = curl_exec($ch);
+curl_close($ch);
+$ch = curl_init('http://127.0.0.1:8080/admin/dashboard.php');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_COOKIEFILE, $cj);
+$r2 = curl_exec($ch);
+$info = curl_getinfo($ch);
+curl_close($ch);
+echo 'DASH HTTP: '.$info['http_code']."\n";
+if ($r2) echo substr($r2,0,400)."\n";
+unlink($cj);

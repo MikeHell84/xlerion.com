@@ -1,0 +1,90 @@
+// Controls (floating right-side buttons)
+// Styles for the floating menu controls stack and the selected tab-like button
+
+.menu-controls-floating {
+  // Strong positioning to override other stylesheet rules
+  position: fixed !important;
+  right: 1rem !important;
+  top: 0 !important;
+  height: 100vh !important; /* full viewport height so we can center the stack vertically */
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important; /* vertical centering */
+  align-items: flex-end !important;
+  gap: 0.6rem !important;
+  z-index: 2500 !important;
+  pointer-events: auto !important;
+}
+
+.menu-controls-floating .mc-stack {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+  column-gap: 0.5rem;
+  align-items: flex-end;
+}
+
+.mc-btn {
+  --size: 44px;
+  width: var(--size);
+  height: var(--size);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.06);
+  color: var(--fg);
+  box-shadow: 0 6px 18px rgba(2,12,32,0.18);
+  border: 1px solid rgba(255,255,255,0.04);
+  cursor: pointer;
+  transition: all 180ms ease;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mc-btn:hover {
+  transform: translateX(-4px);
+}
+
+// Selected state: use aria-pressed or .is-active class
+.mc-btn[aria-pressed="true"],
+.mc-btn.is-active {
+  /* Appear like a right-side tab attached to the page content */
+  width: auto !important;
+  min-width: 64px !important;
+  padding: 0 0.8rem 0 0.8rem !important;
+  border-radius: 12px 0 0 12px !important;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2)) !important;
+  color: var(--btn-contrast) !important;
+  transform: translateX(-8px) !important;
+  box-shadow: 0 10px 30px rgba(2,12,32,0.28) !important;
+  border: none !important;
+}
+
+.mc-btn[aria-pressed="true"] .material-symbols-outlined,
+.mc-btn.is-active .material-symbols-outlined {
+  font-weight: 600;
+}
+
+// Small screens: place the controls near top-right instead of centered
+@media (max-width: 720px) {
+  .menu-controls-floating {
+    position: fixed;
+    right: 1rem;
+    top: 1rem;
+    transform: none;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .menu-controls-floating .mc-stack {
+    flex-direction: row;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .mc-btn {
+    width: 40px;
+    height: 40px;
+  }
+}
