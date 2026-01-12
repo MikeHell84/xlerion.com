@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './index.css'
 import App from './App.jsx'
 import VideoIntro from './components/VideoIntro.jsx'
+import { LanguageProvider } from './context/LanguageContext.jsx'
 import MisionPage from './pages/MisionPage.jsx'
 import VisionPage from './pages/VisionPage.jsx'
 import PrivacyPage from './pages/PrivacyPage.jsx'
@@ -32,6 +33,7 @@ import SolucionesMedidaPage from './pages/SolucionesMedidaPage.jsx'
 import ManualesPage from './pages/ManualesPage.jsx'
 import DiagramasFlujosPage from './pages/DiagramasFlujosPage.jsx'
 import GuiasInstalacionPage from './pages/GuiasInstalacionPage.jsx'
+import FounderPage from './pages/FounderPage.jsx'
 
 function Root() {
   const [showIntro, setShowIntro] = useState(true);
@@ -86,6 +88,7 @@ function Root() {
           <Route path="/documentacion/manuales" element={<ManualesPage />} />
           <Route path="/documentacion/diagramas-flujos" element={<DiagramasFlujosPage />} />
           <Route path="/documentacion/guias-instalacion" element={<GuiasInstalacionPage />} />
+          <Route path="/fundador" element={<FounderPage />} />
         </Routes>
       </BrowserRouter>
     </>
@@ -94,6 +97,8 @@ function Root() {
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Root />
+    <LanguageProvider>
+      <Root />
+    </LanguageProvider>
   </StrictMode>,
 )

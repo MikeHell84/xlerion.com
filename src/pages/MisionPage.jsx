@@ -1,8 +1,11 @@
 import React from 'react';
 import { Target } from 'lucide-react';
 import Layout from '../components/Layout';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function MisionPage() {
+    const { t } = useLanguage();
+
     return (
         <Layout>
             {/* Banner Parallax */}
@@ -16,7 +19,7 @@ export default function MisionPage() {
                 <div className="absolute inset-0 flex items-center justify-center">
                     <div className="text-center px-8">
                         <Target className="text-[#00e9fa] mx-auto mb-4" size={64} />
-                        <h1 className="text-6xl md:text-8xl font-black italic uppercase tracking-tighter text-white drop-shadow-2xl">Misión</h1>
+                        <h1 className="text-6xl md:text-8xl font-black italic uppercase tracking-tighter text-white drop-shadow-2xl">{t('mision_banner_title')}</h1>
                     </div>
                 </div>
             </div>
@@ -26,7 +29,7 @@ export default function MisionPage() {
                 <div className="mb-16">
                     <div className="border-l-4 border-[#00e9fa] pl-8">
                         <h2 className="text-2xl md:text-3xl text-gray-300 font-light leading-relaxed">
-                            Potenciar la ingeniería creativa con toolkits modulares que diagnostican, optimizan y automatizan tareas técnicas, permitiendo a los creadores enfocarse en la esencia de su obra.
+                            {t('mision_hero')}
                         </h2>
                     </div>
                 </div>
@@ -35,45 +38,45 @@ export default function MisionPage() {
                 <div className="space-y-12">
                     <section>
                         <h3 className="text-2xl font-bold text-[#00e9fa] mb-6 font-mono uppercase tracking-wider">
-              // Objetivo Principal
+                            {t('mision_objective_title')}
                         </h3>
                         <div className="prose prose-invert max-w-none">
                             <p className="text-gray-300 text-lg leading-relaxed mb-4">
-                                En Xlerion, nuestra misión es revolucionar la forma en que los profesionales creativos y técnicos abordan sus proyectos. Creemos que la tecnología debe ser un facilitador, no un obstáculo.
+                                {t('mision_objective_p1')}
                             </p>
                             <p className="text-gray-300 text-lg leading-relaxed mb-4">
-                                Desarrollamos soluciones modulares que se adaptan a las necesidades específicas de cada proyecto, eliminando tareas repetitivas y permitiendo que los creadores se concentren en lo que realmente importa: su visión creativa.
+                                {t('mision_objective_p2')}
                             </p>
                         </div>
                     </section>
 
                     <section>
                         <h3 className="text-2xl font-bold text-[#00e9fa] mb-6 font-mono uppercase tracking-wider">
-              // Principios Fundamentales
+                            {t('mision_principles_title')}
                         </h3>
                         <div className="grid md:grid-cols-2 gap-6">
                             <div className="bg-white/5 border border-white/10 p-6 rounded-sm">
-                                <h4 className="font-bold text-lg mb-3 text-white">Modularidad</h4>
+                                <h4 className="font-bold text-lg mb-3 text-white">{t('mision_modular_title')}</h4>
                                 <p className="text-gray-400 text-sm leading-relaxed">
-                                    Herramientas diseñadas para integrarse perfectamente en flujos de trabajo existentes, sin imponer estructuras rígidas.
+                                    {t('mision_modular_desc')}
                                 </p>
                             </div>
                             <div className="bg-white/5 border border-white/10 p-6 rounded-sm">
-                                <h4 className="font-bold text-lg mb-3 text-white">Automatización Inteligente</h4>
+                                <h4 className="font-bold text-lg mb-3 text-white">{t('mision_automation_title')}</h4>
                                 <p className="text-gray-400 text-sm leading-relaxed">
-                                    Sistemas que aprenden y se adaptan, reduciendo la carga técnica mientras mantienen el control en manos del usuario.
+                                    {t('mision_automation_desc')}
                                 </p>
                             </div>
                             <div className="bg-white/5 border border-white/10 p-6 rounded-sm">
-                                <h4 className="font-bold text-lg mb-3 text-white">Diagnóstico Preciso</h4>
+                                <h4 className="font-bold text-lg mb-3 text-white">{t('mision_diagnostic_title')}</h4>
                                 <p className="text-gray-400 text-sm leading-relaxed">
-                                    Análisis profundo de proyectos para identificar oportunidades de optimización y áreas de mejora.
+                                    {t('mision_diagnostic_desc')}
                                 </p>
                             </div>
                             <div className="bg-white/5 border border-white/10 p-6 rounded-sm">
-                                <h4 className="font-bold text-lg mb-3 text-white">Enfoque en el Creador</h4>
+                                <h4 className="font-bold text-lg mb-3 text-white">{t('mision_creator_title')}</h4>
                                 <p className="text-gray-400 text-sm leading-relaxed">
-                                    Liberando tiempo y recursos mentales para que los profesionales se concentren en la innovación y la creatividad.
+                                    {t('mision_creator_desc')}
                                 </p>
                             </div>
                         </div>
@@ -81,12 +84,11 @@ export default function MisionPage() {
 
                     <section>
                         <h3 className="text-2xl font-bold text-[#00e9fa] mb-6 font-mono uppercase tracking-wider">
-              // Impacto
+                            {t('mision_impact_title')}
                         </h3>
                         <div className="bg-gradient-to-r from-[#00e9fa]/10 to-transparent border-l-4 border-[#00e9fa] p-8">
                             <p className="text-gray-300 text-lg leading-relaxed">
-                                Aspiramos a ser el catalizador que transforma la manera en que se conciben y ejecutan los proyectos creativos y técnicos,
-                                empoderando a individuos y equipos para alcanzar nuevos niveles de excelencia y eficiencia.
+                                {t('mision_impact_text')}
                             </p>
                         </div>
                     </section>

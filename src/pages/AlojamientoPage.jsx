@@ -1,45 +1,60 @@
 import React from 'react';
 import { Heart, BedDouble, Ruler, Shield } from 'lucide-react';
 import Layout from '../components/Layout';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function AlojamientoPage() {
+    const { t } = useLanguage();
     return (
         <Layout>
-            <div className="pt-32 pb-24 px-8 max-w-6xl mx-auto">
-                <header className="mb-16">
-                    <div className="flex items-center gap-4 mb-4">
-                        <Heart className="text-[#00e9fa]" size={48} />
-                        <div>
-                            <p className="text-[#00e9fa] font-mono text-xs tracking-[0.4em] uppercase">// Alojamiento Adaptado</p>
-                            <h1 className="text-5xl md:text-7xl font-black italic uppercase tracking-tighter text-white">Habitabilidad Segura</h1>
-                        </div>
+            {/* Banner Parallax */}
+            <div className="relative h-[40vh] overflow-hidden">
+                <img
+                    src="/images/filosofia-parallax.jpg"
+                    alt="Alojamiento Banner"
+                    className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-center px-8">
+                        <Heart className="text-[#00e9fa] mx-auto mb-4" size={64} />
+                        <h1 className="text-6xl md:text-8xl font-black italic uppercase tracking-tighter text-white drop-shadow-2xl">{t('alojamiento_page_title')}</h1>
                     </div>
-                    <p className="text-gray-300 max-w-3xl text-lg leading-relaxed">Diseño de espacios con ergonomía, accesibilidad y protocolos de asistencia integral, especialmente en entornos rurales como Nocaima.</p>
-                </header>
+                </div>
+            </div>
+            {/* Content */}
+            <div className="pt-20 pb-24 px-8 max-w-6xl mx-auto">
+                <div className="mb-16">
+                    <div className="border-l-4 border-[#00e9fa] pl-8">
+                        <h2 className="text-2xl md:text-3xl text-gray-300 font-light leading-relaxed">
+                            {t('alojamiento_page_desc')}
+                        </h2>
+                    </div>
+                </div>
 
                 <div className="grid md:grid-cols-3 gap-10 mb-16">
                     <div className="p-8 border border-white/10 bg-white/5 rounded-sm">
-                        <h3 className="text-white font-mono text-sm uppercase tracking-[0.2em] mb-3 flex items-center gap-2"><BedDouble size={18} className="text-[#00e9fa]" /> Diseño</h3>
+                        <h3 className="text-white font-mono text-sm uppercase tracking-[0.2em] mb-3 flex items-center gap-2"><BedDouble size={18} className="text-[#00e9fa]" /> {t('alojamiento_design')}</h3>
                         <ul className="space-y-2 text-gray-400 text-sm leading-relaxed">
-                            <li>Alturas accesibles, pasamanos y rampas.</li>
-                            <li>Baños adaptados con barras y duchas niveladas.</li>
-                            <li>Iluminación segura y señalización nocturna.</li>
+                            <li>{t('alojamiento_design_1')}</li>
+                            <li>{t('alojamiento_design_2')}</li>
+                            <li>{t('alojamiento_design_3')}</li>
                         </ul>
                     </div>
                     <div className="p-8 border border-white/10 bg-white/5 rounded-sm">
-                        <h3 className="text-white font-mono text-sm uppercase tracking-[0.2em] mb-3 flex items-center gap-2"><Ruler size={18} className="text-[#00e9fa]" /> Ergonomía</h3>
+                        <h3 className="text-white font-mono text-sm uppercase tracking-[0.2em] mb-3 flex items-center gap-2"><Ruler size={18} className="text-[#00e9fa]" /> {t('alojamiento_ergonomics')}</h3>
                         <ul className="space-y-2 text-gray-400 text-sm leading-relaxed">
-                            <li>Mobiliario ajustable y superficies antideslizantes.</li>
-                            <li>Zonas de apoyo para transferencias seguras.</li>
-                            <li>Distribución pensada para movilidad asistida.</li>
+                            <li>{t('alojamiento_ergonomics_1')}</li>
+                            <li>{t('alojamiento_ergonomics_2')}</li>
+                            <li>{t('alojamiento_ergonomics_3')}</li>
                         </ul>
                     </div>
                     <div className="p-8 border border-white/10 bg-white/5 rounded-sm">
-                        <h3 className="text-white font-mono text-sm uppercase tracking-[0.2em] mb-3 flex items-center gap-2"><Shield size={18} className="text-[#00e9fa]" /> Protocolos</h3>
+                        <h3 className="text-white font-mono text-sm uppercase tracking-[0.2em] mb-3 flex items-center gap-2"><Shield size={18} className="text-[#00e9fa]" /> {t('alojamiento_protocols')}</h3>
                         <ul className="space-y-2 text-gray-400 text-sm leading-relaxed">
-                            <li>Planes de emergencia con rutas accesibles.</li>
-                            <li>Checklists operativas y bitácoras diarias.</li>
-                            <li>Capacitación continua del personal de apoyo.</li>
+                            <li>{t('alojamiento_protocols_1')}</li>
+                            <li>{t('alojamiento_protocols_2')}</li>
+                            <li>{t('alojamiento_protocols_3')}</li>
                         </ul>
                     </div>
                 </div>

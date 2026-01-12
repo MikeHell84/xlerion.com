@@ -1,8 +1,11 @@
 import React from 'react';
 import { Heart, Smartphone, Users, Lightbulb } from 'lucide-react';
 import Layout from '../components/Layout';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function TecnologiasComunidadPage() {
+    const { t } = useLanguage();
+
     return (
         <Layout>
             {/* Banner Parallax */}
@@ -16,88 +19,88 @@ export default function TecnologiasComunidadPage() {
                 <div className="absolute inset-0 flex items-center justify-center">
                     <div className="text-center px-8">
                         <Heart className="text-[#00e9fa] mx-auto mb-4" size={64} />
-                        <p className="text-[#00e9fa] font-mono text-xs tracking-[0.4em] uppercase mb-2">// Impacto Social</p>
-                        <h1 className="text-5xl md:text-7xl font-black italic uppercase tracking-tighter text-white drop-shadow-2xl">Tecnologías al Alcance del Bienestar</h1>
+                        <p className="text-[#00e9fa] font-mono text-xs tracking-[0.4em] uppercase mb-2">{t('tecnologias_banner_subtitle')}</p>
+                        <h1 className="text-5xl md:text-7xl font-black italic uppercase tracking-tighter text-white drop-shadow-2xl">{t('tecnologias_banner_title')}</h1>
                     </div>
                 </div>
             </div>
             <div className="pt-20 pb-24 px-8 max-w-6xl mx-auto">
                 <header className="mb-16">
-                    <p className="text-gray-300 max-w-3xl text-lg leading-relaxed">Proyectos orientados a implementar soluciones tecnológicas accesibles que mejoran la calidad de vida y el bienestar social de las comunidades.</p>
+                    <p className="text-gray-300 max-w-3xl text-lg leading-relaxed">{t('tecnologias_header')}</p>
                 </header>
 
                 <div className="grid md:grid-cols-3 gap-10 mb-16">
                     <div className="p-8 border border-white/10 bg-white/5 rounded-sm">
-                        <h3 className="text-white font-mono text-sm uppercase tracking-[0.2em] mb-3 flex items-center gap-2"><Smartphone size={18} className="text-[#00e9fa]" /> Accesibilidad</h3>
+                        <h3 className="text-white font-mono text-sm uppercase tracking-[0.2em] mb-3 flex items-center gap-2"><Smartphone size={18} className="text-[#00e9fa]" /> {t('tecnologias_accessibility_title')}</h3>
                         <ul className="space-y-2 text-gray-400 text-sm leading-relaxed">
-                            <li>Tecnología al alcance de todos.</li>
-                            <li>Interfases intuitivas y simples.</li>
-                            <li>Bajo costo de implementación.</li>
+                            <li>{t('tecnologias_accessibility_1')}</li>
+                            <li>{t('tecnologias_accessibility_2')}</li>
+                            <li>{t('tecnologias_accessibility_3')}</li>
                         </ul>
                     </div>
                     <div className="p-8 border border-white/10 bg-white/5 rounded-sm">
-                        <h3 className="text-white font-mono text-sm uppercase tracking-[0.2em] mb-3 flex items-center gap-2"><Users size={18} className="text-[#00e9fa]" /> Enfoque Territorial</h3>
+                        <h3 className="text-white font-mono text-sm uppercase tracking-[0.2em] mb-3 flex items-center gap-2"><Users size={18} className="text-[#00e9fa]" /> {t('tecnologias_territorial_title')}</h3>
                         <ul className="space-y-2 text-gray-400 text-sm leading-relaxed">
-                            <li>Soluciones contextualizadas.</li>
-                            <li>Respeto por identidades culturales.</li>
-                            <li>Participación comunitaria activa.</li>
+                            <li>{t('tecnologias_territorial_1')}</li>
+                            <li>{t('tecnologias_territorial_2')}</li>
+                            <li>{t('tecnologias_territorial_3')}</li>
                         </ul>
                     </div>
                     <div className="p-8 border border-white/10 bg-white/5 rounded-sm">
-                        <h3 className="text-white font-mono text-sm uppercase tracking-[0.2em] mb-3 flex items-center gap-2"><Lightbulb size={18} className="text-[#00e9fa]" /> Innovación Social</h3>
+                        <h3 className="text-white font-mono text-sm uppercase tracking-[0.2em] mb-3 flex items-center gap-2"><Lightbulb size={18} className="text-[#00e9fa]" /> {t('tecnologias_innovation_title')}</h3>
                         <ul className="space-y-2 text-gray-400 text-sm leading-relaxed">
-                            <li>Inclusión digital efectiva.</li>
-                            <li>Desarrollo sostenible y equitativo.</li>
-                            <li>Empoderamiento comunitario.</li>
+                            <li>{t('tecnologias_innovation_1')}</li>
+                            <li>{t('tecnologias_innovation_2')}</li>
+                            <li>{t('tecnologias_innovation_3')}</li>
                         </ul>
                     </div>
                 </div>
 
                 <section className="mb-16">
-                    <h2 className="text-3xl font-black italic uppercase text-white mb-6">Nuestra Propuesta</h2>
+                    <h2 className="text-3xl font-black italic uppercase text-white mb-6">{t('tecnologias_proposal_title')}</h2>
                     <div className="space-y-6 text-gray-300 leading-relaxed">
-                        <p>Estas iniciativas buscan integrar innovación con enfoque territorial, promoviendo la inclusión digital y el desarrollo sostenible en comunidades tradicionalmente excluidas del acceso tecnológico.</p>
-                        <p>A través de soluciones modulares y adaptables, facilitamos el acceso a herramientas tecnológicas que mejoran la calidad de vida, fortalecen el tejido social y potencian las capacidades locales.</p>
-                        <p>Nuestro compromiso es crear tecnología con propósito social, diseñada desde y para las comunidades, respetando sus contextos culturales y promoviendo su autonomía técnica.</p>
+                        <p>{t('tecnologias_proposal_p1')}</p>
+                        <p>{t('tecnologias_proposal_p2')}</p>
+                        <p>{t('tecnologias_proposal_p3')}</p>
                     </div>
                 </section>
 
                 <section className="mb-16">
-                    <h2 className="text-3xl font-black italic uppercase text-white mb-6">Áreas de Impacto</h2>
+                    <h2 className="text-3xl font-black italic uppercase text-white mb-6">{t('tecnologias_areas_title')}</h2>
                     <div className="grid md:grid-cols-2 gap-6">
                         <div className="p-6 border border-white/10 bg-white/5 rounded-sm">
-                            <h4 className="text-[#00e9fa] font-mono text-sm uppercase tracking-[0.2em] mb-3">Salud Comunitaria</h4>
-                            <p className="text-gray-400 text-sm leading-relaxed">Soluciones tecnológicas para mejorar el acceso a servicios de salud, monitoreo y prevención en comunidades remotas o vulnerables.</p>
+                            <h4 className="text-[#00e9fa] font-mono text-sm uppercase tracking-[0.2em] mb-3">{t('tecnologias_health_title')}</h4>
+                            <p className="text-gray-400 text-sm leading-relaxed">{t('tecnologias_health_desc')}</p>
                         </div>
                         <div className="p-6 border border-white/10 bg-white/5 rounded-sm">
-                            <h4 className="text-[#00e9fa] font-mono text-sm uppercase tracking-[0.2em] mb-3">Educación Digital</h4>
-                            <p className="text-gray-400 text-sm leading-relaxed">Plataformas y herramientas educativas accesibles que democratizan el conocimiento y fomentan el aprendizaje continuo.</p>
+                            <h4 className="text-[#00e9fa] font-mono text-sm uppercase tracking-[0.2em] mb-3">{t('tecnologias_education_title')}</h4>
+                            <p className="text-gray-400 text-sm leading-relaxed">{t('tecnologias_education_desc')}</p>
                         </div>
                         <div className="p-6 border border-white/10 bg-white/5 rounded-sm">
-                            <h4 className="text-[#00e9fa] font-mono text-sm uppercase tracking-[0.2em] mb-3">Economía Local</h4>
-                            <p className="text-gray-400 text-sm leading-relaxed">Sistemas que facilitan el comercio local, la gestión de recursos y el fortalecimiento de emprendimientos comunitarios.</p>
+                            <h4 className="text-[#00e9fa] font-mono text-sm uppercase tracking-[0.2em] mb-3">{t('tecnologias_economy_title')}</h4>
+                            <p className="text-gray-400 text-sm leading-relaxed">{t('tecnologias_economy_desc')}</p>
                         </div>
                         <div className="p-6 border border-white/10 bg-white/5 rounded-sm">
-                            <h4 className="text-[#00e9fa] font-mono text-sm uppercase tracking-[0.2em] mb-3">Medio Ambiente</h4>
-                            <p className="text-gray-400 text-sm leading-relaxed">Tecnologías para monitoreo ambiental, gestión de recursos naturales y promoción de prácticas sostenibles.</p>
+                            <h4 className="text-[#00e9fa] font-mono text-sm uppercase tracking-[0.2em] mb-3">{t('tecnologias_environment_title')}</h4>
+                            <p className="text-gray-400 text-sm leading-relaxed">{t('tecnologias_environment_desc')}</p>
                         </div>
                     </div>
                 </section>
 
                 <section>
-                    <h2 className="text-3xl font-black italic uppercase text-white mb-6">Principios Rectores</h2>
+                    <h2 className="text-3xl font-black italic uppercase text-white mb-6">{t('tecnologias_principles_title')}</h2>
                     <div className="space-y-4">
                         <div className="p-6 border-l-4 border-[#00e9fa] bg-white/5">
-                            <h4 className="text-white font-bold mb-2">Tecnología con Propósito</h4>
-                            <p className="text-gray-400 text-sm leading-relaxed">Cada solución tecnológica debe responder a necesidades reales identificadas en conjunto con las comunidades.</p>
+                            <h4 className="text-white font-bold mb-2">{t('tecnologias_purpose_title')}</h4>
+                            <p className="text-gray-400 text-sm leading-relaxed">{t('tecnologias_purpose_desc')}</p>
                         </div>
                         <div className="p-6 border-l-4 border-[#00e9fa] bg-white/5">
-                            <h4 className="text-white font-bold mb-2">Sostenibilidad y Autonomía</h4>
-                            <p className="text-gray-400 text-sm leading-relaxed">Promovemos la transferencia de conocimiento y la apropiación tecnológica para garantizar la sostenibilidad a largo plazo.</p>
+                            <h4 className="text-white font-bold mb-2">{t('tecnologias_sustainability_title')}</h4>
+                            <p className="text-gray-400 text-sm leading-relaxed">{t('tecnologias_sustainability_desc')}</p>
                         </div>
                         <div className="p-6 border-l-4 border-[#00e9fa] bg-white/5">
-                            <h4 className="text-white font-bold mb-2">Inclusión y Equidad</h4>
-                            <p className="text-gray-400 text-sm leading-relaxed">Diseñamos soluciones accesibles que no perpetúan brechas digitales ni sociales, sino que las reducen activamente.</p>
+                            <h4 className="text-white font-bold mb-2">{t('tecnologias_inclusion_title')}</h4>
+                            <p className="text-gray-400 text-sm leading-relaxed">{t('tecnologias_inclusion_desc')}</p>
                         </div>
                     </div>
                 </section>

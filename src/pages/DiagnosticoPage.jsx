@@ -1,45 +1,60 @@
 import React from 'react';
 import { Activity, Stethoscope, Bug, Wrench } from 'lucide-react';
 import Layout from '../components/Layout';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function DiagnosticoPage() {
+    const { t } = useLanguage();
     return (
         <Layout>
-            <div className="pt-32 pb-24 px-8 max-w-6xl mx-auto">
-                <header className="mb-16">
-                    <div className="flex items-center gap-4 mb-4">
-                        <Activity className="text-[#00e9fa]" size={48} />
-                        <div>
-                            <p className="text-[#00e9fa] font-mono text-xs tracking-[0.4em] uppercase">// Diagnóstico</p>
-                            <h1 className="text-5xl md:text-7xl font-black italic uppercase tracking-tighter text-white">Prevención de Fallos</h1>
-                        </div>
+            {/* Banner Parallax */}
+            <div className="relative h-[40vh] overflow-hidden">
+                <img
+                    src="/images/filosofia-parallax.jpg"
+                    alt="Diagnóstico Banner"
+                    className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-center px-8">
+                        <Activity className="text-[#00e9fa] mx-auto mb-4" size={64} />
+                        <h1 className="text-6xl md:text-8xl font-black italic uppercase tracking-tighter text-white drop-shadow-2xl">{t('diagnostico_page_title')}</h1>
                     </div>
-                    <p className="text-gray-300 max-w-3xl text-lg leading-relaxed">Protocolos previos a despliegue para detectar condiciones críticas antes de impactar producción.</p>
-                </header>
+                </div>
+            </div>
+            {/* Content */}
+            <div className="pt-20 pb-24 px-8 max-w-6xl mx-auto">
+                <div className="mb-16">
+                    <div className="border-l-4 border-[#00e9fa] pl-8">
+                        <h2 className="text-2xl md:text-3xl text-gray-300 font-light leading-relaxed">
+                            {t('diagnostico_page_desc')}
+                        </h2>
+                    </div>
+                </div>
 
                 <div className="grid md:grid-cols-3 gap-10 mb-16">
                     <div className="p-8 border border-white/10 bg-white/5 rounded-sm">
-                        <h3 className="text-white font-mono text-sm uppercase tracking-[0.2em] mb-3 flex items-center gap-2"><Stethoscope size={18} className="text-[#00e9fa]" /> Pruebas</h3>
+                        <h3 className="text-white font-mono text-sm uppercase tracking-[0.2em] mb-3 flex items-center gap-2"><Stethoscope size={18} className="text-[#00e9fa]" /> {t('diagnostico_tests')}</h3>
                         <ul className="space-y-2 text-gray-400 text-sm leading-relaxed">
-                            <li>Health checks de servicios y dependencias.</li>
-                            <li>Pruebas sintéticas y escenarios de carga.</li>
-                            <li>Validación de configuraciones críticas.</li>
+                            <li>{t('diagnostico_tests_1')}</li>
+                            <li>{t('diagnostico_tests_2')}</li>
+                            <li>{t('diagnostico_tests_3')}</li>
                         </ul>
                     </div>
                     <div className="p-8 border border-white/10 bg-white/5 rounded-sm">
-                        <h3 className="text-white font-mono text-sm uppercase tracking-[0.2em] mb-3 flex items-center gap-2"><Bug size={18} className="text-[#00e9fa]" /> Detección</h3>
+                        <h3 className="text-white font-mono text-sm uppercase tracking-[0.2em] mb-3 flex items-center gap-2"><Bug size={18} className="text-[#00e9fa]" /> {t('diagnostico_detection')}</h3>
                         <ul className="space-y-2 text-gray-400 text-sm leading-relaxed">
-                            <li>Escaneo de vulnerabilidades conocidas.</li>
-                            <li>Alertas tempranas de recursos saturados.</li>
-                            <li>Listas de bloqueo para incidentes recurrentes.</li>
+                            <li>{t('diagnostico_detection_1')}</li>
+                            <li>{t('diagnostico_detection_2')}</li>
+                            <li>{t('diagnostico_detection_3')}</li>
                         </ul>
                     </div>
                     <div className="p-8 border border-white/10 bg-white/5 rounded-sm">
-                        <h3 className="text-white font-mono text-sm uppercase tracking-[0.2em] mb-3 flex items-center gap-2"><Wrench size={18} className="text-[#00e9fa]" /> Mitigación</h3>
+                        <h3 className="text-white font-mono text-sm uppercase tracking-[0.2em] mb-3 flex items-center gap-2"><Wrench size={18} className="text-[#00e9fa]" /> {t('diagnostico_mitigation')}</h3>
                         <ul className="space-y-2 text-gray-400 text-sm leading-relaxed">
-                            <li>Runbooks con pasos accionables.</li>
-                            <li>Procedimientos de escalamiento.</li>
-                            <li>Documentación de causa raíz y remediación.</li>
+                            <li>{t('diagnostico_mitigation_1')}</li>
+                            <li>{t('diagnostico_mitigation_2')}</li>
+                            <li>{t('diagnostico_mitigation_3')}</li>
                         </ul>
                     </div>
                 </div>
