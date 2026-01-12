@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Roboto+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+  html,
+  body,
+  #root {
+    @apply h-full bg-black text-white font-sans;
+  }
+
+  body {
+    background-color: #000000;
+    color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: 'Roboto Mono', monospace;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: -0.05em;
+  }
+
+  h1 {
+    @apply text-5xl font-black;
+  }
+
+  h2 {
+    @apply text-4xl font-bold;
+  }
+
+  h3 {
+    @apply text-2xl font-bold;
+  }
+
+  canvas,
+  .webgl-canvas {
+    @apply block m-0 p-0;
+  }
+}
+
+@layer components {
+
+  /* Botón Primario */
+  .xl-btn-primary {
+    @apply inline-flex items-center justify-center gap-3 px-10 py-3 bg-primary text-black font-black text-xs uppercase tracking-widest border-2 border-primary rounded-sm transition-all cursor-pointer;
+  }
+
+  .xl-btn-primary:hover {
+    @apply bg-transparent text-primary;
+    box-shadow: 0 0 30px rgba(0, 233, 250, 0.4), inset 0 0 20px rgba(0, 233, 250, 0.1);
+  }
+
+  .xl-btn-primary:active {
+    @apply scale-95;
+  }
+
+  /* Botón Secundario */
+  .xl-btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-8 py-3 bg-secondary text-white font-bold text-xs uppercase tracking-widest border-2 border-secondary rounded-sm transition-all cursor-pointer;
+  }
+
+  .xl-btn-secondary:hover {
+    @apply border-primary text-primary;
+    background-color: rgba(51, 52, 54, 0.5);
+  }
+
+  /* Tarjeta */
+  .xl-card {
+    @apply relative bg-black border border-white/10 p-8 rounded-sm backdrop-blur-md transition-all overflow-hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  }
+
+  .xl-card:hover {
+    @apply border-primary/50;
+    box-shadow: 0 0 20px rgba(0, 233, 250, 0.2), inset 0 0 15px rgba(0, 233, 250, 0.05);
+  }
+
+  .xl-card-header {
+    @apply flex items-center gap-4 mb-4 relative z-10;
+  }
+
+  .xl-card-title {
+    font-family: 'Roboto Mono', monospace;
+    @apply text-lg font-bold text-white uppercase italic tracking-tight;
+  }
+
+  .xl-card-body {
+    @apply text-gray-400 text-sm leading-relaxed relative z-10;
+  }
+
+  /* Input */
+  .xl-input {
+    @apply w-full bg-white/5 border border-white/10 rounded-sm p-5 text-white text-sm transition-all font-sans;
+  }
+
+  .xl-input::placeholder {
+    @apply text-gray-500;
+  }
+
+  .xl-input:focus {
+    @apply outline-none border-primary bg-primary/5;
+    box-shadow: 0 0 15px rgba(0, 233, 250, 0.2);
+  }
+
+  /* Navbar */
+  .xl-navbar {
+    @apply bg-black border-b border-primary/20 py-4 transition-all;
+  }
+
+  /* Sección */
+  .xl-section {
+    @apply py-20 px-6 max-w-7xl mx-auto;
+  }
+
+  /* Título de sección */
+  .xl-section-title {
+    @apply mb-16 text-left;
+    border-left: 4px solid #00e9fa;
+    @apply pl-6;
+  }
+
+  .xl-section-title h2 {
+    @apply text-4xl md:text-6xl font-black text-white tracking-tighter uppercase font-mono italic;
+  }
+
+  .xl-section-title p {
+    @apply text-primary mt-2 text-sm font-mono tracking-widest uppercase;
+  }
+}

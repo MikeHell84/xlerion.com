@@ -1,0 +1,35 @@
+ # Cargar index.html por defecto
+ DirectoryIndex index.html
+ 
+ # Desactivar el listado de archivos y carpetas para mayor seguridad
+ Options -Indexes
+ 
+ # --- POLÍTICAS DE CACHÉ MODERNAS ---
+ # Eliminar el header Pragma obsoleto que causa la advertencia.
+ Header unset Pragma
+ 
+ # Forzar la revalidación de archivos críticos para que la PWA se actualice correctamente.
+ # El navegador siempre pedirá una nueva versión de estos archivos.
+ <FilesMatch "\.(html|js|json)$">
+   Header set Cache-Control "no-cache, no-store, must-revalidate"
+ </FilesMatch>
+ 
+ # Permitir que los assets estáticos (imágenes, fuentes) se guarden en caché por un largo tiempo.
+ <FilesMatch "\.(ico|jpg|jpeg|png|gif|svg|woff|woff2|ttf|eot)$">
+   Header set Cache-Control "public, max-age=31536000, immutable"
+ </FilesMatch>
+ 
+ # Configuración de Content Security Policy (CSP)
+ # Esto permite que tu aplicación cargue todos los recursos necesarios y use 'unsafe-eval'
+ # para librerías que lo requieran.
+ # ADVERTENCIA: 'unsafe-eval' reduce la seguridad contra inyecciones de script.
+ Header set Content-Security-Policy "default-src 'none'; \
+ base-uri 'self'; \
+ form-action 'self'; \
+ frame-ancestors 'none'; \
+ manifest-src 'self'; \
+ img-src 'self' data: https://placehold.co; \
+ font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com; \
+ style-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com https://fonts.googleapis.com https://unpkg.com; \
+ script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com https://unpkg.com https://cdn.jsdelivr.net https://www.gstatic.com; \
+ connect-src 'self' https://www.googleapis.com https://securetoken.googleapis.com;"
